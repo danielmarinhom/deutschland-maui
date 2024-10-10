@@ -3,13 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Deutschland_Game.MainPage">
 
+    <!-- fonte global -->
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="PeachCake" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="PeachCake" />
+        </Style>
+    </ContentPage.Resources>
+
     <Grid>
+
+        <!-- imagem de fundo -->
         <Image Source="homepage_background.png" 
                Aspect="AspectFill"
                VerticalOptions="FillAndExpand"
                HorizontalOptions="FillAndExpand" />
 
+        <!-- Conteúdo sobreposto à imagem -->
         <Grid>
+
             <!-- titulo (main) -->
             <Label Text="Rule or Ruin"
                    HorizontalOptions="Center"
@@ -17,19 +31,22 @@
                    FontSize="36"
                    FontAttributes="Bold"
                    TextColor="White"
-                   Padding="0, 50, 0, 20" />
+                   Padding="0, 50, 0, 20"
+                   FontFamily="PeachCake" />
 
             <!-- botoes -->
-            <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="20">
+            <VerticalStackLayout HorizontalOptions="Center" 
+                                 VerticalOptions="Center" 
+                                 Spacing="20">
 
                 <!-- jogar -->
                 <Button Text="Jogar"
-                        HorizontalOptions="Center"
                         WidthRequest="200"
                         HeightRequest="50"
                         BackgroundColor="Transparent"
                         TextColor="Black"
-                        FontAttributes="Bold">
+                        FontAttributes="Bold"
+                        FontSize="20">
                     <Button.ImageSource>
                         <FileImageSource File="homepage_option.png" />
                     </Button.ImageSource>
@@ -37,19 +54,21 @@
 
                 <!-- créditos (to-do) -->
                 <Button Text="Creditos"
-                        HorizontalOptions="Center"
                         WidthRequest="200"
                         HeightRequest="50"
                         BackgroundColor="Transparent"
                         TextColor="Black"
-                        FontAttributes="Bold">
+                        FontAttributes="Bold"
+                        FontSize="20">
                     <Button.ImageSource>
                         <FileImageSource File="homepage_option.png" />
                     </Button.ImageSource>
                 </Button>
 
-            </StackLayout>
+            </VerticalStackLayout>
+
         </Grid>
+
     </Grid>
 
 </ContentPage>
