@@ -7,7 +7,11 @@
         public MainPage()
         {
             InitializeComponent();
+
+            
         }
+
+        
 
         
     }
