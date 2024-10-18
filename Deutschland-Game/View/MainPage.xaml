@@ -16,7 +16,10 @@
         </Style>
     </ContentPage.Resources>
 
-    <Grid>
+    <Grid
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand"
+        >
 
         <!-- imagem de fundo -->
         <Image Source="homepage_background.png" 
@@ -31,10 +34,10 @@
             <Label Text="Rule or Ruin"
                    HorizontalOptions="Center"
                    VerticalOptions="Start"
-                   FontSize="36"
+                   FontSize="42"
                    FontAttributes="Bold"
                    TextColor="White"
-                   Margin="0, 50, 0, 0"
+                   Margin="0, 70, 0, 0"
                    FontFamily="PeachCake" />
 
             
@@ -42,7 +45,7 @@
             <!-- botoes -->
             <HorizontalStackLayout HorizontalOptions="Center" 
                                  VerticalOptions="Center" 
-                                 Spacing="20"
+                                 Spacing="40"
                                  Margin="0, 60, 0, 0"
                                    >
 
@@ -75,10 +78,7 @@
                     </Button>
     
                 </AbsoluteLayout>
-                
-                <!-- jogar -->
-                
-                <!-- créditos (to-do) -->
+              
                 <AbsoluteLayout
                     VerticalOptions="Center"
                     HorizontalOptions="Center"                    
@@ -89,7 +89,8 @@
                         WidthRequest="150"
         
                         />
-                                    <Button Text="Creditos"
+                        <Button Text="Creditos"
+                                x:Name="creditosBtn"
                             VerticalOptions="Center"
                             HorizontalOptions="Center"
                             WidthRequest="150"
@@ -98,7 +99,7 @@
                             TextColor="Black"
                             FontAttributes="Bold"
                             FontSize="20"
-            
+                            Clicked="creditosBtn_Clicked"
                             >
 
 
