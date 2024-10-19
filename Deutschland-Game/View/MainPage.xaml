@@ -1,8 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Deutschland_Game.MainPage">
+             x:Class="Deutschland_Game.MainPage"
+             Shell.NavBarIsVisible="False">
 
+    
+    
     <!-- fonte global -->
     <ContentPage.Resources>
         <Style TargetType="Label">
@@ -13,59 +16,96 @@
         </Style>
     </ContentPage.Resources>
 
-    <Grid>
+    <Grid
+        VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand"
+        >
 
-        <!-- imagem de fundo -->
+        <!-- background image -->
         <Image Source="homepage_background.png" 
                Aspect="AspectFill"
                VerticalOptions="FillAndExpand"
                HorizontalOptions="FillAndExpand" />
 
-        <!-- Conteúdo sobreposto à imagem -->
         <Grid>
 
             <!-- titulo (main) -->
             <Label Text="Rule or Ruin"
                    HorizontalOptions="Center"
                    VerticalOptions="Start"
-                   FontSize="36"
+                   FontSize="42"
                    FontAttributes="Bold"
                    TextColor="White"
-                   Padding="0, 50, 0, 20"
+                   Margin="0, 70, 0, 0"
                    FontFamily="PeachCake" />
 
+            
+            
             <!-- botoes -->
-            <VerticalStackLayout HorizontalOptions="Center" 
+            <HorizontalStackLayout HorizontalOptions="Center" 
                                  VerticalOptions="Center" 
-                                 Spacing="20">
+                                 Spacing="40"
+                                 Margin="0, 60, 0, 0"
+                                   >
 
-                <!-- jogar -->
-                <Button Text="Jogar"
-                        WidthRequest="200"
-                        HeightRequest="50"
-                        BackgroundColor="Transparent"
-                        TextColor="Black"
-                        FontAttributes="Bold"
-                        FontSize="20">
-                    <Button.ImageSource>
-                        <FileImageSource File="homepage_option.png" />
-                    </Button.ImageSource>
-                </Button>
 
-                <!-- créditos (to-do) -->
-                <Button Text="Creditos"
-                        WidthRequest="200"
-                        HeightRequest="50"
-                        BackgroundColor="Transparent"
-                        TextColor="Black"
-                        FontAttributes="Bold"
-                        FontSize="20">
-                    <Button.ImageSource>
-                        <FileImageSource File="homepage_option.png" />
-                    </Button.ImageSource>
-                </Button>
+                <AbsoluteLayout
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"                    
+                    
+                    >
+                    
+                    <Image
+                        IsOpaque="False"
+                        Source="scroll.png"
+                        WidthRequest="150"
+                      
+                        />
+                    <Button Text="Jogar"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            WidthRequest="150"
+                            HeightRequest="75"
+                            BackgroundColor="Transparent"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            Clicked="jogarBtn_Clicked"
+                            >
+            
+    
+                    </Button>
+    
+                </AbsoluteLayout>
+              
+                <AbsoluteLayout
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"                    
+                    >
 
-            </VerticalStackLayout>
+                                    <Image
+                        Source="scroll.png"
+                        WidthRequest="150"
+        
+                        />
+                        <Button Text="Creditos"
+                                x:Name="creditosBtn"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            WidthRequest="150"
+                            HeightRequest="75"
+                            BackgroundColor="Transparent"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            FontSize="20"
+                            Clicked="creditosBtn_Clicked"
+                            >
+
+
+                    </Button>
+
+                </AbsoluteLayout>
+            </HorizontalStackLayout>
 
         </Grid>
 
