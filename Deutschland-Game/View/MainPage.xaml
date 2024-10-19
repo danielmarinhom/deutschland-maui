@@ -57,7 +57,11 @@
                     
                     <Image
                         IsOpaque="False"
+<<<<<<< HEAD
                         Source="scroll.png"
+=======
+                        Source="homepage_option.png"
+>>>>>>> a6e09fecbdb0c67935aa73cc8aeb02177bfa0a10
                         WidthRequest="150"
                       
                         />
@@ -70,7 +74,11 @@
                             TextColor="Black"
                             FontAttributes="Bold"
                             FontSize="20"
+<<<<<<< HEAD
                             Clicked="jogarBtn_Clicked"
+=======
+                            
+>>>>>>> a6e09fecbdb0c67935aa73cc8aeb02177bfa0a10
                             >
             
     
@@ -84,7 +92,11 @@
                     >
 
                                     <Image
+<<<<<<< HEAD
                         Source="scroll.png"
+=======
+                        Source="homepage_option.png"
+>>>>>>> a6e09fecbdb0c67935aa73cc8aeb02177bfa0a10
                         WidthRequest="150"
         
                         />
