@@ -68,6 +68,24 @@
 	  <MauiXaml Update="View\CreditosPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+<<<<<<< HEAD
+	  <MauiXaml Update="View\EscolherNomePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\JogarPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\LoadingPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="View\EscolherNomePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
+=======
+>>>>>>> a6e09fecbdb0c67935aa73cc8aeb02177bfa0a10
 	</ItemGroup>
 
 </Project>
