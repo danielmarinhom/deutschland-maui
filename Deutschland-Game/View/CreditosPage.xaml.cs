@@ -18,14 +18,11 @@ public partial class CreditosPage : ContentPage
     {
         await Navigation.PopAsync();
     }
-<<<<<<< HEAD
     protected override bool OnBackButtonPressed()
     {
         Navigation.PopAsync();
         return true;
     }
-=======
->>>>>>> eb4d2c8408a20fd27e137362d9a9e1599ec5aeef
 
     private void backendBtn_Clicked(object sender, EventArgs e)
     {
