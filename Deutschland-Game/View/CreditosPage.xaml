@@ -32,9 +32,9 @@
                 <ImageButton
                     x:Name="backIconBtn"
                         Source="back_icon.png"
-                        WidthRequest="30"
-                        HeightRequest="30"
-                        Margin="60, 20"
+                        WidthRequest="25"
+                        HeightRequest="25"
+                        Margin="60, 30"
                         HorizontalOptions="Start"
                         VerticalOptions="Start"
                         Clicked="backIconBtn_Clicked"/>
@@ -50,12 +50,13 @@
                         <Label
                                 Text="Rule or Ruin"
                                 TextColor="#FFDA9F"
-                                FontSize="40"
-                                LineBreakMode="WordWrap"/>
+                                FontSize="32"
+                                LineBreakMode="WordWrap"
+                                FontFamily="PeachCake"/>
 
                         <Label
                             TextColor="#FFFFFF"
-                            FontSize="32"
+                            FontSize="25"
                             Text="Jogo desenvolvido por&#x0a;estudantes da ETEC HAS"
                             />
 
@@ -67,8 +68,8 @@
                                 x:Name="gitHubImageBtn"
                                 Source="github_icon.png"
                                 HorizontalOptions="Start"
-                                WidthRequest="70"
-                                HeightRequest="70"
+                                WidthRequest="60"
+                                HeightRequest="60"
                                 Clicked="gitHubImageBtn_Clicked"
                                 />
                             <HorizontalStackLayout
@@ -92,12 +93,12 @@
                         Spacing="10">
                         <Label
                             Text="Equipe do 2AI"
-                            FontSize="30"
+                            FontSize="25"
                             TextColor="#FFDA9F"/>
                         <Label
                             HorizontalTextAlignment="Center"
                             TextColor="White"
-                            FontSize="20"
+                            FontSize="18"
                             Text=" Cássia Freitas&#x0a; Daniel Marinho&#x0a; Eduardo Queiroz&#x0a; Gabriel Joaquim&#x0a; Matheus Jacob&#x0a; Matheus Pinter&#x0a; Paulo Sergio&#x0a; Pedro Ludovic&#x0a; Vitor da Luz"/>
                     </VerticalStackLayout>
 

@@ -17,6 +17,7 @@ namespace Deutschland_Game
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("PeachCake.otf", "PeachCake");
                 });
 
 #if DEBUG
