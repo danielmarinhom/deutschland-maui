@@ -84,7 +84,7 @@
                     HorizontalOptions="Center"                    
                     >
 
-                            <Image
+                        <Image
                             Source="scroll.png"
                             WidthRequest="150"
                         />
