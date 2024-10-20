@@ -11,7 +11,7 @@ using static System.Net.WebRequestMethods;
 
 namespace Deutschland_Game.Service
 {
-    internal class PostService
+    internal class UsuarioService
     {
         private HttpClient httpClient;
         private Usuario usuario;
@@ -21,7 +21,7 @@ namespace Deutschland_Game.Service
         Uri uri = new Uri("http://localhost:8080");
         
         //  url - >  /usuario/cadastrar   @RequestBody UsuarioDTO - > (String nome) - > return ResponseEntity.ok(id);
-        public PostService()
+        public UsuarioService()
         {
             httpClient = new HttpClient();
             jsonSerializerOptions = new JsonSerializerOptions
@@ -47,7 +47,7 @@ namespace Deutschland_Game.Service
             {
                 Debug.WriteLine(e.Message);
             }
-            return usuario;
+            return usuario;     // ver com o guilherme sobre retornar a string do id
         }
     }
 }

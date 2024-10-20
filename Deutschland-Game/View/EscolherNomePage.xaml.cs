@@ -29,6 +29,7 @@ namespace Deutschland_Game.View
 
         private async void continuarBtn_Clicked(object sender, EventArgs e)
         {
+
             await Navigation.PushAsync(new LoadingPage());
         }
 
