@@ -30,7 +30,8 @@
                              WidthRequest="40" HeightRequest="40"
                              HorizontalOptions="Start"
                              VerticalOptions="Start"
-                             Command="{Binding VoltarCommand}" />
+                             Command="{Binding VoltarCommand}" 
+                             Clicked="voltarBtn_Clicked"/>
 
                 <!-- left (scroll) -->
                 <Grid Grid.Row="1" Grid.Column="0" ColumnSpan="2" Padding="10">
@@ -60,7 +61,7 @@
 
                     <Entry Placeholder="Digite o nome do rei"
                            Text="{Binding NomeRei, Mode=TwoWay}"
-                           FontSize="20"
+                           FontSize="17"
                            HorizontalOptions="Center"
                            VerticalOptions="Center"
                            BackgroundColor="#f2f2f2"
