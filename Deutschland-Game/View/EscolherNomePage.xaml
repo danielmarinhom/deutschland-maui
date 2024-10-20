@@ -30,7 +30,8 @@
                              WidthRequest="40" HeightRequest="40"
                              HorizontalOptions="Start"
                              VerticalOptions="Start"
-                             Command="{Binding VoltarCommand}" />
+                             Command="{Binding VoltarCommand}" 
+                             Clicked="voltarBtn_Clicked"/>
 
                 <!-- left (scroll) -->
                 <Grid Grid.Row="1" Grid.Column="0" ColumnSpan="2" Padding="10">
@@ -74,7 +75,6 @@
                                TextColor="Black"
                                HorizontalOptions="Center"
                                VerticalOptions="Center" 
-                               Clicked="continuarBtn_Clicked"
                         />
                     </Grid>
                 </Grid>

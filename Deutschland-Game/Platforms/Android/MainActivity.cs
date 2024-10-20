@@ -15,18 +15,18 @@ namespace Deutschland_Game
         protected override void OnCreate(Bundle? savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            
+
             // Coloca o app em tela horizontal
             RequestedOrientation = ScreenOrientation.Landscape;
 
             Window.Attributes.LayoutInDisplayCutoutMode = LayoutInDisplayCutoutMode.ShortEdges;
 
             Window.DecorView.SystemUiVisibility = (StatusBarVisibility)(
-                SystemUiFlags.HideNavigation | // esconde aquela aba de navegacao do celular
-                SystemUiFlags.Fullscreen | // deixa o app em tela cheia e esconde a status bar
                 SystemUiFlags.ImmersiveSticky | // isso permite que ambos os itens anteriores desapareçam automaticamente após uma interação do usuario
                 SystemUiFlags.LayoutFullscreen |
-                SystemUiFlags.LayoutHideNavigation );
+                SystemUiFlags.LayoutHideNavigation |
+                SystemUiFlags.Fullscreen | // deixa o app em tela cheia e esconde a status bar
+                SystemUiFlags.HideNavigation ); // esconde aquela aba de navegacao do celular
             
 
             Window.DecorView.SetOnSystemUiVisibilityChangeListener(new SystemUiVisibilityChangeListener()); // aqui é um listener para executar os comandos acima toda vez que houver alteração da view do app
@@ -47,9 +47,11 @@ namespace Deutschland_Game
                         SystemUiFlags.Fullscreen |
                         SystemUiFlags.ImmersiveSticky |
                         SystemUiFlags.LayoutFullscreen |
-                        SystemUiFlags.LayoutHideNavigation );
+                        SystemUiFlags.LayoutHideNavigation);
                 }
             }
         }
+
+        
     }
 }

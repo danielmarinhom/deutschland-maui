@@ -31,5 +31,15 @@ namespace Deutschland_Game.View
         {
             await Navigation.PushAsync(new LoadingPage());
         }
+
+        private async void voltarBtn_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
+        protected override bool OnBackButtonPressed()
+        {
+            Navigation.PopAsync();
+            return true;
+        }
     }
 }
