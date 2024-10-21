@@ -17,6 +17,7 @@ namespace Deutschland_Game.ViewModel
         [ObservableProperty]
         int id;
 
+<<<<<<< HEAD
         public ICommand CadastrarUsuarioCommand { get; }
 
         public async Task CadastrarUsuario()
@@ -36,6 +37,22 @@ namespace Deutschland_Game.ViewModel
             {
                 Console.WriteLine($"erro ao cadastrar usuario - {e.Message}");
             }
+=======
+        public ICommand SavePostCommand { get; }
+
+        public CadastrarUsuarioViewModel()
+        {
+            SavePostCommand = new Command(CadastrarUsuario);
+        }
+        public async void CadastrarUsuario()
+        {
+            Usuario usuario = new Usuario();
+            Usuario newUsuario = new Usuario();
+            usuario.Nome = nome;
+            usuario.Id = id;
+            UsuarioService usuarioService = new UsuarioService();
+            newUsuario = await usuarioService.CadastrarUsuarioAsync(usuario);
+>>>>>>> d9b7dcb929b6a8a9a9208728f89d4b19931346cb
             /*
              corrigir ao inves de Usuario newUsuario - > string idUsuario (pois a api retorna um id)
              */
