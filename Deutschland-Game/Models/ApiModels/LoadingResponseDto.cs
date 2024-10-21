@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using Deutschland_Game.Dtos;
 
 namespace Deutschland_Game.Models.ApiModels
 {
-    class LoadingResponseDto
+    public class LoadingResponseDto
     {
 
         [JsonPropertyName("id_dialogo")]

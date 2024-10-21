@@ -15,11 +15,11 @@ namespace Deutschland_Game.ViewModel
         [ObservableProperty]
         string nome;
         [ObservableProperty]
-        double id;
+        int id;
 
         public ICommand SavePostCommand { get; }
 
-        CreateCadastrarUsuarioViewModel()
+        public CadastrarUsuarioViewModel()
         {
             SavePostCommand = new Command(CadastrarUsuario);
         }

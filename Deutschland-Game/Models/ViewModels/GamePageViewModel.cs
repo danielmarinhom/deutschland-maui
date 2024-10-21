@@ -7,7 +7,7 @@ namespace Deutschland_Game.Models.ViewModels
     {
 
         [ObservableProperty]
-        private List<LoadingResponseDto> loadingResponses;
+        public List<LoadingResponseDto> loadingResponses;
 
     }
 }

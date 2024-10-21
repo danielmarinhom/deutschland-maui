@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Deutschland_Game.Dtos
 {
-    class PersonagemDto
+    public class PersonagemDto
     {
 
         [JsonPropertyName("nome")]
