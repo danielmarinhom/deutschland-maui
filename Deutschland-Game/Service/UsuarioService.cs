@@ -1,4 +1,4 @@
-﻿using Deutschland_Game.Model;
+﻿using Deutschland_Game.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

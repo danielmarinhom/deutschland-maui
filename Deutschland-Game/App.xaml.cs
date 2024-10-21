@@ -1,4 +1,6 @@
-﻿namespace Deutschland_Game
+﻿using Deutschland_Game.View;
+
+namespace Deutschland_Game
 {
     public partial class App : Application
     {
@@ -6,7 +8,11 @@
         {
             InitializeComponent();
 
+
+
             MainPage = new AppShell();
+            //MainPage = new GamePage();
+
         }
     }
 }
