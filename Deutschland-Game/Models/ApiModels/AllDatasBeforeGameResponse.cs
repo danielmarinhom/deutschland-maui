@@ -3,7 +3,7 @@ using Deutschland_Game.Dtos;
 
 namespace Deutschland_Game.Models.ApiModels
 {
-    public class LoadingResponseDto
+    public class AllDatasBeforeEraResponse
     {
 
         [JsonPropertyName("id_dialogo")]

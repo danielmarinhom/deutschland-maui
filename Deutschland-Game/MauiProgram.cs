@@ -22,6 +22,7 @@ namespace Deutschland_Game
 
 #if DEBUG
     		builder.Logging.AddDebug();
+            builder.Services.AddHttpClient();
 #endif
 
             return builder.Build();
