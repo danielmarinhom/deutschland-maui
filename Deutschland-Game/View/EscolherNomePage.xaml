@@ -52,17 +52,19 @@
                             Margin="20, 0, 0, 20"
                             >
 
-                            <Label Text="{Binding NomeRei}"
-                               FontSize="20"
+                            <Label 
+                               Text="{Binding NomeRei, StringFormat='{0} I'}"
+                               FontSize="16"
                                FontAttributes="Bold"
                                TextColor="Black"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center"
                                FontFamily="Muthiara"
+                               
                             />
 
                             <Label Text="Reinará no&#x0a;Sacro Império"
-                               FontSize="18"
+                               FontSize="15"
                                TextColor="Black"
                                HorizontalOptions="Center"
                                HorizontalTextAlignment="Center"
@@ -108,14 +110,18 @@
 
                         
 
-                    </VerticalStackLayout>
-
-                    
+                </VerticalStackLayout>
 
                     <Grid VerticalOptions="End" Padding="10">
+                        <Button
+                            WidthRequest="150"
+                            BackgroundColor="Transparent"
+                            Clicked="continuarBtn_Clicked"/>
+                        
                         <Image 
                             Source="scroll.png" 
                             WidthRequest="150"/>
+                        
                         <Label Text="Continuar"
                                FontSize="20"
                                FontAttributes="Bold"
