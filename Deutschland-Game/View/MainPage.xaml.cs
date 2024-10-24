@@ -1,4 +1,7 @@
-﻿using Deutschland_Game.View;
+﻿using Deutschland_Game.Service;
+using Deutschland_Game.View;
+using System.Diagnostics;
+using System.Text.Json;
 
 namespace Deutschland_Game
 {
@@ -8,6 +11,7 @@ namespace Deutschland_Game
         public MainPage()
         {
             InitializeComponent();
+
         }
 
         private async void creditosBtn_Clicked(object sender, EventArgs e)

@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Deutschland_Game.View.EscolherNomePage"
-             Shell.NavBarIsVisible="False">
+             Shell.NavBarIsVisible="False"
+             >
 
     <!-- global font -->
     <ContentPage.Resources>
@@ -22,53 +23,105 @@
                    Aspect="AspectFill"
                    VerticalOptions="FillAndExpand"
                    HorizontalOptions="FillAndExpand" />
-            <Grid Padding="20" ColumnDefinitions="100,*,200" RowDefinitions="Auto,Auto,Auto,Auto">
+            
+            <ImageButton
+                Source="back_icon.png"
+                WidthRequest="25"
+                HeightRequest="25"
+                Margin="60, 30"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                Clicked="voltarBtn_Clicked"/>
 
-                <!-- back icon -->
-                <ImageButton Source="back_icon.png"
-                             Grid.Row="0" Grid.Column="0"
-                             WidthRequest="40" HeightRequest="40"
-                             HorizontalOptions="Start"
-                             VerticalOptions="Start"
-                             Command="{Binding VoltarCommand}" 
-                             Clicked="voltarBtn_Clicked"/>
+            <HorizontalStackLayout
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Spacing="70">
 
-                <!-- left (scroll) -->
                 <Grid Grid.Row="1" Grid.Column="0" ColumnSpan="2" Padding="10">
-                    <Image Source="scroll_vertical.png" Aspect="AspectFit" />
-                    <Label Text="{Binding NomeRei}"
+                        <Image 
+                            Source="scroll_vertical.png" 
+                            WidthRequest="250"
+                            />
+
+                        <VerticalStackLayout
+                            Spacing="20"
+                            VerticalOptions="Center"
+                            HorizontalOptions="Center"
+                            WidthRequest="150"
+                            Margin="20, 0, 0, 20"
+                            >
+
+                            <Label 
+                               Text="{Binding NomeRei, StringFormat='{0} I'}"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="Black"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"
+                               FontFamily="Muthiara"
+                               
+                            />
+
+                            <Label Text="Reinará no&#x0a;Sacro Império"
+                               FontSize="15"
+                               TextColor="Black"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"
+                               FontFamily="Muthiara"
+                            />
+
+                        </VerticalStackLayout>
+
+                    </Grid>
+
+                <VerticalStackLayout
+                    VerticalOptions="Center"
+                    Spacing="50">
+
+                    <VerticalStackLayout
+                        Spacing="30">
+
+                        <Label Text="O rei chamará:"
                            FontSize="30"
-                           FontAttributes="Bold"
-                           TextColor="Black"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center" />
-                    
-                    <Label Text="Reinará no Sacro Império"
-                           FontSize="18"
-                           TextColor="Black"
-                           HorizontalOptions="Center"
-                           VerticalOptions="End" />
-                </Grid>
-
-                <!-- right (input) -->
-                <Grid Grid.Row="1" Grid.Column="2" Padding="10">
-
-                    <Label Text="O rei chamará:"
-                           FontSize="24"
                            TextColor="White"
                            HorizontalOptions="Center"
-                           VerticalOptions="Start" />
+                           VerticalOptions="Start" 
+                               />
 
-                    <Entry Placeholder="Digite o nome do rei"
-                           Text="{Binding NomeRei, Mode=TwoWay}"
-                           FontSize="17"
-                           HorizontalOptions="Center"
-                           VerticalOptions="Center"
-                           BackgroundColor="#f2f2f2"
-                           TextColor="Black" />
+                        <Border
+                            Stroke="#AD8C65"
+                            BackgroundColor="Transparent"
+                            Padding="50, 5"
+                            StrokeThickness="3"
+                            StrokeShape="RoundRectangle 25"
+                            >
+
+                            <Entry Placeholder="Digite o nome do rei"
+                               Text="{Binding NomeRei, Mode=TwoWay}"
+                               TextColor="#AD8C65"
+                               FontSize="17"
+                               FontFamily="PeachCake"
+                               PlaceholderColor="#AD8C65"
+                               BackgroundColor="Transparent"
+                                   />
+
+                        </Border>
+
+                        
+
+                </VerticalStackLayout>
 
                     <Grid VerticalOptions="End" Padding="10">
-                        <Image Source="pergaminho.png" Aspect="AspectFit" />
+                        <Button
+                            WidthRequest="150"
+                            BackgroundColor="Transparent"
+                            Clicked="continuarBtn_Clicked"/>
+                        
+                        <Image 
+                            Source="scroll.png" 
+                            WidthRequest="150"/>
+                        
                         <Label Text="Continuar"
                                FontSize="20"
                                FontAttributes="Bold"
@@ -77,8 +130,9 @@
                                VerticalOptions="Center" 
                         />
                     </Grid>
-                </Grid>
-            </Grid>
+                </VerticalStackLayout>
+
+            </HorizontalStackLayout>
         </Grid>
 
     </VerticalStackLayout>

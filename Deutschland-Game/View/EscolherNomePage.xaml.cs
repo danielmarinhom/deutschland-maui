@@ -1,3 +1,7 @@
+using Deutschland_Game.Models;
+using Deutschland_Game.Service;
+using Deutschland_Game.Dtos;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -6,6 +10,7 @@ namespace Deutschland_Game.View
     public partial class EscolherNomePage : ContentPage, INotifyPropertyChanged
     {
         private string nomeRei;
+        private readonly UsuarioService usuarioService;
         public string NomeRei
         {
             get => nomeRei;
@@ -29,8 +34,15 @@ namespace Deutschland_Game.View
 
         private async void continuarBtn_Clicked(object sender, EventArgs e)
         {
-
-            await Navigation.PushAsync(new LoadingPage());
+            UsuarioDto usuarioDto = await usuarioService.CadastrarUsuarioAsync(nomeRei);
+            if (usuarioDto == null) {
+                // tratar erro (ver com o pscosta)
+                await DisplayAlert("Erro", "Falha ao cadastrar o usuário", "OK");
+            }
+            else
+            {
+                await Navigation.PushAsync(new LoadingPage(id));
+            }
         }
 
         private async void voltarBtn_Clicked(object sender, EventArgs e)

@@ -1,21 +1,16 @@
-﻿using Deutschland_Game.Models;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using Deutschland_Game.Dtos;
+using Deutschland_Game.Models;
+using Microsoft.Maui.Animations;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
-using static System.Net.WebRequestMethods;
 
 namespace Deutschland_Game.Service
 {
-    internal class UsuarioService
+    public class UsuarioService
     {
         private HttpClient httpClient;
         private Usuario usuario;
-        //private ObservableCollection<x> x;
         private JsonSerializerOptions jsonSerializerOptions;
         private string userId = "";
         Uri uri = new Uri("http://localhost:8080");
@@ -30,24 +25,32 @@ namespace Deutschland_Game.Service
                 WriteIndented = true,
             };
         }
-        public async Task<Usuario> CadastrarUsuarioAsync(Usuario usuario)
+        public async Task<UsuarioDto> CadastrarUsuarioAsync(String nome)
         {
+            var usuarioDto = new UsuarioDto { Nome = nome };
             try
             {
-                string json = JsonSerializer.Serialize<Usuario>(usuario, jsonSerializerOptions);
+                string json = JsonSerializer.Serialize(usuarioDto, jsonSerializerOptions);
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await httpClient.PostAsync(uri + "/usuario/cadastrar"
-                    , content);
+                    ,content);
                 if (response.IsSuccessStatusCode)
                 {
-                    userId = response.Content.ToString();
+                    string jsonResponse = await response.Content.ReadAsStringAsync();
+                    UsuarioDto usuarioCadastrado = JsonSerializer.Deserialize<UsuarioDto>(jsonResponse, jsonSerializerOptions);
+                    return usuarioCadastrado;
+                }
+                else
+                {
+                    Debug.WriteLine(response.StatusCode);
+                    return null;
                 }
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
+                return null;
             }
-            return usuario;     // ver com o guilherme sobre retornar a string do id
         }
     }
 }
