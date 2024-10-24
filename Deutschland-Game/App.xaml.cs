@@ -1,4 +1,5 @@
 ﻿using Deutschland_Game.View;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 
 namespace Deutschland_Game
 {
@@ -7,6 +8,8 @@ namespace Deutschland_Game
         public App()
         {
             InitializeComponent();
+            
+            //Handler.PlatformView.BackgroundTintList = ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
 
 
 
