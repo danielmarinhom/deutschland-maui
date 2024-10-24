@@ -8,7 +8,7 @@ namespace Deutschland_Game.View
     {
         //puxar id do cadastro da api e passar no JogarPage no parametro do Navigation
         private double id;
-        public LoadingPage()
+        public LoadingPage(double id)
         {
             InitializeComponent();
             SimulateLoading();

@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Deutschland_Game.Dtos;
 using Deutschland_Game.Models;
 using Deutschland_Game.Service;
 using System.Windows.Input;
@@ -14,22 +15,27 @@ namespace Deutschland_Game.ViewModel
 
         public ICommand CadastrarUsuarioCommand { get; }
 
-        public async Task CadastrarUsuario()
+        public async Task<double> CadastrarUsuario(string nome)
         {
             try
             {
+                /*  se precisar criar o objeto do usuario caso adicione mais atributos:
                 Usuario usuario = new Usuario
                 {
                     Nome = nome,
                     Id = id
                 };
+                */
 
                 UsuarioService usuarioService = new UsuarioService();
-                Usuario newUsuario = await usuarioService.CadastrarUsuarioAsync(usuario);
+                UsuarioDto newUsuarioDto = await usuarioService.CadastrarUsuarioAsync(nome);
+                double id = Convert.ToDouble(newUsuarioDto.Id);
+                return id;
             }
             catch (Exception e)
             {
                 Console.WriteLine($"erro ao cadastrar usuario - {e.Message}");
+                return -1;
             } 
         }
         public ICommand SavePostCommand { get; }
