@@ -29,8 +29,6 @@ namespace Deutschland_Game.Models.ViewModels
                 return;
             }
 
-            Console.WriteLine(response[0].mensagem);
-
         }
 
     }
