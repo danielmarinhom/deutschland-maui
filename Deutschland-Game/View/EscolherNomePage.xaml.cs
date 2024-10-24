@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 using Deutschland_Game.Models;
 using Deutschland_Game.Service;
 using Deutschland_Game.Dtos;
+=======
+>>>>>>> eaafa53c1bfb60f526a859881d75ccb4f15fb635
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;

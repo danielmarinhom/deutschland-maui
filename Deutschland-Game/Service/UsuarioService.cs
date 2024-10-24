@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 ﻿using Deutschland_Game.Dtos;
 using Deutschland_Game.Models;
 using Microsoft.Maui.Animations;
+=======
+﻿using Deutschland_Game.Models;
+>>>>>>> eaafa53c1bfb60f526a859881d75ccb4f15fb635
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
