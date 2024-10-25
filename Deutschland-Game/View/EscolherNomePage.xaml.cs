@@ -37,9 +37,10 @@ namespace Deutschland_Game.View
 
         private async void continuarBtn_Clicked(object sender, EventArgs e)
         {
-
+            loading_component.IsVisible = true;
             try { 
                 var usuarioDto = await cadastrarUsuarioViewModel.CadastrarUsuario(nomeRei);
+                loading_component.IsVisible = false;
                 if (usuarioDto == null) {
                     // tratar erro (ver com o pscosta)
                     await DisplayAlert("Erro", "Falha ao cadastrar o usuário", "OK");
@@ -53,7 +54,8 @@ namespace Deutschland_Game.View
 
                     await Navigation.PushAsync(new LoadingPage(usuarioDto, globalVars.eraID));
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 Debug.WriteLine("ERRO ------------ " + ex.Message);
             }
