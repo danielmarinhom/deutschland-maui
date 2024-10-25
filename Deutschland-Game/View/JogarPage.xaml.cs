@@ -1,11 +1,14 @@
+using Deutschland_Game.Dtos;
+
 namespace Deutschland_Game.View;
 
 public partial class JogarPage : ContentPage
 {
-	private double id;
-	public JogarPage(double id)
+	private UsuarioDto usuarioDto;
+
+	public JogarPage(UsuarioDto usuarioDto)
 	{
 		InitializeComponent();
-		this.id = id;
+		this.usuarioDto = usuarioDto;
 	}
 }

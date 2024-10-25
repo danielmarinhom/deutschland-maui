@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Deutschland_Game.Dtos;
 using Microsoft.Maui.Controls;
 
 namespace Deutschland_Game.View
@@ -7,10 +8,11 @@ namespace Deutschland_Game.View
     public partial class LoadingPage : ContentPage
     {
         //puxar id do cadastro da api e passar no JogarPage no parametro do Navigation
-        private double id;
-        public LoadingPage()
+        private UsuarioDto usuarioDto;
+        public LoadingPage(UsuarioDto usuarioDto)
         {
             InitializeComponent();
+            this.usuarioDto = usuarioDto;
             SimulateLoading();
         }
 
@@ -23,7 +25,7 @@ namespace Deutschland_Game.View
                 await Task.Delay(500);
             }
 
-            await Navigation.PushAsync(new JogarPage(id));
+            await Navigation.PushAsync(new JogarPage(this.usuarioDto));
         }
         /*
          to-do:
