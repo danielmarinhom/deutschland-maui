@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Deutschland_Game
 {
-    internal class ApiDatas
+    internal class GlobalVars
     {
 
-        public const string API_BASE_URL = "localhost:8080/";
+        public int eraID { get; set; }
 
     }
 }

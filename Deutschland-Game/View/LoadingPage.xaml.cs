@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Deutschland_Game.Dtos;
+using Deutschland_Game.Models.ApiModels;
+using Deutschland_Game.Service;
 using Microsoft.Maui.Controls;
 
 namespace Deutschland_Game.View
@@ -9,12 +11,40 @@ namespace Deutschland_Game.View
     {
         //puxar id do cadastro da api e passar no JogarPage no parametro do Navigation
         private UsuarioDto usuarioDto;
-        public LoadingPage(UsuarioDto usuarioDto)
+
+        private AllDatasBeforeEraService allDatasBeforeEraService;
+
+        private List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses;
+
+        private int eraID;
+
+        public LoadingPage(UsuarioDto usuarioDto, int eraID)
         {
             InitializeComponent();
             this.usuarioDto = usuarioDto;
+
+            this.allDatasBeforeEraService = new AllDatasBeforeEraService();
+            
+            this.eraID = eraID;
+
             SimulateLoading();
         }
+
+        private async Task isLoadAllDatasBeforeEraSucess()
+        {
+
+            var response = await allDatasBeforeEraService.GetDatasByEraID(this.eraID);
+            if (response == null)
+            {
+                await DisplayAlert("Erro", "Algo deu errado! Cadastre o usuário novamente.", "OK");
+                await Navigation.PopAsync();
+                return;
+            }
+
+            this.allDatasBeforeEraResponses = response;
+
+        }
+
 
         private async void SimulateLoading()
         {
@@ -22,6 +52,13 @@ namespace Deutschland_Game.View
             {
                 ProgressBox.WidthRequest = progress;
                 progressLabel.Text = $"{(int)(progress/40*10)}%";
+
+                if(progress == 80)
+                {
+                    await isLoadAllDatasBeforeEraSucess();
+                }
+
+
                 await Task.Delay(500);
             }
 

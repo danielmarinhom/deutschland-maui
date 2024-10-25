@@ -46,7 +46,12 @@ namespace Deutschland_Game.View
                 }
                 else
                 {
-                    await Navigation.PushAsync(new LoadingPage(usuarioDto));
+
+                    var globalVars = new GlobalVars();
+
+                    globalVars.eraID = 1;
+
+                    await Navigation.PushAsync(new LoadingPage(usuarioDto, globalVars.eraID));
                 }
             }catch(Exception ex)
             {
