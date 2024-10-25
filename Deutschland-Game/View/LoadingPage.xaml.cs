@@ -18,10 +18,10 @@ namespace Deutschland_Game.View
 
         private async void SimulateLoading()
         {
-            for (double progress = 0; progress <= 1; progress += 0.1)
+            for (double progress = 0; progress <= 400; progress += 40)
             {
-                progressBar.Progress = progress;
-                progressLabel.Text = $"{(int)(progress * 100)}%";
+                ProgressBox.WidthRequest = progress;
+                progressLabel.Text = $"{(int)(progress/40*10)}%";
                 await Task.Delay(500);
             }
 

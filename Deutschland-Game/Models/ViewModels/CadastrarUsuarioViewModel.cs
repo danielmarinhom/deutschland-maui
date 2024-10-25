@@ -29,20 +29,6 @@ namespace Deutschland_Game.ViewModel
                 return null;
             } 
         }
-        /*
-        public async void CadastrarUsuario()
-        {
-            Usuario usuario = new Usuario();
-            Usuario newUsuario = new Usuario();
-            usuario.Nome = nome;
-            usuario.Id = id;
-            UsuarioService usuarioService = new UsuarioService();
-            newUsuario = await usuarioService.CadastrarUsuarioAsync(usuario);
 
-            /*
-             corrigir ao inves de Usuario newUsuario - > string idUsuario (pois a api retorna um id)
-             
-        }*/
-        
     }
 }

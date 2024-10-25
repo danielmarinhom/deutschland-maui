@@ -4,8 +4,19 @@
              x:Class="Deutschland_Game.View.JogarPage"
              Title="JogarPage"
              Shell.NavBarIsVisible="False">
-    <VerticalStackLayout>
 
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="PeachCake" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="PeachCake" />
+        </Style>
+        <ResourceDictionary />
+    </ContentPage.Resources>
+
+    <VerticalStackLayout>
+        
         <Grid>
 
             <Image Source="sacro_imperio_test.png" 
@@ -17,14 +28,95 @@
             <Grid
                 VerticalOptions="Start"
                 HorizontalOptions="End"
-                Margin="0, 0, 100, 0"
+                Margin="0, -15, 100, 0"
                 >
 
-                <Image
-                    
-                    Source="placa_conquistas"
-                    WidthRequest="150"
-                    />
+                <Grid
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    WidthRequest="180"
+                    >
+
+                        <Image
+                            Source="placa_conquistas.png"          
+                        />
+
+                        <FlexLayout
+                        
+                            HeightRequest="130"
+                            WidthRequest="120"
+                            Margin="15, 0, 0, 0"
+                            Wrap="Wrap"
+                            Direction="Row"
+                            JustifyContent="Start"
+                            AlignItems="Center"
+                            AlignContent="Center"
+                            VerticalOptions="End"
+                            HorizontalOptions="CenterAndExpand"
+                        
+                        >
+
+                        <HorizontalStackLayout
+                            Spacing="2"
+                            Margin="0, 0, 6, 3">
+                            <Image
+                                Source="popularidade_conquista.png"
+                                WidthRequest="22"/>
+                            <Label
+                                Text="100"
+                                FontSize="17"
+                                TextColor="White"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            Spacing="2"
+                            Margin="0, 0, 0, 3">
+                            <Image
+                                Source="igreja_conquista.png"
+                                WidthRequest="22"/>
+                            <Label
+                                Text="100"
+                                FontSize="17"
+                                TextColor="White"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            Spacing="2"
+                            Margin="0, 0, 6, 3">
+                            <Image
+                                Source="diplomacia_conquista.png"
+                                WidthRequest="22"/>
+                            <Label
+                                Text="100"
+                                FontSize="17"
+                                TextColor="White"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            Spacing="2"
+                            Margin="0, 0, 0, 3">
+                            <Image
+                                Source="dinheiro_conquista.png"
+                                WidthRequest="22"/>
+                            <Label
+                                Text="100"
+                                FontSize="17"
+                                TextColor="White"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            Spacing="2"
+                            Margin="0, 0, 6, 3">
+                            <Image
+                                Source="exercito_conquista.png"
+                                WidthRequest="22"/>
+                            <Label
+                                Text="100"
+                                FontSize="17"
+                                TextColor="White"/>
+                        </HorizontalStackLayout>
+
+                    </FlexLayout>
+
+                </Grid>
+
+                
 
             </Grid>
             
