@@ -17,6 +17,23 @@ public partial class JogarPage : ContentPage
 		this.usuarioDto = usuarioDto;
 		this.allDatasBeforeEraResponse = allDatasBeforeEraResponses;
 		this.eraResponse = eraResponse;
+		RunTextStyle();
 		
+	}
+
+	public async void RunTextStyle()
+	{
+		await LoadTextStyle("Senhor João", personagemNomeLabel, 100);
+        await LoadTextStyle("Senhor, os impostos imperiais são sufocantes e estão  causando fome e miséria nas vilas. Precisamos de uma redução nos impostos.", dialogoLabel, 20);
+    }
+
+    public async Task LoadTextStyle(string dialog, Label targetLabel, int delayInMls)
+	{
+		targetLabel.Text = "";
+		for(int i = 0; i < dialog.Length; i++)
+		{
+			targetLabel.Text += dialog[i];
+			await Task.Delay(delayInMls);
+		}
 	}
 }

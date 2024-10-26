@@ -151,12 +151,14 @@
                     
                     >
                     <Label
-                        Text="Senhor João"
+                        x:Name="personagemNomeLabel"
+                        Text=""
                         TextColor="#474747"    
                         FontSize="17"
                         />
                     <Label
-                        Text="Senhor, os impostos imperiais são sufocantes e estão  causando fome e miséria nas vilas. Precisamos de uma redução nos impostos."
+                        x:Name="dialogoLabel"
+                        Text=""
                         TextColor="Black"    
                         FontSize="17"
                     />
