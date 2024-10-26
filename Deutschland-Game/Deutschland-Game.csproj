@@ -93,6 +93,8 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\sacro_imperio_test.png" />
 	  <None Remove="Resources\Raw\circleloading.json" />
+	  <None Remove="Resources\Raw\greenarrow.json" />
+	  <None Remove="Resources\Raw\redarrow.json" />
 	</ItemGroup>
 
 	<ItemGroup>
