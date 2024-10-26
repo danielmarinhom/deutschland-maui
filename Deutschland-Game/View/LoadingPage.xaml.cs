@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Deutschland_Game.Dtos;
 using Deutschland_Game.Models.ApiModels;
@@ -16,16 +17,22 @@ namespace Deutschland_Game.View
 
         private List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses;
 
+        private EraResponse eraResponse;
+
         private int eraID;
 
-        public LoadingPage(UsuarioDto usuarioDto, int eraID)
+        public LoadingPage(UsuarioDto usuarioDto, EraResponse eraResponse, int eraID)
         {
             InitializeComponent();
             this.usuarioDto = usuarioDto;
 
             this.allDatasBeforeEraService = new AllDatasBeforeEraService();
-            
+
+            this.eraResponse = eraResponse;
+
             this.eraID = eraID;
+
+            eraNameLabel.Text = eraResponse.Nome;
 
             SimulateLoading();
         }
@@ -62,15 +69,9 @@ namespace Deutschland_Game.View
                 await Task.Delay(500);
             }
 
-            await Navigation.PushAsync(new JogarPage(this.usuarioDto));
+            await Navigation.PushAsync(new JogarPage(this.usuarioDto, this.allDatasBeforeEraResponses, this.eraResponse));
         }
-        /*
-         to-do:
-            fazer o service para puxar o id passando o nome do usuario, se deu certo ->
-            criar um model em c# dos dialogos da era
-            mandar o id pra tela de loading
-            mandar o model pra tela de jogar a partir do loading
-         */
+        
     }
 
 }

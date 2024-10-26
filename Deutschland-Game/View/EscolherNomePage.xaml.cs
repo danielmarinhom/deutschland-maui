@@ -1,7 +1,4 @@
-using Deutschland_Game.Models;
 using Deutschland_Game.Service;
-using Deutschland_Game.Dtos;
-using Microsoft.Maui.Controls.PlatformConfiguration;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Deutschland_Game.ViewModel;
@@ -13,6 +10,8 @@ namespace Deutschland_Game.View
     {
         private string nomeRei;
         private CadastrarUsuarioViewModel cadastrarUsuarioViewModel;
+        private EraService eraService;
+
         public string NomeRei
         {
             get => nomeRei;
@@ -27,6 +26,7 @@ namespace Deutschland_Game.View
             BindingContext = this;
             NomeRei = "Francisco Barbarossa";
             cadastrarUsuarioViewModel = new CadastrarUsuarioViewModel();
+            eraService = new EraService();
         }
         // update left scroll according to right entry irt
         public event PropertyChangedEventHandler PropertyChanged;
@@ -37,22 +37,23 @@ namespace Deutschland_Game.View
 
         private async void continuarBtn_Clicked(object sender, EventArgs e)
         {
-            loading_component.IsVisible = true;
+
+            loading_component.IsVisible = true; // habilita o loading visual
             try { 
+
                 var usuarioDto = await cadastrarUsuarioViewModel.CadastrarUsuario(nomeRei);
-                loading_component.IsVisible = false;
+
+                var eraResponse = await eraService.GetEraByID(1);
+
+                loading_component.IsVisible = false; // desabilita o loading visual
+
                 if (usuarioDto == null) {
-                    // tratar erro (ver com o pscosta)
+                    // tratar erro (ver com o pscosta) - por mim tá ok, nao precisa ter trabalho com isto
                     await DisplayAlert("Erro", "Falha ao cadastrar o usuário", "OK");
                 }
                 else
                 {
-
-                    var globalVars = new GlobalVars();
-
-                    globalVars.eraID = 1;
-
-                    await Navigation.PushAsync(new LoadingPage(usuarioDto, globalVars.eraID));
+                    await Navigation.PushAsync(new LoadingPage(usuarioDto, eraResponse, 1));
                 }
             }
             catch (Exception ex)

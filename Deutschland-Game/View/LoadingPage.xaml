@@ -23,7 +23,8 @@
         <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
 
             <!-- title -->
-            <Label Text="Sacro Império"
+            <Label x:Name="eraNameLabel"
+                    Text="Sacro Império"
                    FontSize="40"
                    TextColor="White"
                    HorizontalOptions="Center"

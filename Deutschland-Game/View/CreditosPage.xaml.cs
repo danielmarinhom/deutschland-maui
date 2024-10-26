@@ -1,7 +1,3 @@
-using Deutschland_Game.Models.ViewModels;
-using Deutschland_Game.Service;
-using System.Diagnostics;
-using System.Text.Json;
 
 namespace Deutschland_Game.View;
 

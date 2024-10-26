@@ -19,23 +19,22 @@ namespace Deutschland_Game.Service
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 WriteIndented = true
             };
-            //_httpClient.BaseAddress = new Uri(ApiDatas.API_BASE_URL);
         }
 
-        public async Task<List<AllDatasBeforeEraResponse>> GetDatasByEraID(int EraID)
+        public async Task<List<AllDatasBeforeEraResponse>> GetDatasByEraID(int eraID)
         {
             if(Connectivity.Current.NetworkAccess != NetworkAccess.Internet) // valida se tem internet
             {
-                return null; // melhoria: lançar exception para tratar dps visualmente
+                Debug.WriteLine("SEM INTERNET!!!!!!");
+                return null; 
             }
 
-            var uri = new Uri($"http://192.168.15.200:8080/allDatas/load/era/1");
+            var uri = new Uri($"http://192.168.15.200:8080/allDatas/load/era/{eraID}");
 
             try
             {
                 var response = await _httpClient.GetAsync(uri);
-
-                var data = await response.Content.ReadAsStringAsync();
+                Debug.WriteLine(response.StatusCode);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -48,6 +47,7 @@ namespace Deutschland_Game.Service
             {
                 Debug.WriteLine("ERRO ----------------------------- " + ex.Message);
             }
+
 
             return null;
             
