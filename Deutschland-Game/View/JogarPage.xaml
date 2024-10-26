@@ -17,7 +17,7 @@
     </ContentPage.Resources>
 
     <VerticalStackLayout>
-        
+
         <Grid>
 
             <Image Source="sacro_imperio_test.png" 
@@ -169,14 +169,18 @@
 
             </Grid>
 
-            <Grid
-                BackgroundColor="Black"
-                Opacity=".6"
-                ></Grid>
+            
 
             <Grid
+                x:Name="tutorialComponent"
+                IsVisible="False"
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand">
+
+                <Grid
+                    BackgroundColor="Black"
+                    Opacity=".6"
+                ></Grid>
 
                 <Grid
                     HorizontalOptions="Start"
@@ -230,6 +234,11 @@
 
 
             </Grid>
+
+            <Grid.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Left" Swiped="DialogAccepted" />
+                <SwipeGestureRecognizer Direction="Right" Swiped="DialogRefused" />
+            </Grid.GestureRecognizers>
 
         </Grid> <!-- grid mais externo -->
         

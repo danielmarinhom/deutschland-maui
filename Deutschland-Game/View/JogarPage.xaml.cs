@@ -1,5 +1,7 @@
 using Deutschland_Game.Dtos;
 using Deutschland_Game.Models.ApiModels;
+using System.Diagnostics;
+using Microsoft.Maui.Storage;
 
 namespace Deutschland_Game.View;
 
@@ -11,15 +13,44 @@ public partial class JogarPage : ContentPage
 
 	private EraResponse eraResponse;
 
-	public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, EraResponse eraResponse)
+    const string IsFirstLaunchKey = "IsFirstLaunch";
+
+    public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, EraResponse eraResponse)
 	{
 		InitializeComponent();
+
 		this.usuarioDto = usuarioDto;
 		this.allDatasBeforeEraResponse = allDatasBeforeEraResponses;
 		this.eraResponse = eraResponse;
+
+		tutorialComponent.IsVisible = false;
+
+		if (CheckIfItsFirstTime()) {
+
+			tutorialComponent.IsVisible = true;
+
+        }
+
 		RunTextStyle();
 		
 	}
+
+	public bool CheckIfItsFirstTime()
+	{
+
+		bool itsTheFirstTime = Preferences.Get(IsFirstLaunchKey, true); // verifica se tem essa key no armazenamento local
+
+		if (itsTheFirstTime)
+		{
+
+			Preferences.Set(IsFirstLaunchKey, false); // define q o app já foi aberto
+			return true;
+
+        }
+
+		return false;
+
+    }
 
 	public async void RunTextStyle()
 	{
@@ -36,4 +67,27 @@ public partial class JogarPage : ContentPage
 			await Task.Delay(delayInMls);
 		}
 	}
+
+    private void DialogAccepted(object sender, SwipedEventArgs e)
+    {
+
+		if (CheckIfItsFirstTime())
+		{
+            tutorialComponent.IsVisible = false;
+        }
+
+		Debug.WriteLine("ACEITOOO ;)");
+    }
+
+    private void DialogRefused(object sender, SwipedEventArgs e)
+    {
+
+        if (CheckIfItsFirstTime())
+        {
+            tutorialComponent.IsVisible = false;
+        }
+
+        Debug.WriteLine("RECUSADOOO :(");
+
+    }
 }
