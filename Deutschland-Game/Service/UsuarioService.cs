@@ -37,7 +37,7 @@ namespace Deutschland_Game.Service
             try
             {
 
-                var response = await httpClient.PostAsJsonAsync("http://192.168.15.200:8080/usuario/cadastrar", new { Nome = nome});
+                var response = await httpClient.PostAsJsonAsync($"{ApiBaseURL.API_BASE_URL}/usuario/cadastrar", new { Nome = nome});
 
                 if (response.IsSuccessStatusCode)
                 {

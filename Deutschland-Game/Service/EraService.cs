@@ -35,7 +35,7 @@ namespace Deutschland_Game.Service
             try
             {
 
-                var response = await _httpClient.GetAsync($"http://192.168.15.200:8080/era/id/{eraID}");
+                var response = await _httpClient.GetAsync($"{ApiBaseURL.API_BASE_URL}/era/id/{eraID}");
 
 
                 if (response.IsSuccessStatusCode)

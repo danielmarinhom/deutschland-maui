@@ -29,7 +29,7 @@ namespace Deutschland_Game.Service
                 return null; 
             }
 
-            var uri = new Uri($"http://192.168.15.200:8080/allDatas/load/era/{eraID}");
+            var uri = new Uri($"{ApiBaseURL.API_BASE_URL}/allDatas/load/era/{eraID}");
 
             try
             {
