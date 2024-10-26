@@ -15,7 +15,6 @@ namespace Deutschland_Game.Service
         private Usuario usuario;
         private JsonSerializerOptions jsonSerializerOptions;
         private int userId;
-        Uri uri = new Uri("http://192.168.15.200:8080");
         
         //  url - >  /usuario/cadastrar   @RequestBody UsuarioDTO - > (String nome) - > return ResponseEntity.ok(id);
         public UsuarioService()
@@ -29,6 +28,11 @@ namespace Deutschland_Game.Service
         }
         public async Task<UsuarioDto> CadastrarUsuarioAsync(String nome)
         {
+
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) // valida se tem internet
+            {
+                return null; 
+            }
 
             try
             {
