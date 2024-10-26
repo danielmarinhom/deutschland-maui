@@ -33,6 +33,7 @@ namespace Deutschland_Game.View
             this.eraID = eraID;
 
             eraNameLabel.Text = eraResponse.Nome;
+            eraPeriodo.Text = eraResponse.Periodo;
 
             SimulateLoading();
         }

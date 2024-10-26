@@ -29,7 +29,15 @@
                    TextColor="White"
                    HorizontalOptions="Center"
                    VerticalOptions="Start"
-                   Margin="0, 0,0,50" />
+                   Margin="0, 0,0,5" />
+
+            <Label x:Name="eraPeriodo"
+                Text=""
+               FontSize="25"
+               TextColor="White"
+               HorizontalOptions="Center"
+               VerticalOptions="Start"
+               Margin="0, 0,0,50" />
 
             <!-- loading message -->
 

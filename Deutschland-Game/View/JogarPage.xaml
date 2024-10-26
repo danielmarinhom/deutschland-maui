@@ -114,13 +114,59 @@
 
                     </FlexLayout>
 
+               
+                    
                 </Grid>
 
+            </Grid> <!-- grid placa das conquistas-->
+
+
+            <Image
+                    VerticalOptions="End"
+                    HorizontalOptions="End"
+                    WidthRequest="140"
+                    Source="povo_pers_test.png"
+                    Margin="0, 0, 0, 90"/>
+
+
+            <Grid
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                WidthRequest="650"
+                
+                Margin="0, 0, 0, 100"
+                
+                >
+
+                <Image
+                    Source="dialogo_folha.png"
+                    
+                />
+
+                <VerticalStackLayout
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Margin="0, 0, 0, 30"
+                    WidthRequest="500"
+                    
+                    >
+                    <Label
+                        Text="Senhor João"
+                        TextColor="#474747"    
+                        FontSize="17"
+                        />
+                    <Label
+                        Text="Senhor, os impostos imperiais são sufocantes e estão  causando fome e miséria nas vilas. Precisamos de uma redução nos impostos."
+                        TextColor="Black"    
+                        FontSize="17"
+                    />
+                </VerticalStackLayout>
+                
                 
 
             </Grid>
-            
-        </Grid>
+
+        </Grid> <!-- grid mais externo -->
         
     </VerticalStackLayout>
 </ContentPage>

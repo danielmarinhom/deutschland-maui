@@ -16,6 +16,9 @@ namespace Deutschland_Game.Models.ApiModels
         [JsonPropertyName("nome_era")]
         public string Nome {  get; set; }
 
+        [JsonPropertyName("periodo")]
+        public string Periodo { get; set; }
+
         [JsonPropertyName("sprite")]
         public string Sprite { get; set; }
 
