@@ -46,13 +46,25 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             tutorialComponent.IsVisible = true;
         }
 
-
-
     }
 
     public string TempFixDialogsContents(string content) // metodo temporário por conta dos dialogos que foram inseridos com quebra linha no banco
     {
         return content.Replace("\r\n", " ");
+    }
+
+    public async void CharacterJoinInScene()
+    {
+        var translate = personagemComponent.TranslateTo(personagemComponent.X - 80, personagemComponent.Y, 2000, Easing.SinInOut);
+
+        await Task.WhenAll(translate);
+    }
+
+    public async void CharacterLeaveInScene()
+    {
+        var translate = personagemComponent.TranslateTo(personagemComponent.X + 80, personagemComponent.Y, 2000, Easing.SinInOut);
+
+        await Task.WhenAll(translate);
     }
 
     public bool CheckIfItsFirstTime()
@@ -91,6 +103,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
 	public async Task RunDialog(int index)
 	{
+        CharacterJoinInScene();
+
         personagemNomeLabel.Text = "";
         dialogoLabel.Text = "";
         dialogoContainer.IsVisible = true;
@@ -98,6 +112,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         string characterName = allDatasBeforeEraResponse[index].Personagem.Nome;
 		string dialogContent = allDatasBeforeEraResponse[index].mensagem;
 
+        viewModel.setPersonagemPathInImage(personagemImagesPaths[index]);
 		await RunTextStyle(characterName, TempFixDialogsContents(dialogContent));
 
 	}
@@ -111,7 +126,6 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         string username = usuarioDto.Nome;
 
         string dialogContent;
-
 
         if (wasAccpted)
         {
@@ -128,6 +142,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         await Task.Delay(500);
 
         dialogoContainer.IsVisible = false;
+
+        CharacterLeaveInScene();
 
 
     }
