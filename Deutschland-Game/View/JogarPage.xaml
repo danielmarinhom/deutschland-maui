@@ -20,10 +20,11 @@
 
         <Grid>
 
-            <Image Source="sacro_imperio_test.png" 
-                Aspect="AspectFill"
+            <Image Source="{Binding LocalImagePath}"  
+                Aspect="AspectFit"
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand" 
+                Margin="0, 0, 0, 250"
             />
 
             <Grid
@@ -125,18 +126,17 @@
             <Image
                     VerticalOptions="End"
                     HorizontalOptions="End"
-                    WidthRequest="140"
-                    Source="povo_pers_test.png"
-                    Margin="0, 0, 0, 90"/>
+                    WidthRequest="100"
+                    Source="{Binding PersonagemImagePath}"
+                    Margin="0, 0, -20, 300"/>
 
 
             <Grid
                 VerticalOptions="End"
                 HorizontalOptions="Center"
                 WidthRequest="650"
-                
-                Margin="0, 0, 0, 100"
-                
+                IsVisible="True"
+                Margin="0, 0, 0, 350"
                 >
 
                 <Image

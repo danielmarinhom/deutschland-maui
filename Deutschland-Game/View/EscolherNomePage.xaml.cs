@@ -49,6 +49,7 @@ namespace Deutschland_Game.View
 
                 if (usuarioDto == null) {
                     // tratar erro (ver com o pscosta) - por mim tá ok, nao precisa ter trabalho com isto
+                    // kkkkkkkkkkkkkk okk
                     await DisplayAlert("Erro", "Falha ao cadastrar o usuário", "OK");
                 }
                 else

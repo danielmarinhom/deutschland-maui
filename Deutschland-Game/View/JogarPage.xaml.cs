@@ -3,39 +3,55 @@ using Deutschland_Game.Models.ApiModels;
 using System.Diagnostics;
 using Microsoft.Maui.Storage;
 using System.Formats.Asn1;
+using System.ComponentModel;
+using Deutschland_Game.Models.ViewModels;
 
 namespace Deutschland_Game.View;
 
-public partial class JogarPage : ContentPage
+public partial class JogarPage : ContentPage, INotifyPropertyChanged
 {
-	private UsuarioDto usuarioDto;
 
-	private List<AllDatasBeforeEraResponse> allDatasBeforeEraResponse;
-
-	private EraResponse eraResponse;
+    private UsuarioDto usuarioDto;
+    private List<AllDatasBeforeEraResponse> allDatasBeforeEraResponse;
+    private EraResponse eraResponse;
+    private JogarPageViewModel viewModel;
 
     const string IsFirstLaunchKey = "IsFirstLaunch";
 
 	private int actIndexDialog = 0;
 
     public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, EraResponse eraResponse)
-	{
-		InitializeComponent();
 
-		this.actIndexDialog = 0;
+    {
+        InitializeComponent();
+
         this.usuarioDto = usuarioDto;
-		this.allDatasBeforeEraResponse = allDatasBeforeEraResponses;
-		this.eraResponse = eraResponse;
+        this.allDatasBeforeEraResponse = allDatasBeforeEraResponses;
+        this.eraResponse = eraResponse;
 
-		tutorialComponent.IsVisible = false;
+        viewModel = new JogarPageViewModel();
+        BindingContext = viewModel;
+        LoadEraData();
+        LoadPersonagemData();
 
-		if (CheckIfItsFirstTime()) { // se é a primeira vez
+        tutorialComponent.IsVisible = false;
 
-			tutorialComponent.IsVisible = true; // habilita o component de tutorial
-
+        if (CheckIfItsFirstTime())
+        {
+            tutorialComponent.IsVisible = true;
         }
-		
-	}
+    }
+
+    public async void LoadEraData()
+    {
+        await viewModel.DownloadImg64Async(eraResponse.Sprite, eraResponse.Nome);
+        OnPropertyChanged(nameof(viewModel.LocalImagePath));
+    }
+    public async void LoadPersonagemData()
+    {
+        await viewModel.DownloadPersonagemImg64Async(allDatasBeforeEraResponse[0].Personagem.Sprite, allDatasBeforeEraResponse[0].Personagem.Nome);
+        OnPropertyChanged(nameof(viewModel.PersonagemImagePath)); 
+    }
 
 	public bool CheckIfItsFirstTime()
 	{
