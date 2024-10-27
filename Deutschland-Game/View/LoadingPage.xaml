@@ -3,32 +3,73 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Deutschland_Game.View.LoadingPage"
              BackgroundColor="Black"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             Shell.NavBarIsVisible="False">
 
-    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="PeachCake" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="PeachCake" />
+        </Style>
+        <ResourceDictionary />
+    </ContentPage.Resources>
+
+    <Grid>
+        
         <Image Source="homepage_background.png" Aspect="AspectFill" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" />
+        
+        <VerticalStackLayout VerticalOptions="Center" HorizontalOptions="Center">
 
-        <!-- title -->
-        <Label Text="Sacro Império"
-               FontSize="40"
-               FontAttributes="Bold"
+            <!-- title -->
+            <Label x:Name="eraNameLabel"
+                    Text="Sacro Império"
+                   FontSize="40"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Start"
+                   Margin="0, 0,0,5" />
+
+            <Label x:Name="eraPeriodo"
+                Text=""
+               FontSize="25"
                TextColor="White"
                HorizontalOptions="Center"
                VerticalOptions="Start"
-               Margin="0,50,0,0" />
+               Margin="0, 0,0,50" />
 
-        <!-- loading message -->
-        <Label Text="Carregando história..."
-               FontSize="20"
-               TextColor="White"
-               HorizontalOptions="Center"
-               VerticalOptions="CenterAndExpand" />
+            <!-- loading message -->
 
-        <!-- progress bar -->
-        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-            <ProgressBar x:Name="progressBar" WidthRequest="300" HeightRequest="15" Progress="0" />
-            <Label x:Name="progressLabel" Text="0%" TextColor="White" HorizontalOptions="Center" />
-        </StackLayout>
+            <VerticalStackLayout>
+                
+                <Label Text="Carregando história..."
+                       FontSize="20"
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       VerticalOptions="CenterAndExpand" 
+                       Margin="0, 0, 0, 5"/>
+
+                <Border HeightRequest="15" 
+                        BackgroundColor="Transparent" 
+                        Margin="10" 
+                        WidthRequest="400" 
+                        StrokeShape="RoundRectangle 10,10,10,10" 
+                        StrokeThickness="2" 
+                        Stroke="White">
+                    <BoxView x:Name="ProgressBox" BackgroundColor="White" HorizontalOptions="Start" MaximumWidthRequest="400"/>
+                </Border>
+                <!--<ProgressBar x:Name="progressBar" WidthRequest="400" Progress=".2"  /> -->
+                    
+
+                
+                <Label x:Name="progressLabel" Text="0%" TextColor="White" HorizontalOptions="Center" FontSize="20"/>
+                
+            </VerticalStackLayout>
+
+
         
+        </VerticalStackLayout>
     </Grid>
+
 </ContentPage>

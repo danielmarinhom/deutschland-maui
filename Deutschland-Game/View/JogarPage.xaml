@@ -1,12 +1,246 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
              x:Class="Deutschland_Game.View.JogarPage"
-             Title="JogarPage">
+             Title="JogarPage"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="PeachCake" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="PeachCake" />
+        </Style>
+        <ResourceDictionary />
+    </ContentPage.Resources>
+
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+
+        <Grid>
+
+            <Image Source="{Binding EraImagem64}" 
+                Aspect="AspectFill"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand" 
+            />
+
+            <Grid
+                VerticalOptions="Start"
+                HorizontalOptions="End"
+                Margin="0, -15, 100, 0"
+                >
+
+                <Grid
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    WidthRequest="180"
+                    >
+
+                        <Image
+                            Source="placa_conquistas.png"          
+                        />
+
+                        <FlexLayout
+                        
+                            HeightRequest="130"
+                            WidthRequest="120"
+                            Margin="15, 0, 0, 0"
+                            Wrap="Wrap"
+                            Direction="Row"
+                            JustifyContent="Start"
+                            AlignItems="Center"
+                            AlignContent="Center"
+                            VerticalOptions="End"
+                            HorizontalOptions="CenterAndExpand"
+                        
+                        >
+
+                        <HorizontalStackLayout
+                            Spacing="2"
+                            Margin="0, 0, 6, 3">
+                            <Image
+                                Source="popularidade_conquista.png"
+                                WidthRequest="22"/>
+                            <Label
+                                Text="100"
+                                FontSize="17"
+                                TextColor="White"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            Spacing="2"
+                            Margin="0, 0, 0, 3">
+                            <Image
+                                Source="igreja_conquista.png"
+                                WidthRequest="22"/>
+                            <Label
+                                Text="100"
+                                FontSize="17"
+                                TextColor="White"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            Spacing="2"
+                            Margin="0, 0, 6, 3">
+                            <Image
+                                Source="diplomacia_conquista.png"
+                                WidthRequest="22"/>
+                            <Label
+                                Text="100"
+                                FontSize="17"
+                                TextColor="White"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            Spacing="2"
+                            Margin="0, 0, 0, 3">
+                            <Image
+                                Source="dinheiro_conquista.png"
+                                WidthRequest="22"/>
+                            <Label
+                                Text="100"
+                                FontSize="17"
+                                TextColor="White"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            Spacing="2"
+                            Margin="0, 0, 6, 3">
+                            <Image
+                                Source="exercito_conquista.png"
+                                WidthRequest="22"/>
+                            <Label
+                                Text="100"
+                                FontSize="17"
+                                TextColor="White"/>
+                        </HorizontalStackLayout>
+
+                    </FlexLayout>
+
+               
+                    
+                </Grid>
+
+            </Grid> <!-- grid placa das conquistas-->
+
+
+            <Image
+                    VerticalOptions="End"
+                    HorizontalOptions="End"
+                    WidthRequest="140"
+                    Source="{Binding JogadorImagem64}"
+                    Margin="0, 0, 0, 90"/>
+
+
+            <Grid
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                WidthRequest="650"
+                
+                Margin="0, 0, 0, 100"
+                
+                >
+
+                <Image
+                    Source="dialogo_folha.png"
+                    
+                />
+
+                <VerticalStackLayout
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Margin="0, 0, 0, 30"
+                    WidthRequest="500"
+                    
+                    >
+                    <Label
+                        x:Name="personagemNomeLabel"
+                        Text=""
+                        TextColor="#474747"    
+                        FontSize="17"
+                        />
+                    <Label  
+                        x:Name="dialogoLabel"
+                        Text=""
+                        TextColor="Black"    
+                        FontSize="17"
+                    />
+                </VerticalStackLayout>
+                
+                
+
+            </Grid>
+
+            
+
+            <Grid
+                x:Name="tutorialComponent"
+                IsVisible="False"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand">
+
+                <Grid
+                    BackgroundColor="Black"
+                    Opacity=".6"
+                ></Grid>
+
+                <Grid
+                    HorizontalOptions="Start"
+                    VerticalOptions="Center"
+                    Margin="0, 0, 0, 120"
+                    >
+                    <skia:SKLottieView
+                        Source="greenarrow.json"
+                        RepeatCount="-1"
+                        RepeatMode="Restart"
+                        WidthRequest="200"
+                        HeightRequest="100"
+                        Rotation="180"
+                        />
+                    <Label
+                        Margin="0, 80, 0, 0"
+                        Text="Para aceitar"
+                        FontSize="22"
+                        TextColor="#00c1a2"
+                        HorizontalOptions="Center"
+                        />
+                </Grid>
+
+                <Label
+                    HorizontalOptions="Center"
+                    Text="Arraste"
+                    FontSize="32"
+                    Margin="0, 40, 0, 0"
+                    TextColor="White"/>
+
+                <Grid
+                    VerticalOptions="Center"
+                    HorizontalOptions="End"
+                    Margin="0, 0, 0, 120">
+                    <skia:SKLottieView
+                        Source="redarrow.json"
+                        RepeatCount="-1"
+                        RepeatMode="Restart"
+                        WidthRequest="200"
+                        HeightRequest="100"
+                        Background="Transparent"
+                        />
+                        <Label
+                        Text="Para aceitar"
+                        FontSize="22"
+                        TextColor="#de524b"
+                        HorizontalOptions="Center"
+                        Margin="0, 80, 0, 0"
+                        />
+                </Grid>
+
+
+            </Grid>
+
+            <Grid.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Left" Swiped="DialogAccepted" />
+                <SwipeGestureRecognizer Direction="Right" Swiped="DialogRefused" />
+            </Grid.GestureRecognizers>
+
+        </Grid> <!-- grid mais externo -->
+        
     </VerticalStackLayout>
 </ContentPage>

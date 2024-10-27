@@ -91,6 +91,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Images\sacro_imperio_test.png" />
+	  <None Remove="Resources\Raw\circleloading.json" />
+	  <None Remove="Resources\Raw\greenarrow.json" />
+	  <None Remove="Resources\Raw\redarrow.json" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
@@ -98,6 +105,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.92" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
 		<PackageReference Include="Sharpnado.MaterialFrame.Maui" Version="2.0.0" />
+		<PackageReference Include="SkiaSharp.Extended.UI.Maui" Version="2.0.0" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 	</ItemGroup>
 

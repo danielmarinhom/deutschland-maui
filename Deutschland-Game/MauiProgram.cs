@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using Sharpnado.MaterialFrame;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace Deutschland_Game
 {
@@ -14,6 +15,7 @@ namespace Deutschland_Game
                 .UseMauiApp<App>()
                 .UseSharpnadoMaterialFrame(loggerEnable: false)
                 .UseMauiCommunityToolkit()
+                .UseSkiaSharp()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

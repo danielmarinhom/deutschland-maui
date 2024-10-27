@@ -13,6 +13,6 @@ namespace Deutschland_Game.Dtos
         public string Nome { get; set; }
 
         [JsonPropertyName("id")]
-        public string Id { get; set; }
+        public int Id { get; set; }
     }
 }
