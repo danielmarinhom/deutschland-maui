@@ -55,14 +55,16 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     public async void CharacterJoinInScene()
     {
-        var translate = personagemComponent.TranslateTo(personagemComponent.X - 80, personagemComponent.Y, 2000, Easing.SinInOut);
+        Debug.WriteLine(personagemComponent.Y);
+        var translate = personagemComponent.TranslateTo(-80, 0, 2000, Easing.SinInOut);
 
         await Task.WhenAll(translate);
     }
 
     public async void CharacterLeaveInScene()
     {
-        var translate = personagemComponent.TranslateTo(personagemComponent.X + 80, personagemComponent.Y, 2000, Easing.SinInOut);
+        Debug.WriteLine(personagemComponent.X);
+        var translate = personagemComponent.TranslateTo(0, 0, 2000, Easing.SinInOut);
 
         await Task.WhenAll(translate);
     }
@@ -123,7 +125,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         personagemNomeLabel.Text = "";
         dialogoLabel.Text = "";
 
-        string username = usuarioDto.Nome;
+        string username = usuarioDto.Nome + "I";
 
         string dialogContent;
 
@@ -144,7 +146,6 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         dialogoContainer.IsVisible = false;
 
         CharacterLeaveInScene();
-
 
     }
 
