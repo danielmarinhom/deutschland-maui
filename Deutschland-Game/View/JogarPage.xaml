@@ -21,10 +21,10 @@
         <Grid>
 
             <Image Source="{Binding LocalImagePath}"  
-                Aspect="AspectFit"
+                Aspect="AspectFill"
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand" 
-                Margin="0, 0, 0, 250"
+                Margin="0, 0, 0, 0"
             />
 
             <Grid
@@ -128,7 +128,7 @@
                     HorizontalOptions="End"
                     WidthRequest="100"
                     Source="{Binding PersonagemImagePath}"
-                    Margin="0, 0, -20, 300"/>
+                    Margin="0, 0, -20, 100"/>
 
 
             <Grid
@@ -137,7 +137,7 @@
                 HorizontalOptions="Center"
                 WidthRequest="650"
                 IsVisible="True"
-                Margin="0, 0, 0, 350"
+                Margin="0, 0, 0, 100"
                 >
 
                 <Image

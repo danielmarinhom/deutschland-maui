@@ -3,6 +3,7 @@ using Deutschland_Game.Models.ApiModels;
 using System.Diagnostics;
 using System.ComponentModel;
 using Deutschland_Game.Models.ViewModels;
+using System.Net.Mime;
 
 
 namespace Deutschland_Game.View;
@@ -49,6 +50,11 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     }
 
+    public string TempFixDialogsContents(string content) // metodo temporário por conta dos dialogos que foram inseridos com quebra linha no banco
+    {
+        return content.Replace("\r\n", " ");
+    }
+
     public bool CheckIfItsFirstTime()
 	{
 
@@ -62,13 +68,13 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
         }
 
-		return false;
+		return true; // colocar false para a versao final
 
     }
 
 	public async Task RunTextStyle(string characterName, string dialogContent)
 	{
-        dialogoContainer.IsVisible = true;
+
         await LoadTextStyle(characterName, personagemNomeLabel, 100);
         await LoadTextStyle(dialogContent, dialogoLabel, 20);
     }
@@ -85,16 +91,22 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
 	public async Task RunDialog(int index)
 	{
+        personagemNomeLabel.Text = "";
+        dialogoLabel.Text = "";
+        dialogoContainer.IsVisible = true;
 
-		string characterName = allDatasBeforeEraResponse[index].Personagem.Nome;
+        string characterName = allDatasBeforeEraResponse[index].Personagem.Nome;
 		string dialogContent = allDatasBeforeEraResponse[index].mensagem;
 
-		await RunTextStyle(characterName, dialogContent);
+		await RunTextStyle(characterName, TempFixDialogsContents(dialogContent));
 
 	}
 
     public async Task RunAnswer(int index, bool wasAccpted)
     {
+
+        personagemNomeLabel.Text = "";
+        dialogoLabel.Text = "";
 
         string username = usuarioDto.Nome;
 
@@ -104,12 +116,19 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         if (wasAccpted)
         {
             dialogContent = allDatasBeforeEraResponse[index].Respostas.Aceito;
-            return;
+        }
+        else
+        {
+            dialogContent = allDatasBeforeEraResponse[index].Respostas.Recusado;
         }
 
-        dialogContent = allDatasBeforeEraResponse[index].Respostas.Recusado;
 
-        RunTextStyle(username, dialogContent);
+        await RunTextStyle(username, TempFixDialogsContents(dialogContent));
+
+        await Task.Delay(500);
+
+        dialogoContainer.IsVisible = false;
+
 
     }
 
@@ -122,8 +141,10 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         }
 
         await RunAnswer(actIndexDialog, true);
+
         actIndexDialog++;
-        await Task.Delay(500);
+
+        await Task.Delay(1500);
 
         await RunDialog(actIndexDialog);
     }
@@ -137,12 +158,12 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         }
 
         await RunAnswer(actIndexDialog, false);
+
         actIndexDialog++;
-        await Task.Delay(500);
+
+        await Task.Delay(1500);
 
         await RunDialog(actIndexDialog);
-
-        Debug.WriteLine("RECUSADOOO :(");
 
     }
 }
