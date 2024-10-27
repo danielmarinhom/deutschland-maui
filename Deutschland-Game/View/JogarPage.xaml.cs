@@ -2,6 +2,7 @@ using Deutschland_Game.Dtos;
 using Deutschland_Game.Models.ApiModels;
 using System.Diagnostics;
 using Microsoft.Maui.Storage;
+using System.Formats.Asn1;
 
 namespace Deutschland_Game.View;
 
@@ -15,23 +16,24 @@ public partial class JogarPage : ContentPage
 
     const string IsFirstLaunchKey = "IsFirstLaunch";
 
+	private int actIndexDialog = 0;
+
     public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, EraResponse eraResponse)
 	{
 		InitializeComponent();
 
-		this.usuarioDto = usuarioDto;
+		this.actIndexDialog = 0;
+        this.usuarioDto = usuarioDto;
 		this.allDatasBeforeEraResponse = allDatasBeforeEraResponses;
 		this.eraResponse = eraResponse;
 
 		tutorialComponent.IsVisible = false;
 
-		if (CheckIfItsFirstTime()) {
+		if (CheckIfItsFirstTime()) { // se é a primeira vez
 
-			tutorialComponent.IsVisible = true;
+			tutorialComponent.IsVisible = true; // habilita o component de tutorial
 
         }
-
-		RunTextStyle();
 		
 	}
 
@@ -52,10 +54,10 @@ public partial class JogarPage : ContentPage
 
     }
 
-	public async void RunTextStyle()
+	public async Task RunTextStyle(string characterName, string dialogContent)
 	{
-		await LoadTextStyle("Senhor João", personagemNomeLabel, 100);
-        await LoadTextStyle("Senhor, os impostos imperiais são sufocantes e estão  causando fome e miséria nas vilas. Precisamos de uma redução nos impostos.", dialogoLabel, 20);
+		await LoadTextStyle(characterName, personagemNomeLabel, 100);
+        await LoadTextStyle(dialogContent, dialogoLabel, 20);
     }
 
     public async Task LoadTextStyle(string dialog, Label targetLabel, int delayInMls)
@@ -66,6 +68,16 @@ public partial class JogarPage : ContentPage
 			targetLabel.Text += dialog[i];
 			await Task.Delay(delayInMls);
 		}
+	}
+
+	public async Task RunDialog(int index)
+	{
+
+		string characterName = allDatasBeforeEraResponse[index].Personagem.Nome;
+		string dialogContent = allDatasBeforeEraResponse[index].mensagem;
+
+		await RunTextStyle(characterName, dialogContent);
+
 	}
 
     private void DialogAccepted(object sender, SwipedEventArgs e)
