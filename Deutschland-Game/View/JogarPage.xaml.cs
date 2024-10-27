@@ -1,10 +1,9 @@
 using Deutschland_Game.Dtos;
 using Deutschland_Game.Models.ApiModels;
 using System.Diagnostics;
-using Microsoft.Maui.Storage;
-using System.Formats.Asn1;
 using System.ComponentModel;
 using Deutschland_Game.Models.ViewModels;
+
 
 namespace Deutschland_Game.View;
 
@@ -12,48 +11,45 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 {
 
     private UsuarioDto usuarioDto;
+
     private List<AllDatasBeforeEraResponse> allDatasBeforeEraResponse;
-    private EraResponse eraResponse;
+
     private JogarPageViewModel viewModel;
+
+    private List<string> personagemImagesPaths;
 
     const string IsFirstLaunchKey = "IsFirstLaunch";
 
 	private int actIndexDialog = 0;
 
-    public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, EraResponse eraResponse)
+    public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths)
 
     {
         InitializeComponent();
 
-        this.usuarioDto = usuarioDto;
-        this.allDatasBeforeEraResponse = allDatasBeforeEraResponses;
-        this.eraResponse = eraResponse;
-
         viewModel = new JogarPageViewModel();
         BindingContext = viewModel;
-        LoadEraData();
-        LoadPersonagemData();
+        viewModel.setEraPathInImage(eraImagePath);
 
+        this.usuarioDto = usuarioDto;
+        this.allDatasBeforeEraResponse = allDatasBeforeEraResponses;
+        
+        this.personagemImagesPaths = personagemImagesPaths;
+
+        RunDialog(0);
+        
         tutorialComponent.IsVisible = false;
 
         if (CheckIfItsFirstTime())
         {
             tutorialComponent.IsVisible = true;
         }
+
+
+
     }
 
-    public async void LoadEraData()
-    {
-        await viewModel.DownloadImg64Async(eraResponse.Sprite, eraResponse.Nome);
-        OnPropertyChanged(nameof(viewModel.LocalImagePath));
-    }
-    public async void LoadPersonagemData()
-    {
-        await viewModel.DownloadPersonagemImg64Async(allDatasBeforeEraResponse[0].Personagem.Sprite, allDatasBeforeEraResponse[0].Personagem.Nome);
-        OnPropertyChanged(nameof(viewModel.PersonagemImagePath)); 
-    }
-
-	public bool CheckIfItsFirstTime()
+    public bool CheckIfItsFirstTime()
 	{
 
 		bool itsTheFirstTime = Preferences.Get(IsFirstLaunchKey, true); // verifica se tem essa key no armazenamento local
@@ -72,7 +68,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
 	public async Task RunTextStyle(string characterName, string dialogContent)
 	{
-		await LoadTextStyle(characterName, personagemNomeLabel, 100);
+        dialogoContainer.IsVisible = true;
+        await LoadTextStyle(characterName, personagemNomeLabel, 100);
         await LoadTextStyle(dialogContent, dialogoLabel, 20);
     }
 
@@ -96,7 +93,27 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
 	}
 
-    private void DialogAccepted(object sender, SwipedEventArgs e)
+    public async Task RunAnswer(int index, bool wasAccpted)
+    {
+
+        string username = usuarioDto.Nome;
+
+        string dialogContent;
+
+
+        if (wasAccpted)
+        {
+            dialogContent = allDatasBeforeEraResponse[index].Respostas.Aceito;
+            return;
+        }
+
+        dialogContent = allDatasBeforeEraResponse[index].Respostas.Recusado;
+
+        RunTextStyle(username, dialogContent);
+
+    }
+
+    private async void DialogAccepted(object sender, SwipedEventArgs e)
     {
 
 		if (CheckIfItsFirstTime())
@@ -104,16 +121,26 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             tutorialComponent.IsVisible = false;
         }
 
-		Debug.WriteLine("ACEITOOO ;)");
+        await RunAnswer(actIndexDialog, true);
+        actIndexDialog++;
+        await Task.Delay(500);
+
+        await RunDialog(actIndexDialog);
     }
 
-    private void DialogRefused(object sender, SwipedEventArgs e)
+    private async void DialogRefused(object sender, SwipedEventArgs e)
     {
 
         if (CheckIfItsFirstTime())
         {
             tutorialComponent.IsVisible = false;
         }
+
+        await RunAnswer(actIndexDialog, false);
+        actIndexDialog++;
+        await Task.Delay(500);
+
+        await RunDialog(actIndexDialog);
 
         Debug.WriteLine("RECUSADOOO :(");
 

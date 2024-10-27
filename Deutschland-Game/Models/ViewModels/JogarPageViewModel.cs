@@ -12,29 +12,38 @@ namespace Deutschland_Game.Models.ViewModels
         [ObservableProperty]
         private string personagemImagePath;
 
-        public async Task DownloadImg64Async(string base64, string nome)
+        //public async Task DownloadImg64Async(string base64, string nome)
+        //{
+        //    byte[] imageBytes = Convert.FromBase64String(base64);
+        //    string fileName = $"{nome}.png";
+        //    string localPath = Path.Combine(FileSystem.AppDataDirectory, fileName);
+
+        //    await File.WriteAllBytesAsync(localPath, imageBytes);
+
+        //    LocalImagePath = localPath;
+        //    OnPropertyChanged(nameof(LocalImagePath));
+        //}
+        //public async Task DownloadPersonagemImg64Async(string base64, string nome)
+        //{
+        //    byte[] imageBytes = Convert.FromBase64String(base64);
+        //    string fileName = $"{nome}_personagem.png";
+        //    string localPath = Path.Combine(FileSystem.AppDataDirectory, fileName);
+
+        //    await File.WriteAllBytesAsync(localPath, imageBytes);
+
+        //    PersonagemImagePath = localPath;
+        //    OnPropertyChanged(nameof(PersonagemImagePath));
+        //}
+
+        public void setEraPathInImage(string imagePath)
         {
-            byte[] imageBytes = Convert.FromBase64String(base64);
-            string fileName = $"{nome}.png";
-            string localPath = Path.Combine(FileSystem.AppDataDirectory, fileName);
-
-            await File.WriteAllBytesAsync(localPath, imageBytes);
-
-            LocalImagePath = localPath;
-            OnPropertyChanged(nameof(LocalImagePath));
+            LocalImagePath = imagePath;
         }
-        public async Task DownloadPersonagemImg64Async(string base64, string nome)
+
+        public void setPersonagemPathInImage(string imagePath)
         {
-            byte[] imageBytes = Convert.FromBase64String(base64);
-            string fileName = $"{nome}_personagem.png";
-            string localPath = Path.Combine(FileSystem.AppDataDirectory, fileName);
-
-            await File.WriteAllBytesAsync(localPath, imageBytes);
-
-            PersonagemImagePath = localPath;
-            OnPropertyChanged(nameof(PersonagemImagePath));
+            PersonagemImagePath = imagePath;
         }
-
 
         //protected virtual void OnPropertyChanged(string propertyName)
         //{

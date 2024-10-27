@@ -17,7 +17,15 @@ namespace Deutschland_Game.View
 
         private List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses;
 
+        private EraService eraService;
+
+        private PersonagemService personagemService;
+
         private EraResponse eraResponse;
+
+        private string eraImagePath;
+
+        private List<string> personagemImagesPaths;
 
         private int eraID;
 
@@ -28,6 +36,12 @@ namespace Deutschland_Game.View
 
             this.allDatasBeforeEraService = new AllDatasBeforeEraService();
 
+            this.eraService = new EraService();
+
+            this.personagemService = new PersonagemService();
+
+            this.personagemImagesPaths = new List<string>();
+
             this.eraResponse = eraResponse;
 
             this.eraID = eraID;
@@ -37,6 +51,7 @@ namespace Deutschland_Game.View
 
             SimulateLoading();
         }
+
 
         private async Task isLoadAllDatasBeforeEraSucess()
         {
@@ -53,6 +68,24 @@ namespace Deutschland_Game.View
 
         }
 
+        public async Task LoadEraData()
+        {
+            eraImagePath = await eraService.DownloadImg64Async(eraResponse.Sprite, eraResponse.Nome);
+            Debug.WriteLine(eraImagePath);
+        }
+
+        public async Task LoadAllPersonagemData()
+        {
+
+            foreach (var data in allDatasBeforeEraResponses)
+            {
+                var imagePath = await personagemService.DownloadPersonagemImg64Async(data.Personagem.Sprite, data.Personagem.Nome);
+                Debug.WriteLine(imagePath);
+                personagemImagesPaths.Add(imagePath);
+            }
+
+        }
+
 
         private async void SimulateLoading()
         {
@@ -66,11 +99,21 @@ namespace Deutschland_Game.View
                     await isLoadAllDatasBeforeEraSucess();
                 }
 
+                if(progress == 240)
+                {
+                    await LoadEraData();
+                }
+
+                if(progress == 320)
+                {
+                    await LoadAllPersonagemData();
+                }
+
 
                 await Task.Delay(500);
             }
 
-            await Navigation.PushAsync(new JogarPage(this.usuarioDto, this.allDatasBeforeEraResponses, this.eraResponse));
+            await Navigation.PushAsync(new JogarPage(this.usuarioDto, this.allDatasBeforeEraResponses, eraImagePath, personagemImagesPaths));
         }
         
     }

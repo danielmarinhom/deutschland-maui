@@ -54,5 +54,20 @@ namespace Deutschland_Game.Service
             return null;
         }
 
+        public async Task<string> DownloadImg64Async(string base64, string nome)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) // valida se tem internet
+            {
+                return null;
+            }
+            byte[] imageBytes = Convert.FromBase64String(base64);
+            string fileName = $"{nome}.png";
+            string localPath = Path.Combine(FileSystem.AppDataDirectory, fileName);
+
+            await File.WriteAllBytesAsync(localPath, imageBytes);
+
+            return localPath;
+        }
+
     }
 }
