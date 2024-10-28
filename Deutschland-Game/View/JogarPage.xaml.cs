@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.ComponentModel;
 using Deutschland_Game.Models.ViewModels;
 using System.Net.Mime;
+using Deutschland_Game.Service;
 
 
 namespace Deutschland_Game.View;
@@ -25,6 +26,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     private bool isTaskingRunning = false;
 
+    private ConquistaUsuarioService conquistaUsuarioService;
+
     public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths)
 
     {
@@ -33,6 +36,10 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         viewModel = new JogarPageViewModel();
         BindingContext = viewModel;
         viewModel.setEraPathInImage(eraImagePath);
+
+        viewModel.GetAllConquistasByUserID(usuarioDto.Id);
+
+        this.conquistaUsuarioService = new ConquistaUsuarioService();
 
         this.usuarioDto = usuarioDto;
         this.allDatasBeforeEraResponse = allDatasBeforeEraResponses;
@@ -142,10 +149,12 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     {
         isTaskingRunning = true;
 
+        await viewModel.GetAllConquistasByUserID(usuarioDto.Id);
+
         personagemNomeLabel.Text = "";
         dialogoLabel.Text = "";
 
-        string username = usuarioDto.Nome + "I";
+        string username = usuarioDto.Nome + " I";
 
         string dialogContent;
 
@@ -185,10 +194,12 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             tutorialComponent.IsVisible = false;
         }
 
+        await conquistaUsuarioService.UpdateConquistas(allDatasBeforeEraResponse[actIndexDialog].Consequencias.aceito, usuarioDto.Id);
+
         Vibration.Vibrate(200);
 
         ShowChoiceEffect(true);
-        await Task.Delay(250);
+        await Task.Delay(300);
         ShowChoiceEffect(true);
 
         await RunAnswer(actIndexDialog, true);
@@ -213,10 +224,12 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             tutorialComponent.IsVisible = false;
         }
 
+        await conquistaUsuarioService.UpdateConquistas(allDatasBeforeEraResponse[actIndexDialog].Consequencias.recusado, usuarioDto.Id);
+
         Vibration.Vibrate(200);
 
         ShowChoiceEffect(false);
-        await Task.Delay(200);
+        await Task.Delay(300);
         ShowChoiceEffect(false);
 
         await RunAnswer(actIndexDialog, false);

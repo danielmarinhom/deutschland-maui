@@ -67,7 +67,7 @@
                                 Source="popularidade_conquista.png"
                                 WidthRequest="22"/>
                                 <Label
-                                Text="100"
+                                Text="{Binding PopularidadeText}"
                                 FontSize="17"
                                 TextColor="White"/>
                             </HorizontalStackLayout>
@@ -78,7 +78,7 @@
                                 Source="igreja_conquista.png"
                                 WidthRequest="22"/>
                                 <Label
-                                Text="100"
+                                Text="{Binding IgrejaText}"
                                 FontSize="17"
                                 TextColor="White"/>
                             </HorizontalStackLayout>
@@ -89,7 +89,7 @@
                                 Source="diplomacia_conquista.png"
                                 WidthRequest="22"/>
                                 <Label
-                                Text="100"
+                                Text="{Binding DiplomaciaText}"
                                 FontSize="17"
                                 TextColor="White"/>
                             </HorizontalStackLayout>
@@ -100,7 +100,7 @@
                                 Source="dinheiro_conquista.png"
                                 WidthRequest="22"/>
                                 <Label
-                                Text="100"
+                                Text="{Binding DinheiroText}"
                                 FontSize="17"
                                 TextColor="White"/>
                             </HorizontalStackLayout>
@@ -111,7 +111,7 @@
                                 Source="exercito_conquista.png"
                                 WidthRequest="22"/>
                                 <Label
-                                Text="100"
+                                Text="{Binding ExercitoText}"
                                 FontSize="17"
                                 TextColor="White"/>
                             </HorizontalStackLayout>

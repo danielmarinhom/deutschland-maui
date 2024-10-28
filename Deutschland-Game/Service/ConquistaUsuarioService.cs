@@ -1,4 +1,5 @@
-﻿using Deutschland_Game.Models.ApiModels;
+﻿using Deutschland_Game.Dtos;
+using Deutschland_Game.Models.ApiModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,7 +28,7 @@ namespace Deutschland_Game.Service
             };
         }
 
-        public async Task<List<ConquistaUsuarioResponse>> FindByUserID(int userID)
+        public async Task<List<ConquistasResponseDto>> FindByUserID(long userID)
         {
 
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) // valida se tem internet
@@ -44,7 +45,7 @@ namespace Deutschland_Game.Service
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    var json = JsonSerializer.Deserialize<List<ConquistaUsuarioResponse>>(content, serializerOptions);
+                    var json = JsonSerializer.Deserialize<List<ConquistasResponseDto>>(content, serializerOptions);
                     return json;
                 }
             }catch(Exception ex)
@@ -56,32 +57,25 @@ namespace Deutschland_Game.Service
 
         }
 
-        public async Task<bool> UpdateConquistas(List<ConquistaUsuarioResponse> conquistaUsuarioResponses)
+        public async Task UpdateConquistas(List<ConquistasResponseDto> conquistaUsuarioResponses, long userID)
         {
 
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) // valida se tem internet
             {
-                return false;
+                return;
             }
 
-            var uri = new Uri($"{ApiBaseURL.API_BASE_URL}/conquistas/update");
+            var uri = new Uri($"{ApiBaseURL.API_BASE_URL}/conquistas/update/userID/{userID}");
 
             try
             {
 
-                var response = await _httpClient.PutAsJsonAsync(uri, conquistaUsuarioResponses);
-
-                if(response.StatusCode == HttpStatusCode.NoContent)
-                {
-                    return true;
-                }
+                await _httpClient.PutAsJsonAsync(uri, conquistaUsuarioResponses);
 
             }catch(Exception ex)
             {
                 Debug.WriteLine("ERRO ----------------------------- " + ex.Message);
             }
-
-            return false;
 
         }
 

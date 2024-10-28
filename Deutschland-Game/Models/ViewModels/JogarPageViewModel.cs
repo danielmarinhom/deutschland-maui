@@ -1,10 +1,19 @@
 ﻿using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Deutschland_Game.Dtos;
+using Deutschland_Game.Models.ApiModels;
+using Deutschland_Game.Service;
 
 namespace Deutschland_Game.Models.ViewModels
 {
     public partial class JogarPageViewModel : ObservableObject 
     {
+        private readonly ConquistaUsuarioService conquistaUsuarioService;
+
+        public JogarPageViewModel() { 
+            conquistaUsuarioService = new ConquistaUsuarioService();
+        } 
 
         [ObservableProperty]
         private string localImagePath;
@@ -12,28 +21,21 @@ namespace Deutschland_Game.Models.ViewModels
         [ObservableProperty]
         private string personagemImagePath;
 
-        //public async Task DownloadImg64Async(string base64, string nome)
-        //{
-        //    byte[] imageBytes = Convert.FromBase64String(base64);
-        //    string fileName = $"{nome}.png";
-        //    string localPath = Path.Combine(FileSystem.AppDataDirectory, fileName);
+        [ObservableProperty]
+        private string popularidadeText;
 
-        //    await File.WriteAllBytesAsync(localPath, imageBytes);
+        [ObservableProperty]
+        private string diplomaciaText;
 
-        //    LocalImagePath = localPath;
-        //    OnPropertyChanged(nameof(LocalImagePath));
-        //}
-        //public async Task DownloadPersonagemImg64Async(string base64, string nome)
-        //{
-        //    byte[] imageBytes = Convert.FromBase64String(base64);
-        //    string fileName = $"{nome}_personagem.png";
-        //    string localPath = Path.Combine(FileSystem.AppDataDirectory, fileName);
+        [ObservableProperty]
+        private string dinheiroText;
 
-        //    await File.WriteAllBytesAsync(localPath, imageBytes);
+        [ObservableProperty]
+        private string igrejaText;
 
-        //    PersonagemImagePath = localPath;
-        //    OnPropertyChanged(nameof(PersonagemImagePath));
-        //}
+        [ObservableProperty]
+        private string exercitoText;
+
 
         public void setEraPathInImage(string imagePath)
         {
@@ -45,9 +47,29 @@ namespace Deutschland_Game.Models.ViewModels
             PersonagemImagePath = imagePath;
         }
 
-        //protected virtual void OnPropertyChanged(string propertyName)
-        //{
-        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        //}
+        [RelayCommand]
+        public async Task GetAllConquistasByUserID(int userID)
+        {
+
+            var response = await conquistaUsuarioService.FindByUserID(userID);
+
+            if(response == null)
+            {
+                return;
+            }
+
+            PopularidadeText = response[0].ValorAcrescentado.ToString();
+            IgrejaText = response[1].ValorAcrescentado.ToString();
+            DiplomaciaText = response[2].ValorAcrescentado.ToString();
+            DinheiroText = response[3].ValorAcrescentado.ToString();
+            ExercitoText = response[4].ValorAcrescentado.ToString();
+
+        }
+
+        public async Task UpdateConquistas(List<ConquistasResponseDto> conquistaUsuarioResponses) 
+        {
+            
+        }
+
     }
 }
