@@ -69,6 +69,22 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         await Task.WhenAll(translate);
     }
 
+    public async void ShowChoiceEffect(bool wasAccept)
+    {
+        if (wasAccept)
+        {
+            choiceEffect.BackgroundColor = Color.FromHex("#00c1a2");
+        }
+        else
+        {
+            choiceEffect.BackgroundColor = Color.FromHex("#de524b");
+        }
+        choiceEffect.IsVisible = true;
+        await Task.Delay(700);
+        choiceEffect.IsVisible = false;
+
+    }
+
     public bool CheckIfItsFirstTime()
 	{
 
@@ -157,6 +173,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             tutorialComponent.IsVisible = false;
         }
 
+        ShowChoiceEffect(true);
+
         await RunAnswer(actIndexDialog, true);
 
         actIndexDialog++;
@@ -173,6 +191,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         {
             tutorialComponent.IsVisible = false;
         }
+
+        ShowChoiceEffect(false);
 
         await RunAnswer(actIndexDialog, false);
 

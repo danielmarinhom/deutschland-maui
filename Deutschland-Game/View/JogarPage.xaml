@@ -27,13 +27,15 @@
                 Margin="0, 0, 0, 0"
             />
 
-            <Grid
+            <Grid>
+
+                <Grid
                 VerticalOptions="Start"
                 HorizontalOptions="End"
                 Margin="0, -15, 100, 0"
                 >
 
-                <Grid
+                    <Grid
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     WidthRequest="180"
@@ -44,7 +46,7 @@
                         />
 
                         <FlexLayout
-                        
+            
                             HeightRequest="130"
                             WidthRequest="120"
                             Margin="15, 0, 0, 0"
@@ -55,84 +57,92 @@
                             AlignContent="Center"
                             VerticalOptions="End"
                             HorizontalOptions="CenterAndExpand"
-                        
+            
                         >
 
-                        <HorizontalStackLayout
+                            <HorizontalStackLayout
                             Spacing="2"
                             Margin="0, 0, 6, 3">
-                            <Image
+                                <Image
                                 Source="popularidade_conquista.png"
                                 WidthRequest="22"/>
-                            <Label
+                                <Label
                                 Text="100"
                                 FontSize="17"
                                 TextColor="White"/>
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout
                             Spacing="2"
                             Margin="0, 0, 0, 3">
-                            <Image
+                                <Image
                                 Source="igreja_conquista.png"
                                 WidthRequest="22"/>
-                            <Label
+                                <Label
                                 Text="100"
                                 FontSize="17"
                                 TextColor="White"/>
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout
                             Spacing="2"
                             Margin="0, 0, 6, 3">
-                            <Image
+                                <Image
                                 Source="diplomacia_conquista.png"
                                 WidthRequest="22"/>
-                            <Label
+                                <Label
                                 Text="100"
                                 FontSize="17"
                                 TextColor="White"/>
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout
                             Spacing="2"
                             Margin="0, 0, 0, 3">
-                            <Image
+                                <Image
                                 Source="dinheiro_conquista.png"
                                 WidthRequest="22"/>
-                            <Label
+                                <Label
                                 Text="100"
                                 FontSize="17"
                                 TextColor="White"/>
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout
                             Spacing="2"
                             Margin="0, 0, 6, 3">
-                            <Image
+                                <Image
                                 Source="exercito_conquista.png"
                                 WidthRequest="22"/>
-                            <Label
+                                <Label
                                 Text="100"
                                 FontSize="17"
                                 TextColor="White"/>
-                        </HorizontalStackLayout>
+                            </HorizontalStackLayout>
 
-                    </FlexLayout>
+                        </FlexLayout>
 
-               
-                    
+
+
+                    </Grid>
+
                 </Grid>
+                <!-- grid placa das conquistas-->
 
-            </Grid> <!-- grid placa das conquistas-->
-
-
-            <Image
-                x:Name="personagemComponent"
+                <Grid
+                    x:Name="personagemComponent"
                     VerticalOptions="End"
                     HorizontalOptions="End"
-                    WidthRequest="100"
-                    Source="{Binding PersonagemImagePath}"
-                    Margin="0 , 0, -100, 100"/>
+                    Margin="0 , 0, -110, 100"
+                    >
+
+                    <Image
+                        WidthRequest="100"
+                        MaximumHeightRequest="300"
+                        Source="{Binding PersonagemImagePath}"
+                        />
+
+                </Grid>
+                
 
 
-            <Grid
+                <Grid
                 x:Name="dialogoContainer"
                 VerticalOptions="End"
                 HorizontalOptions="Center"
@@ -141,54 +151,54 @@
                 Margin="0, 0, 0, 100"
                 >
 
-                <Image
+                    <Image
                     Source="dialogo_folha.png"
                 />
 
-                <VerticalStackLayout
+                    <VerticalStackLayout
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Margin="0, 0, 0, 30"
                     WidthRequest="500"
-                    
+        
                     >
-                    <Label
+                        <Label
                         x:Name="personagemNomeLabel"
                         Text=""
                         TextColor="#474747"    
                         FontSize="17"
                         />
-                    <Label  
+                        <Label  
                         x:Name="dialogoLabel"
                         Text=""
                         TextColor="Black"    
                         FontSize="17"
                     />
-                </VerticalStackLayout>
-                
-                
+                    </VerticalStackLayout>
 
-            </Grid>
 
-            
 
-            <Grid
+                </Grid>
+
+
+
+                <Grid
                 x:Name="tutorialComponent"
                 IsVisible="False"
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand">
 
-                <Grid
+                    <Grid
                     BackgroundColor="Black"
                     Opacity=".6"
                 ></Grid>
 
-                <Grid
+                    <Grid
                     HorizontalOptions="Start"
                     VerticalOptions="Center"
                     Margin="0, 0, 0, 120"
                     >
-                    <skia:SKLottieView
+                        <skia:SKLottieView
                         Source="greenarrow.json"
                         RepeatCount="-1"
                         RepeatMode="Restart"
@@ -196,27 +206,27 @@
                         HeightRequest="100"
                         Rotation="180"
                         />
-                    <Label
+                        <Label
                         Margin="0, 80, 0, 0"
                         Text="Para aceitar"
                         FontSize="22"
                         TextColor="#00c1a2"
                         HorizontalOptions="Center"
                         />
-                </Grid>
+                    </Grid>
 
-                <Label
+                    <Label
                     HorizontalOptions="Center"
                     Text="Arraste"
                     FontSize="32"
                     Margin="0, 40, 0, 0"
                     TextColor="White"/>
 
-                <Grid
+                    <Grid
                     VerticalOptions="Center"
                     HorizontalOptions="End"
                     Margin="0, 0, 0, 120">
-                    <skia:SKLottieView
+                        <skia:SKLottieView
                         Source="redarrow.json"
                         RepeatCount="-1"
                         RepeatMode="Restart"
@@ -231,8 +241,17 @@
                         HorizontalOptions="Center"
                         Margin="0, 80, 0, 0"
                         />
+                    </Grid>
+
+
                 </Grid>
 
+                <BoxView
+                IsVisible="False"
+                x:Name="choiceEffect"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                Opacity=".3"></BoxView>
 
             </Grid>
 
