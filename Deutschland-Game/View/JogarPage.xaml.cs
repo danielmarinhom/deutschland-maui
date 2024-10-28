@@ -23,6 +23,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
 	private int actIndexDialog = 0;
 
+    private bool isTaskingRunning = false;
+
     public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths)
 
     {
@@ -80,7 +82,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             choiceEffect.BackgroundColor = Color.FromHex("#de524b");
         }
         choiceEffect.IsVisible = true;
-        await Task.Delay(700);
+        await Task.Delay(300);
         choiceEffect.IsVisible = false;
 
     }
@@ -121,6 +123,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
 	public async Task RunDialog(int index)
 	{
+        isTaskingRunning = true;
         CharacterJoinInScene();
 
         personagemNomeLabel.Text = "";
@@ -132,11 +135,12 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
         viewModel.setPersonagemPathInImage(personagemImagesPaths[index]);
 		await RunTextStyle(characterName, TempFixDialogsContents(dialogContent));
-
-	}
+        isTaskingRunning = false;
+    }
 
     public async Task RunAnswer(int index, bool wasAccpted)
     {
+        isTaskingRunning = true;
 
         personagemNomeLabel.Text = "";
         dialogoLabel.Text = "";
@@ -163,16 +167,28 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
         CharacterLeaveInScene();
 
+        isTaskingRunning = false;
+
+
     }
 
     private async void DialogAccepted(object sender, SwipedEventArgs e)
     {
+
+        if (isTaskingRunning)
+        {
+            return;
+        }
 
 		if (CheckIfItsFirstTime())
 		{
             tutorialComponent.IsVisible = false;
         }
 
+        Vibration.Vibrate(200);
+
+        ShowChoiceEffect(true);
+        await Task.Delay(250);
         ShowChoiceEffect(true);
 
         await RunAnswer(actIndexDialog, true);
@@ -187,11 +203,20 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     private async void DialogRefused(object sender, SwipedEventArgs e)
     {
 
+        if (isTaskingRunning)
+        {
+            return;
+        }
+
         if (CheckIfItsFirstTime())
         {
             tutorialComponent.IsVisible = false;
         }
 
+        Vibration.Vibrate(200);
+
+        ShowChoiceEffect(false);
+        await Task.Delay(200);
         ShowChoiceEffect(false);
 
         await RunAnswer(actIndexDialog, false);
