@@ -57,6 +57,25 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     }
 
+    public async void AdicionalAnimation(Label label)
+    {
+        label.IsVisible = true;
+
+        label.Opacity = 0;
+
+        label.FadeTo(1, 500, Easing.SinOut);
+
+        await label.TranslateTo(0, -20, 800, Easing.BounceIn);
+        //await label.TranslateTo(0, 0, 600, Easing.BounceOut);
+
+        await label.FadeTo(0, 500, Easing.SinOut);
+
+        label.IsVisible = false;
+
+        await label.TranslateTo(0, 0, 10, Easing.Linear);
+
+    }
+
     public string TempFixDialogsContents(string content) // metodo temporário por conta dos dialogos que foram inseridos com quebra linha no banco
     {
         return content.Replace("\r\n", " ");
@@ -107,7 +126,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
         }
 
-		return true; // colocar false para a versao final
+		return false; // colocar false para a versao final
 
     }
 
@@ -143,12 +162,14 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         viewModel.setPersonagemPathInImage(personagemImagesPaths[index]);
 		await RunTextStyle(characterName, TempFixDialogsContents(dialogContent));
         isTaskingRunning = false;
+
     }
 
     public async Task RunAnswer(int index, bool wasAccpted)
     {
         isTaskingRunning = true;
 
+        AdicionalAnimation(populaidadeAdicional);
         await viewModel.GetAllConquistasByUserID(usuarioDto.Id);
 
         personagemNomeLabel.Text = "";

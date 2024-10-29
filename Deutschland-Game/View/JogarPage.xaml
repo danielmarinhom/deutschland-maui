@@ -56,9 +56,7 @@
                             AlignItems="Center"
                             AlignContent="Center"
                             VerticalOptions="End"
-                            HorizontalOptions="CenterAndExpand"
-            
-                        >
+                            HorizontalOptions="CenterAndExpand">
 
                             <HorizontalStackLayout
                             Spacing="2"
@@ -70,6 +68,8 @@
                                 Text="{Binding PopularidadeText}"
                                 FontSize="17"
                                 TextColor="White"/>
+
+                                
                             </HorizontalStackLayout>
                             <HorizontalStackLayout
                             Spacing="2"
@@ -117,6 +117,44 @@
                             </HorizontalStackLayout>
 
                         </FlexLayout>
+
+                        <Label
+                            IsVisible="false"
+                        x:Name="populaidadeAdicional"
+                        Text="+50"
+                        FontSize="20"
+                        TextColor="#7BFA36"
+                        Margin="50, 50, 0, 0"/>
+
+                        <Label
+                        x:Name="igrejaAdicional"
+                        Text="+50"
+                        FontSize="20"
+                        TextColor="#7BFA36"
+                        Margin="110, 50, 0, 0"/>
+
+                        <Label
+                        x:Name="economiaAdicional"
+                        Text="+50"
+                        FontSize="20"
+                        TextColor="#7BFA36"
+                        Margin="140, 100, 0, 0"
+                        Rotation="10"/>
+
+                        <Label
+                        x:Name="diplomaciaAdicional"
+                        Text="+50"
+                        FontSize="20"
+                        TextColor="#7BFA36"
+                        Margin="15, 80, 0, 0"
+                        Rotation="-10"/>
+
+                        <Label
+                        x:Name="exercitoAdicional"
+                        Text="+50"
+                        FontSize="20"
+                        TextColor="#7BFA36"
+                        Margin="80, 135, 0, 0"/>
 
 
 
