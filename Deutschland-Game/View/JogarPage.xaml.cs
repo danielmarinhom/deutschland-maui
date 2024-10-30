@@ -31,7 +31,10 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     private ConquistaUsuarioService conquistaUsuarioService;
 
     private List<Label> conquistasLabels;
+<<<<<<< HEAD
     private List<int> conquistasValues;
+=======
+>>>>>>> 54ff3d6a748c82363769ac948a3b50b0c5c67a26
 
     public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths)
 
@@ -63,6 +66,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         }
 
     }
+<<<<<<< HEAD
     public void AtualizarConquistas(bool wasAceppt) // atualiza a lista global das conquistas a cada escolha
     {
         foreach (var dialogo in allDatasBeforeEraResponse)
@@ -89,6 +93,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         return conquistasValues;
     }
 
+=======
+>>>>>>> 54ff3d6a748c82363769ac948a3b50b0c5c67a26
 
     public async void AdicionalAnimation(Label label)
     {
@@ -238,7 +244,11 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         {
             return;
         }
+<<<<<<< HEAD
         AtualizarConquistas(wasAceppt);
+=======
+
+>>>>>>> 54ff3d6a748c82363769ac948a3b50b0c5c67a26
         List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>();
         if (wasAceppt)
         {
