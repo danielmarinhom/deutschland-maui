@@ -206,6 +206,12 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     public async void ChoiceMade(bool wasAceppt)
     {
+
+        if (actIndexDialog >= allDatasBeforeEraResponse.Count)
+        {
+            return;
+        }
+
         List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>();
         if (wasAceppt)
         {
@@ -234,6 +240,11 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         await RunAnswer(actIndexDialog, wasAceppt);
 
         actIndexDialog++;
+
+        if(actIndexDialog >= allDatasBeforeEraResponse.Count)
+        {
+            return;
+        }
 
         await Task.Delay(1500);
 
