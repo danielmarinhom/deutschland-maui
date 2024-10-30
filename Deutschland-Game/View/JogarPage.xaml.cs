@@ -70,7 +70,6 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         label.FadeTo(1, 500, Easing.SinOut);
 
         await label.TranslateTo(0, -20, 800, Easing.BounceIn);
-        //await label.TranslateTo(0, 0, 600, Easing.BounceOut);
 
         await label.FadeTo(0, 500, Easing.SinOut);
 
@@ -87,7 +86,6 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     public async void CharacterJoinInScene()
     {
-        Debug.WriteLine(personagemComponent.Y);
         var translate = personagemComponent.TranslateTo(-80, 0, 2000, Easing.SinInOut);
 
         await Task.WhenAll(translate);
@@ -95,7 +93,6 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     public async void CharacterLeaveInScene()
     {
-        Debug.WriteLine(personagemComponent.X);
         var translate = personagemComponent.TranslateTo(0, 0, 2000, Easing.SinInOut);
 
         await Task.WhenAll(translate);
@@ -205,6 +202,42 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     }
 
+    public async void ChoiceMade(bool wasAceppt)
+    {
+        List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>();
+        if (wasAceppt)
+        {
+            conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.aceito;
+        }
+        else
+        {
+            conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.recusado;
+        }
+
+        var ids = await viewModel.SetAdicionalValuesInConquistas(conquistas, conquistasLabels);
+
+        for (int i = 0; i < ids.Count; i++)
+        {
+            AdicionalAnimation(conquistasLabels[ids[i] - 1]);
+        }
+
+        await conquistaUsuarioService.UpdateConquistas(conquistas, usuarioDto.Id);
+
+        Vibration.Vibrate(200);
+
+        ShowChoiceEffect(wasAceppt);
+        await Task.Delay(300);
+        ShowChoiceEffect(wasAceppt);
+
+        await RunAnswer(actIndexDialog, wasAceppt);
+
+        actIndexDialog++;
+
+        await Task.Delay(1500);
+
+        await RunDialog(actIndexDialog);
+    }
+
     private async void DialogAccepted(object sender, SwipedEventArgs e)
     {
 
@@ -218,28 +251,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             tutorialComponent.IsVisible = false;
         }
 
-        var ids = await viewModel.SetAdicionalValuesInConquistas(allDatasBeforeEraResponse[actIndexDialog].Consequencias.aceito, true, conquistasLabels);
-
-        for (int i = 0; i < ids.Count; i++)
-        {
-            AdicionalAnimation(conquistasLabels[ids[i] - 1]);
-        }
-
-        await conquistaUsuarioService.UpdateConquistas(allDatasBeforeEraResponse[actIndexDialog].Consequencias.aceito, usuarioDto.Id);
-
-        Vibration.Vibrate(200);
-
-        ShowChoiceEffect(true);
-        await Task.Delay(300);
-        ShowChoiceEffect(true);
-
-        await RunAnswer(actIndexDialog, true);
-
-        actIndexDialog++;
-
-        await Task.Delay(1500);
-
-        await RunDialog(actIndexDialog);
+        ChoiceMade(true);
     }
 
     private async void DialogRefused(object sender, SwipedEventArgs e)
@@ -255,28 +267,6 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             tutorialComponent.IsVisible = false;
         }
 
-        var ids = await viewModel.SetAdicionalValuesInConquistas(allDatasBeforeEraResponse[actIndexDialog].Consequencias.recusado, false, conquistasLabels);
-
-        for(int i = 0; i < ids.Count; i++)
-        {
-            AdicionalAnimation(conquistasLabels[ids[i]-1]);
-        }
-
-        await conquistaUsuarioService.UpdateConquistas(allDatasBeforeEraResponse[actIndexDialog].Consequencias.recusado, usuarioDto.Id);
-
-        Vibration.Vibrate(200);
-
-        ShowChoiceEffect(false);
-        await Task.Delay(300);
-        ShowChoiceEffect(false);
-
-        await RunAnswer(actIndexDialog, false);
-
-        actIndexDialog++;
-
-        await Task.Delay(1500);
-
-        await RunDialog(actIndexDialog);
-
+        ChoiceMade(false);
     }
 }

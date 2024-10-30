@@ -83,30 +83,27 @@ namespace Deutschland_Game.Models.ViewModels
 
         }
 
-        public async Task<List<int>> SetAdicionalValuesInConquistas(List<ConquistasResponseDto> conquistas, bool wasAccpet, List<Label> labels)
+        public async Task<List<int>> SetAdicionalValuesInConquistas(List<ConquistasResponseDto> conquistas, List<Label> labels)
         {
             List<int> ids= new List<int>();
             foreach (var conquista in conquistas)
             {
                 var id = conquista.IdConquista;
-                var valor = conquista.ValorAcrescentado.ToString();
+                var valor = conquista.ValorAcrescentado;
 
 
-                if (wasAccpet)
+                if (valor > 0)
                 {
-                    labels[id - 1].Text = "+" + valor;
+                    labels[id - 1].Text = "+" + valor.ToString();
                     labels[id - 1].TextColor = Color.FromHex("#7BFA36");
                 }
                 else
                 {
-                    labels[id - 1].Text = valor;
+                    labels[id - 1].Text = valor.ToString();
                     labels[id - 1].TextColor = Color.FromHex("#FA3636");
                 }
 
-                Debug.WriteLine(ConquistaLabelDtos[id - 1].text);
-
                 ids.Add(id);
-
             }
 
             return ids;
