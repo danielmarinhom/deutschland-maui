@@ -53,25 +53,24 @@ namespace Deutschland_Game.View
         }
 
 
-        private async Task isLoadAllDatasBeforeEraSucess()
+        private async Task LoadAllDatasBeforeEra()
         {
 
-            var response = await allDatasBeforeEraService.GetDatasByEraID(this.eraID);
-            if (response == null)
+            var response = await allDatasBeforeEraService.GetDatasByEraID(this.eraID); // carrega todos os dados dos dialogos, dos personagens e das consequencias
+            if (response == null) // se nao deu certo, response == null
             {
                 await DisplayAlert("Erro", "Algo deu errado! Cadastre o usuário novamente.", "OK");
                 await Navigation.PopAsync();
                 return;
             }
 
-            this.allDatasBeforeEraResponses = response;
+            this.allDatasBeforeEraResponses = response; // atribui à variavel global da Classe
 
         }
 
         public async Task LoadEraData()
         {
-            eraImagePath = await eraService.DownloadImg64Async(eraResponse.Sprite, eraResponse.Nome);
-            Debug.WriteLine(eraImagePath);
+            eraImagePath = await eraService.DownloadImg64Async(eraResponse.Sprite, eraResponse.Nome); // baixa a imagem da era no dispositivo
         }
 
         public async Task LoadAllPersonagemData()
@@ -79,9 +78,9 @@ namespace Deutschland_Game.View
 
             foreach (var data in allDatasBeforeEraResponses)
             {
-                var imagePath = await personagemService.DownloadPersonagemImg64Async(data.Personagem.Sprite, data.Personagem.Nome);
-                Debug.WriteLine(imagePath);
-                personagemImagesPaths.Add(imagePath);
+                // baixa a imagem dos personagens no dispositivo
+                var imagePath = await personagemService.DownloadPersonagemImg64Async(data.Personagem.Sprite, data.Personagem.Nome); 
+                personagemImagesPaths.Add(imagePath); // adiciona à lista
             }
 
         }
@@ -94,9 +93,9 @@ namespace Deutschland_Game.View
                 ProgressBox.WidthRequest = progress;
                 progressLabel.Text = $"{(int)(progress/40*10)}%";
 
-                if(progress == 80)
+                if(progress == 80) // só pra decoração, simula um carregamento dos requests em diferentes partes do carregamento
                 {
-                    await isLoadAllDatasBeforeEraSucess();
+                    await LoadAllDatasBeforeEra();
                 }
 
                 if(progress == 240)

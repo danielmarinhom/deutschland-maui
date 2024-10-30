@@ -28,6 +28,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     private bool userPassedAnimation = false;
 
+    private bool allDialogsAnswered = false;
+
     private ConquistaUsuarioService conquistaUsuarioService;
 
     private List<Label> conquistasLabels;
@@ -63,13 +65,13 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     }
 
-    public async void AdicionalAnimation(Label label)
+    public async void AdicionalAnimation(Label label) // animacao dos valores acrescentados nas conquistas
     {
         label.IsVisible = true;
 
         label.Opacity = 0;
 
-        label.FadeTo(1, 500, Easing.SinOut);
+        label.FadeTo(1, 500, Easing.SinOut); // opacidade do 0 para 1
 
         await label.TranslateTo(0, -20, 800, Easing.BounceIn);
 
@@ -86,29 +88,19 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         return content.Replace("\r\n", " ");
     }
 
-    public async void CharacterJoinInScene()
+    public async void CharacterJoinInScene() // animacao de entrada do personagem
     {
         var translate = personagemComponent.TranslateTo(-80, 0, 2000, Easing.SinInOut);
 
         await Task.WhenAll(translate);
     }
 
-    public async void CharacterLeaveInScene()
+    public async void CharacterLeaveInScene() // animacao de saída do personagem
     {
         var translate = personagemComponent.TranslateTo(0, 0, 2000, Easing.SinInOut);
 
         await Task.WhenAll(translate);
     }
-
-    public async void ShowChoiceEffect(bool wasAccept)
-    {
-        
-        if(wasAccept)
-        {
-
-        }
-
-    } // fazer dps
 
     public bool CheckIfItsFirstTime()
 	{
@@ -123,56 +115,59 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
         }
 
-		return true; // colocar false para a versao final
+		return false; // colocar false para a versao final
 
     }
 
-	public async Task RunTextStyle(string characterName, string dialogContent)
-	{
-
-        await LoadTextStyle(characterName, personagemNomeLabel, 100);
-        await LoadTextStyle(dialogContent, dialogoLabel, 20);
-    }
-
-    public async Task LoadTextStyle(string dialog, Label targetLabel, int delayInMls)
-	{
-		targetLabel.Text = "";
-		for(int i = 0; i < dialog.Length; i++)
-		{
-            if (userPassedAnimation)
+    public async Task LoadTextStyle(string dialog, Label targetLabel, int delayInMls) // animacao de textos 
+    {
+        targetLabel.Text = "";
+        for (int i = 0; i < dialog.Length; i++)
+        {
+            if (userPassedAnimation) // valida se o usuario clicar na tela, ele passa a animacao
             {
                 targetLabel.Text = dialog;
                 userPassedAnimation = false;
                 return;
             }
-			targetLabel.Text += dialog[i];
-			await Task.Delay(delayInMls);
-		}
-	}
+            targetLabel.Text += dialog[i];
+            await Task.Delay(delayInMls);
+        }
+    }
 
-	public async Task RunDialog(int index)
+    public async Task RunTextStyle(string characterName, string dialogContent)
+	{
+        // executa em ordem - nome do personagem e depois o conteudo
+        await LoadTextStyle(characterName, personagemNomeLabel, 100); // nome do personagem
+        await LoadTextStyle(dialogContent, dialogoLabel, 20); // conteudo do dialogo
+    }
+
+	public async Task RunDialog(int index) // organiza os dados da Response para rodar o Dialogo
 	{
         isTaskingRunning = true;
-        CharacterJoinInScene();
+        
+        viewModel.setPersonagemPathInImage(personagemImagesPaths[index]); // seta o path da imagem para o Xaml
+        CharacterJoinInScene(); // animacao de entrada do personagem
 
-        personagemNomeLabel.Text = "";
+        personagemNomeLabel.Text = ""; // define pra garantir que vai carregar do zero
         dialogoLabel.Text = "";
-        dialogoContainer.IsVisible = true;
 
-        string characterName = allDatasBeforeEraResponse[index].Personagem.Nome;
-		string dialogContent = allDatasBeforeEraResponse[index].mensagem;
+        dialogoContainer.IsVisible = true; // deixa visível a imagem da folha do dialogo
 
-        viewModel.setPersonagemPathInImage(personagemImagesPaths[index]);
-		await RunTextStyle(characterName, TempFixDialogsContents(dialogContent));
-        isTaskingRunning = false;
+        string characterName = allDatasBeforeEraResponse[index].Personagem.Nome; // pega o nome do personagem
+		string dialogContent = allDatasBeforeEraResponse[index].mensagem; // pega o conteudo do dialogo
+
+		await RunTextStyle(characterName, TempFixDialogsContents(dialogContent)); // roda a animacao do dialoog e do nome do personagem
+
+        isTaskingRunning = false; // habilita o usuario a escolher a proposta
 
     }
 
-    public async Task RunAnswer(int index, bool wasAccpted)
+    public async Task RunAnswer(int index, bool wasAccpted) // organiza os dados da resposta do rei
     {
-        isTaskingRunning = true;
+        isTaskingRunning = true; // usuario nao pode mais fazer interação
 
-        await viewModel.GetAllConquistasByUserID(usuarioDto.Id);
+        await viewModel.GetAllConquistasByUserID(usuarioDto.Id); // atualiza a conquista do usuario fazendo requesting na api
 
         personagemNomeLabel.Text = "";
         dialogoLabel.Text = "";
@@ -181,7 +176,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
         string dialogContent;
 
-        if (wasAccpted)
+        if (wasAccpted) // filtra os dados de acordo com a escolha do usuario
         {
             dialogContent = allDatasBeforeEraResponse[index].Respostas.Aceito;
         }
@@ -191,29 +186,29 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         }
 
 
-        await RunTextStyle(username, TempFixDialogsContents(dialogContent));
+        await RunTextStyle(username, TempFixDialogsContents(dialogContent)); // roda as animacoes dos dialogos
 
-        await Task.Delay(500);
+        await Task.Delay(500); // delay só pra decorar o jogo
 
-        dialogoContainer.IsVisible = false;
+        dialogoContainer.IsVisible = false; // esconde a imagem da folha 
 
-        CharacterLeaveInScene();
+        CharacterLeaveInScene(); // animacao do personagem saindo de cena
 
-        isTaskingRunning = false;
-
+        isTaskingRunning = false; // usuario pode fazer interações dnv
 
     }
 
-    public async void ChoiceMade(bool wasAceppt)
+    public async void ChoiceMade(bool wasAceppt) // wasAceppt = se o dialogo foi aceito
     {
 
         if (actIndexDialog >= allDatasBeforeEraResponse.Count)
         {
-            return;
+            return; 
         }
 
         List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>();
-        if (wasAceppt)
+
+        if (wasAceppt) // filtra as consequencias certas
         {
             conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.aceito;
         }
@@ -222,27 +217,26 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.recusado;
         }
 
-        var ids = await viewModel.SetAdicionalValuesInConquistas(conquistas, conquistasLabels);
+        var ids = await viewModel.SetAdicionalValuesInConquistas(conquistas, conquistasLabels); 
 
-        for (int i = 0; i < ids.Count; i++)
+        for (int i = 0; i < ids.Count; i++) // pra rodar as animações de +50, -100 e etc
         {
             AdicionalAnimation(conquistasLabels[ids[i] - 1]);
         }
 
-        await conquistaUsuarioService.UpdateConquistas(conquistas, usuarioDto.Id);
+        await conquistaUsuarioService.UpdateConquistas(conquistas, usuarioDto.Id); // faz o update das conquistasUsuario pela api 
 
-        Vibration.Vibrate(200);
+        Vibration.Vibrate(200); // vibração do celular pra decoração do jogo
 
-        ShowChoiceEffect(wasAceppt);
-        await Task.Delay(300);
-        ShowChoiceEffect(wasAceppt);
+        await RunAnswer(actIndexDialog, wasAceppt); // aqui roda o dialogo do rei como resposta
 
-        await RunAnswer(actIndexDialog, wasAceppt);
-
-        actIndexDialog++;
+        actIndexDialog++; // aumenta o indice pra indicar o proximo dialogo a ser carregado
 
         if(actIndexDialog >= allDatasBeforeEraResponse.Count)
         {
+            // se o indice do dialogo for >= ao tamanha da lista ---- é pra nao dar exception de index no allDatasBeforeEraResponse
+            // basicamente significa que os dialogos já foram todos carregados
+            allDialogsAnswered = true;
             return;
         }
 
@@ -254,7 +248,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     private async void DialogAccepted(object sender, SwipedEventArgs e)
     {
 
-        if (isTaskingRunning)
+        if (isTaskingRunning || allDialogsAnswered) // isTaskingRunning = bool que valida se a animacao do dialogo tá sendo executada
         {
             return;
         }
@@ -270,7 +264,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     private async void DialogRefused(object sender, SwipedEventArgs e)
     {
 
-        if (isTaskingRunning)
+        if (isTaskingRunning || allDialogsAnswered)
         {
             return;
         }
@@ -285,6 +279,6 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     private void PassDialog(object sender, EventArgs e) // método para pular a animação do diálogo 
     {
-        userPassedAnimation = true;
+        userPassedAnimation = true; // var que atualiza se o usuario clicar na tela - significa que ele quer passar a animacao do dialogo
     }
 }

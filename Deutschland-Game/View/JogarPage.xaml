@@ -273,7 +273,7 @@
                         Background="Transparent"
                         />
                         <Label
-                        Text="Para aceitar"
+                        Text="Para recusar"
                         FontSize="22"
                         TextColor="#de524b"
                         HorizontalOptions="Center"
@@ -286,7 +286,14 @@
 
             </Grid>
 
+            <!--<Grid>
+                                
+                
+                
+            </Grid>-->
+
             <Grid.GestureRecognizers>
+                <!-- para validar a interação das escolhas do usuario -->
                 <TapGestureRecognizer Tapped="PassDialog"/>
                 <SwipeGestureRecognizer Direction="Left" Swiped="DialogAccepted" />
                 <SwipeGestureRecognizer Direction="Right" Swiped="DialogRefused" />

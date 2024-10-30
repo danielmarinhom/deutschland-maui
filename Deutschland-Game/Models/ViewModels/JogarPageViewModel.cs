@@ -83,7 +83,7 @@ namespace Deutschland_Game.Models.ViewModels
 
         }
 
-        public async Task<List<int>> SetAdicionalValuesInConquistas(List<ConquistasResponseDto> conquistas, List<Label> labels)
+        public async Task<List<int>> SetAdicionalValuesInConquistas(List<ConquistasResponseDto> conquistas, List<Label> labels) //
         {
             List<int> ids= new List<int>();
             foreach (var conquista in conquistas)
@@ -92,15 +92,15 @@ namespace Deutschland_Game.Models.ViewModels
                 var valor = conquista.ValorAcrescentado;
 
 
-                if (valor > 0)
+                if (valor > 0) // se o valor for positivo
                 {
-                    labels[id - 1].Text = "+" + valor.ToString();
-                    labels[id - 1].TextColor = Color.FromHex("#7BFA36");
+                    labels[id - 1].Text = "+" + valor.ToString(); // formatacao para o +50 
+                    labels[id - 1].TextColor = Color.FromHex("#7BFA36"); // muda a cor para um verde
                 }
                 else
                 {
-                    labels[id - 1].Text = valor.ToString();
-                    labels[id - 1].TextColor = Color.FromHex("#FA3636");
+                    labels[id - 1].Text = valor.ToString(); // aqui a formatacao já fica no -50
+                    labels[id - 1].TextColor = Color.FromHex("#FA3636"); // muda a cor para um vermelho
                 }
 
                 ids.Add(id);
