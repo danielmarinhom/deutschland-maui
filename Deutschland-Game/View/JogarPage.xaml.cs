@@ -34,6 +34,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     private List<Label> conquistasLabels;
 
+    private List<int> conquistasValues;
+
     public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths)
 
     {
@@ -63,6 +65,31 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             tutorialComponent.IsVisible = true;
         }
 
+    }
+    public void AtualizarConquistas(bool wasAceppt) // atualiza a lista global das conquistas a cada escolha
+    {
+        foreach (var dialogo in allDatasBeforeEraResponse)
+        {
+            List<ConquistasResponseDto> conquistas;
+
+            if (wasAceppt)
+            {
+                conquistas = dialogo.Consequencias.aceito;
+            }
+            else
+            {
+                conquistas = dialogo.Consequencias.recusado;
+            }
+
+            foreach (var conquista in conquistas)
+            {
+                conquistasValues[conquista.IdConquista - 1] += (int)conquista.ValorAcrescentado;
+            }
+        }
+    }
+    public List<int> endGame() // no fim do jogo retorna os valores acumulados ate o fim da era
+    {
+        return conquistasValues;
     }
 
     public async void AdicionalAnimation(Label label) // animacao dos valores acrescentados nas conquistas
@@ -205,6 +232,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         {
             return; 
         }
+        AtualizarConquistas(wasAceppt);
 
         List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>();
 
