@@ -5,6 +5,7 @@ using Microsoft.Maui.Animations;
 using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
+using System.Net.Http.Json;
 
 namespace Deutschland_Game.Service
 {
@@ -13,8 +14,7 @@ namespace Deutschland_Game.Service
         private HttpClient httpClient;
         private Usuario usuario;
         private JsonSerializerOptions jsonSerializerOptions;
-        private string userId = "";
-        Uri uri = new Uri("http://localhost:8080");
+        private int userId;
         
         //  url - >  /usuario/cadastrar   @RequestBody UsuarioDTO - > (String nome) - > return ResponseEntity.ok(id);
         public UsuarioService()
@@ -28,23 +28,29 @@ namespace Deutschland_Game.Service
         }
         public async Task<UsuarioDto> CadastrarUsuarioAsync(String nome)
         {
-            var usuarioDto = new UsuarioDto { Nome = nome };
+
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) // valida se tem internet
+            {
+                return null; 
+            }
+
             try
             {
-                string json = JsonSerializer.Serialize(usuarioDto, jsonSerializerOptions);
-                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await httpClient.PostAsync(uri + "/usuario/cadastrar"
-                    ,content);
+
+                var response = await httpClient.PostAsJsonAsync($"{ApiBaseURL.API_BASE_URL}/usuario/cadastrar", new { Nome = nome});
+
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonResponse = await response.Content.ReadAsStringAsync();
+
                     UsuarioDto usuarioCadastrado = JsonSerializer.Deserialize<UsuarioDto>(jsonResponse, jsonSerializerOptions);
+
                     return usuarioCadastrado;
                 }
                 else
                 {
                     Debug.WriteLine(response.StatusCode);
-                    return null;
+                    return null; 
                 }
             }
             catch (Exception e)

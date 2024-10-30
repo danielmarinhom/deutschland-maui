@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:material="http://sharpnado.com"
              x:Class="Deutschland_Game.View.EscolherNomePage"
              Shell.NavBarIsVisible="False"
              >
@@ -97,13 +99,17 @@
                             StrokeShape="RoundRectangle 25"
                             >
 
-                            <Entry Placeholder="Digite o nome do rei"
+                            <Entry 
+                                x:Name="nameEntry"
+                                TextChanged="nameEntry_TextChanged"
+                                Placeholder="Digite o nome do rei"
                                Text="{Binding NomeRei, Mode=TwoWay}"
                                TextColor="#AD8C65"
                                FontSize="17"
                                FontFamily="PeachCake"
                                PlaceholderColor="#AD8C65"
                                BackgroundColor="Transparent"
+                               
                                    />
 
                         </Border>
@@ -133,6 +139,35 @@
                 </VerticalStackLayout>
 
             </HorizontalStackLayout>
+
+            <Grid
+                IsVisible="False"
+                x:Name="loading_component">
+
+                <material:MaterialFrame
+                    MaterialTheme="AcrylicBlur"
+                    MaterialBlurStyle="Dark"
+                    Opacity=".8"
+                    Elevation="10"
+                    HasShadow="False"
+                    AcrylicGlowColor="#000000"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand"
+                    />
+
+                <skia:SKLottieView
+                    RepeatCount="-1"
+                    RepeatMode="Restart"
+                    Source="circleloading.json"
+                    WidthRequest="150"
+                    HeightRequest="150"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    />
+
+            </Grid>
+            
+
         </Grid>
 
     </VerticalStackLayout>
