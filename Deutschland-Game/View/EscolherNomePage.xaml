@@ -99,13 +99,17 @@
                             StrokeShape="RoundRectangle 25"
                             >
 
-                            <Entry Placeholder="Digite o nome do rei"
+                            <Entry 
+                                x:Name="nameEntry"
+                                TextChanged="nameEntry_TextChanged"
+                                Placeholder="Digite o nome do rei"
                                Text="{Binding NomeRei, Mode=TwoWay}"
                                TextColor="#AD8C65"
                                FontSize="17"
                                FontFamily="PeachCake"
                                PlaceholderColor="#AD8C65"
                                BackgroundColor="Transparent"
+                               
                                    />
 
                         </Border>

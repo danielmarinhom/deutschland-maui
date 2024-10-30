@@ -12,6 +12,8 @@ namespace Deutschland_Game.View
         private CadastrarUsuarioViewModel cadastrarUsuarioViewModel;
         private EraService eraService;
 
+
+
         public string NomeRei
         {
             get => nomeRei;
@@ -71,6 +73,14 @@ namespace Deutschland_Game.View
         {
             Navigation.PopAsync();
             return true;
+        }
+
+        private void nameEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(nameEntry.Text.Length >= 22)
+            {
+                nameEntry.Text = nameEntry.Text.Substring(0, 22);
+            }
         }
     }
 }

@@ -284,13 +284,6 @@
 
                 </Grid>
 
-                <BoxView
-                IsVisible="False"
-                x:Name="choiceEffect"
-                VerticalOptions="FillAndExpand"
-                HorizontalOptions="FillAndExpand"
-                Opacity=".3"></BoxView>
-
             </Grid>
 
             <Grid.GestureRecognizers>

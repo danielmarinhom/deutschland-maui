@@ -102,19 +102,13 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     public async void ShowChoiceEffect(bool wasAccept)
     {
-        if (wasAccept)
+        
+        if(wasAccept)
         {
-            choiceEffect.BackgroundColor = Color.FromHex("#00c1a2");
-        }
-        else
-        {
-            choiceEffect.BackgroundColor = Color.FromHex("#de524b");
-        }
-        choiceEffect.IsVisible = true;
-        await Task.Delay(300);
-        choiceEffect.IsVisible = false;
 
-    }
+        }
+
+    } // fazer dps
 
     public bool CheckIfItsFirstTime()
 	{
@@ -129,7 +123,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
         }
 
-		return false; // colocar false para a versao final
+		return true; // colocar false para a versao final
 
     }
 
