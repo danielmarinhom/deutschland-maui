@@ -294,6 +294,7 @@
             </Grid>
 
             <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="PassDialog"/>
                 <SwipeGestureRecognizer Direction="Left" Swiped="DialogAccepted" />
                 <SwipeGestureRecognizer Direction="Right" Swiped="DialogRefused" />
             </Grid.GestureRecognizers>

@@ -26,6 +26,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     private bool isTaskingRunning = false;
 
+    private bool userPassedAnimation = false;
+
     private ConquistaUsuarioService conquistaUsuarioService;
 
     private List<Label> conquistasLabels;
@@ -143,6 +145,12 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 		targetLabel.Text = "";
 		for(int i = 0; i < dialog.Length; i++)
 		{
+            if (userPassedAnimation)
+            {
+                targetLabel.Text = dialog;
+                userPassedAnimation = false;
+                return;
+            }
 			targetLabel.Text += dialog[i];
 			await Task.Delay(delayInMls);
 		}
@@ -268,5 +276,10 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         }
 
         ChoiceMade(false);
+    }
+
+    private void PassDialog(object sender, EventArgs e) // método para pular a animação do diálogo 
+    {
+        userPassedAnimation = true;
     }
 }
