@@ -119,41 +119,41 @@
                         </FlexLayout>
 
                         <Label
-                            IsVisible="false"
+                        IsVisible="False"
                         x:Name="populaidadeAdicional"
-                        Text="+50"
+                        Text=""
                         FontSize="20"
-                        TextColor="#7BFA36"
                         Margin="50, 50, 0, 0"/>
 
                         <Label
+                        IsVisible="False"
                         x:Name="igrejaAdicional"
-                        Text="+50"
+                        Text=""
                         FontSize="20"
-                        TextColor="#7BFA36"
                         Margin="110, 50, 0, 0"/>
 
                         <Label
+                            
+                        IsVisible="False"
                         x:Name="economiaAdicional"
-                        Text="+50"
+                        Text=""
                         FontSize="20"
-                        TextColor="#7BFA36"
                         Margin="140, 100, 0, 0"
                         Rotation="10"/>
 
                         <Label
+                        IsVisible="False"  
                         x:Name="diplomaciaAdicional"
-                        Text="+50"
+                        Text=""
                         FontSize="20"
-                        TextColor="#7BFA36"
                         Margin="15, 80, 0, 0"
                         Rotation="-10"/>
 
                         <Label
+                        IsVisible="False"
                         x:Name="exercitoAdicional"
-                        Text="+50"
+                        Text=""
                         FontSize="20"
-                        TextColor="#7BFA36"
                         Margin="80, 135, 0, 0"/>
 
 

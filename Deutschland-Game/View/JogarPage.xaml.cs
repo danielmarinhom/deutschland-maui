@@ -3,8 +3,8 @@ using Deutschland_Game.Models.ApiModels;
 using System.Diagnostics;
 using System.ComponentModel;
 using Deutschland_Game.Models.ViewModels;
-using System.Net.Mime;
 using Deutschland_Game.Service;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 
 
 namespace Deutschland_Game.View;
@@ -28,10 +28,14 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     private ConquistaUsuarioService conquistaUsuarioService;
 
+    private List<Label> conquistasLabels;
+
     public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths)
 
     {
         InitializeComponent();
+
+        conquistasLabels = new List<Label> { populaidadeAdicional, igrejaAdicional, diplomaciaAdicional, economiaAdicional, exercitoAdicional };
 
         viewModel = new JogarPageViewModel();
         BindingContext = viewModel;
@@ -169,7 +173,6 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     {
         isTaskingRunning = true;
 
-        AdicionalAnimation(populaidadeAdicional);
         await viewModel.GetAllConquistasByUserID(usuarioDto.Id);
 
         personagemNomeLabel.Text = "";
@@ -215,6 +218,13 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             tutorialComponent.IsVisible = false;
         }
 
+        var ids = await viewModel.SetAdicionalValuesInConquistas(allDatasBeforeEraResponse[actIndexDialog].Consequencias.aceito, true, conquistasLabels);
+
+        for (int i = 0; i < ids.Count; i++)
+        {
+            AdicionalAnimation(conquistasLabels[ids[i] - 1]);
+        }
+
         await conquistaUsuarioService.UpdateConquistas(allDatasBeforeEraResponse[actIndexDialog].Consequencias.aceito, usuarioDto.Id);
 
         Vibration.Vibrate(200);
@@ -243,6 +253,13 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         if (CheckIfItsFirstTime())
         {
             tutorialComponent.IsVisible = false;
+        }
+
+        var ids = await viewModel.SetAdicionalValuesInConquistas(allDatasBeforeEraResponse[actIndexDialog].Consequencias.recusado, false, conquistasLabels);
+
+        for(int i = 0; i < ids.Count; i++)
+        {
+            AdicionalAnimation(conquistasLabels[ids[i]-1]);
         }
 
         await conquistaUsuarioService.UpdateConquistas(allDatasBeforeEraResponse[actIndexDialog].Consequencias.recusado, usuarioDto.Id);

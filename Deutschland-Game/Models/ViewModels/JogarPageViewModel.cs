@@ -1,4 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Deutschland_Game.Dtos;
@@ -7,13 +10,28 @@ using Deutschland_Game.Service;
 
 namespace Deutschland_Game.Models.ViewModels
 {
-    public partial class JogarPageViewModel : ObservableObject 
+    public partial class JogarPageViewModel : ObservableObject
     {
         private readonly ConquistaUsuarioService conquistaUsuarioService;
 
-        public JogarPageViewModel() { 
+        [ObservableProperty]
+        private ObservableCollection<ConquistaLabelDto> conquistaLabelDtos;
+
+        public JogarPageViewModel()
+        {
             conquistaUsuarioService = new ConquistaUsuarioService();
-        } 
+
+            conquistaLabelDtos = new ObservableCollection<ConquistaLabelDto> {
+
+                new ConquistaLabelDto { text = "test", color = "Red"},
+                new ConquistaLabelDto { text = "test", color = "Red"},
+                new ConquistaLabelDto { text = "test", color = "Red"},
+                new ConquistaLabelDto { text = "test", color = "Red"},
+                new ConquistaLabelDto { text = "test", color = "Red"},
+
+
+            };
+        }
 
         [ObservableProperty]
         private string localImagePath;
@@ -36,7 +54,6 @@ namespace Deutschland_Game.Models.ViewModels
         [ObservableProperty]
         private string exercitoText;
 
-
         public void setEraPathInImage(string imagePath)
         {
             LocalImagePath = imagePath;
@@ -53,7 +70,7 @@ namespace Deutschland_Game.Models.ViewModels
 
             var response = await conquistaUsuarioService.FindByUserID(userID);
 
-            if(response == null)
+            if (response == null)
             {
                 return;
             }
@@ -66,10 +83,34 @@ namespace Deutschland_Game.Models.ViewModels
 
         }
 
-        public async Task UpdateConquistas(List<ConquistasResponseDto> conquistaUsuarioResponses) 
+        public async Task<List<int>> SetAdicionalValuesInConquistas(List<ConquistasResponseDto> conquistas, bool wasAccpet, List<Label> labels)
         {
-            
-        }
+            List<int> ids= new List<int>();
+            foreach (var conquista in conquistas)
+            {
+                var id = conquista.IdConquista;
+                var valor = conquista.ValorAcrescentado.ToString();
 
+
+                if (wasAccpet)
+                {
+                    labels[id - 1].Text = "+" + valor;
+                    labels[id - 1].TextColor = Color.FromHex("#7BFA36");
+                }
+                else
+                {
+                    labels[id - 1].Text = valor;
+                    labels[id - 1].TextColor = Color.FromHex("#FA3636");
+                }
+
+                Debug.WriteLine(ConquistaLabelDtos[id - 1].text);
+
+                ids.Add(id);
+
+            }
+
+            return ids;
+
+        }
     }
 }
