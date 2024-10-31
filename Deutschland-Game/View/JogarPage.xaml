@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:material="http://sharpnado.com"
              x:Class="Deutschland_Game.View.JogarPage"
              Title="JogarPage"
              Shell.NavBarIsVisible="False">
@@ -30,6 +31,8 @@
             <Grid>
 
                 <Grid
+                    
+                x:Name="conquistasComponent"
                 VerticalOptions="Start"
                 HorizontalOptions="End"
                 Margin="0, -15, 100, 0"
@@ -286,11 +289,164 @@
 
             </Grid>
 
-            <!--<Grid>
-                                
-                
-                
-            </Grid>-->
+            <Grid
+                x:Name="summaryContainer"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="False"
+                >
+
+                <Grid
+                    x:Name="bkgSummaryContainer"
+                    >
+                    <BoxView
+                    IsVisible="True"
+                    Background="Black"
+                    Opacity=".5">
+                    </BoxView>
+
+                    <material:MaterialFrame
+                        MaterialTheme="AcrylicBlur"
+                        MaterialBlurStyle="Dark"
+                        Opacity=".8"
+                        Elevation="10"
+                        HasShadow="False"
+                        AcrylicGlowColor="#000000"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                    />
+                </Grid>
+
+
+                <skia:SKLottieView
+                x:Name="conffetsAnimation"
+                Source="conffets.json"
+                RepeatCount="-1"
+                RepeatMode="Restart"
+                VerticalOptions="FillAndExpand"
+                Background="Transparent"
+                />
+
+                <Grid
+                   x:Name="summaryInfoContainer"
+                   IsVisible="True"
+                   WidthRequest="350"
+                    >
+                    <Image Source="relatorio_image.png"
+                            Margin="0, 0, 0, 95"/>
+
+                    <VerticalStackLayout
+                        HorizontalOptions="Center"
+                        Margin="0, 90, 0, 0">
+
+                        <Label
+                                VerticalOptions="Center"
+                                Text="{Binding EraSummary, StringFormat='Período Finalizado!&#x0a;{0}'}"
+                                HorizontalTextAlignment="Center"
+                                LineBreakMode="WordWrap"
+                                FontSize="20"
+                                TextColor="Black"
+                                    Margin="0, 0, 0, 5"/>
+
+                        <HorizontalStackLayout
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Image
+                                Source="popularidade_conquista.png"
+                                WidthRequest="30"
+                                Margin="0, 0, 5, 5"/>
+                            <Label
+                                x:Name="popularidadeSum"
+                                Text="Popularidade "
+                                FontSize="25"
+                                TextColor="#339300"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Image
+                            Source="igreja_conquista.png"
+                            WidthRequest="30"
+                            Margin="0, 0, 5, 5"/>
+                            <Label
+                                x:Name="igrejaSum"
+                            Text="Igreja "
+                            FontSize="25"
+                            TextColor="White"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Image
+                            Source="diplomacia_conquista.png"
+                            WidthRequest="30"
+                            Margin="0, 0, 5, 5"/>
+                            <Label
+                                x:Name="diplomaciaSum"
+                            Text="Diplomacia "
+                            FontSize="25"
+                            TextColor="#339300"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Image
+                            Source="dinheiro_conquista.png"
+                            WidthRequest="30"
+                            Margin="0, 0, 5, 5"/>
+                            <Label
+                                x:Name="economiaSum"
+                            Text="Economia "
+                            FontSize="25"
+                            TextColor="#FF0000"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Image
+                            Source="exercito_conquista.png"
+                            WidthRequest="30"
+                            Margin="0, 0, 5, 5"/>
+                            <Label
+                              x:Name="exercitoSum"
+                            Text="Exercito "
+                            FontSize="25"
+                            TextColor="#FF0000"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <VerticalStackLayout
+                    x:Name="summaryButton"
+                    IsEnabled="False"
+                    VerticalOptions="End"
+                    HorizontalOptions="End"
+                    Margin="0, 0, 30, 120">
+                    <Grid VerticalOptions="End" Padding="10">
+                        <Button
+                            WidthRequest="150"
+                            BackgroundColor="Transparent"
+                            Clicked="NextEra"
+                            />
+                        
+                        <Image 
+                            Source="scroll.png" 
+                            WidthRequest="150"/>
+                        
+                        <Label Text="Continuar"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="Black"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" 
+                               
+                                />
+                    </Grid>
+                </VerticalStackLayout>
+
+            </Grid>
+
+
 
             <Grid.GestureRecognizers>
                 <!-- para validar a interação das escolhas do usuario -->

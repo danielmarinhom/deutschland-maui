@@ -14,7 +14,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     private UsuarioDto usuarioDto;
     private EraService eraService = new EraService();
-
+    private AudioService audioService = new AudioService();
     private List<AllDatasBeforeEraResponse> allDatasBeforeEraResponse;
 
     private JogarPageViewModel viewModel;
@@ -34,19 +34,21 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     private ConquistaUsuarioService conquistaUsuarioService;
 
     private List<Label> conquistasLabels;
-<<<<<<< HEAD
-    private int idEra;
-=======
 
->>>>>>> 9341495cb2700e3a51842d5483a7b9c8e9755256
+    private List<Label> summaryLabels;
+
+    private EraResponse eraResponseGlobal;
+
     private List<int> conquistasValues;
 
-    public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths, long eraId)
+    public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths, EraResponse eraResponse)
 
     {
         InitializeComponent();
 
         conquistasLabels = new List<Label> { populaidadeAdicional, igrejaAdicional, diplomaciaAdicional, economiaAdicional, exercitoAdicional };
+
+        summaryLabels = new List<Label> { popularidadeSum, igrejaSum, diplomaciaSum, economiaSum, exercitoSum };
 
         conquistasValues = new List<int> { 0, 0, 0, 0, 0};
 
@@ -57,7 +59,9 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         viewModel.GetAllConquistasByUserID(usuarioDto.Id);
 
         this.conquistaUsuarioService = new ConquistaUsuarioService();
-        this.id = id;
+
+        this.eraResponseGlobal = eraResponse;
+
         this.usuarioDto = usuarioDto;
         this.allDatasBeforeEraResponse = allDatasBeforeEraResponses;
         
@@ -73,64 +77,65 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         }
 
     }
-    public void AtualizarConquistas(bool wasAceppt) // atualiza a lista global das conquistas a cada escolha
+    public async Task AtualizarConquistas(bool wasAceppt) // atualiza a lista global das conquistas a cada escolha
     {
-        foreach (var dialogo in allDatasBeforeEraResponse)
-        {
-
-            List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>();
-            if (wasAceppt)
+        List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>(); // tive que mudar essa lógica aqui, Daniel
+                                                                                        //antes ele tava somando todas as consequencias de todos os dialogos, pq vc tava fazendo um for no allDatasBeforeEra
+                                                                                        // agora ele só pega o dialogo de acordo com o index global da classe, e filtra certinho
+        audioService.PlayKingAudio(wasAceppt);
+        if (wasAceppt)
             {
-                conquistas = dialogo.Consequencias.aceito;
+                conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.aceito;
             }
             else
             {
-                conquistas = dialogo.Consequencias.recusado;
+                conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.recusado;
+            }
+
+            // aqui eu só joguei esses códigos para dentro desse método, antes tava no ChoiceMade()
+            await conquistaUsuarioService.UpdateConquistas(conquistas, usuarioDto.Id); // faz o update das conquistasUsuario pela api 
+
+            var ids = await viewModel.SetAdicionalValuesInConquistas(conquistas, conquistasLabels);
+
+            for (int i = 0; i < ids.Count; i++) // pra rodar as animações de +50, -100 e etc
+            {
+                AdicionalAnimation(conquistasLabels[ids[i] - 1]);
             }
 
             foreach (var conquista in conquistas)
             {
-                conquistasValues[conquista.IdConquista - 1] += (int)conquista.ValorAcrescentado;
+                conquistasValues[conquista.IdConquista - 1] += (int) conquista.ValorAcrescentado;
             }
-        }
-    }
-    public List<int> endGame() // no fim do jogo retorna os valores acumulados ate o fim da era
-    {
-        if (actIndexDialog >= allDatasBeforeEraResponse.Count)
-        {
-            ShowEndGameDialog(); // Exibe a caixa de diálogo com os resultados
-        }
-        return conquistasValues;
     }
 
-<<<<<<< HEAD
+    public async void RunEndEraAnimation()
+    {
+        conffetsAnimation.IsEnabled = false;
+        bkgSummaryContainer.Opacity = 0;
+
+        await bkgSummaryContainer.FadeTo(1, 1000, Easing.SinInOut);
+
+        conffetsAnimation.RepeatCount = 0;
+        conffetsAnimation.IsEnabled = true;
+
+        await summaryInfoContainer.TranslateTo(0, 0, 1000, Easing.SinInOut);
+
+        summaryButton.IsEnabled = true;
+    }
+
     public async void ShowEndGameDialog()
     {
-        List<int> finalConquistasValues = endGame();
+        await summaryInfoContainer.TranslateTo(0, -500, 10);
+        await viewModel.SetEraNameInSummary(eraResponseGlobal);
+        await viewModel.SetSummaryValues(summaryLabels, conquistasValues);
+        summaryContainer.IsVisible = true;
 
-        string message = $"Popularidade: {finalConquistasValues[0]}\n" +
-                         $"Igreja: {finalConquistasValues[1]}\n" +
-                         $"Diplomacia: {finalConquistasValues[2]}\n" +
-                         $"Economia: {finalConquistasValues[3]}\n" +
-                         $"Exército: {finalConquistasValues[4]}";
+        RunEndEraAnimation();
 
-        await DisplayAlert("Resultado Final", message, "OK");
-        if(idEra <= 6) { idEra++; }
-        EraResponse eraResponse = await eraService.GetEraByID(idEra);
-        if (eraResponse != null)
-        {
-            await Navigation.PushAsync(new LoadingPage(usuarioDto, eraResponse, idEra));
-        }
-        else
-        {
-            await DisplayAlert("Erro", "Não foi possível carregar os dados da era.", "OK");
-        }
+
     }
 
-    public async void AdicionalAnimation(Label label)
-=======
     public async void AdicionalAnimation(Label label) // animacao dos valores acrescentados nas conquistas
->>>>>>> 9341495cb2700e3a51842d5483a7b9c8e9755256
     {
         label.IsVisible = true;
 
@@ -156,7 +161,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     public async void CharacterJoinInScene() // animacao de entrada do personagem
     {
         var translate = personagemComponent.TranslateTo(-80, 0, 2000, Easing.SinInOut);
-
+        audioService.PlayCharacterAudio();
         await Task.WhenAll(translate);
     }
 
@@ -259,65 +264,16 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
         CharacterLeaveInScene(); // animacao do personagem saindo de cena
 
-        isTaskingRunning = false; // usuario pode fazer interações dnv
-
     }
 
     public async void ChoiceMade(bool wasAceppt) // wasAceppt = se o dialogo foi aceito
     {
 
-<<<<<<< HEAD
-        if (actIndexDialog >= allDatasBeforeEraResponse.Count)
-        {
-            return;
-        }
-
-        AtualizarConquistas(wasAceppt);
-
-=======
-        Debug.WriteLine("1");
-        AtualizarConquistas(wasAceppt);
-        Debug.WriteLine("1.5");
-
->>>>>>> 9341495cb2700e3a51842d5483a7b9c8e9755256
-        List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>();
-
-        if (wasAceppt) // filtra as consequencias certas
-        {
-            conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.aceito;
-        }
-        else
-        {
-            conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.recusado;
-        }
-
-        Debug.WriteLine("2");
-
-
-        var ids = await viewModel.SetAdicionalValuesInConquistas(conquistas, conquistasLabels);
-
-        Debug.WriteLine("3");
-
-
-        for (int i = 0; i < ids.Count; i++) // pra rodar as animações de +50, -100 e etc
-        {
-            AdicionalAnimation(conquistasLabels[ids[i] - 1]);
-        }
-
-        Debug.WriteLine("4");
-
-
-        await conquistaUsuarioService.UpdateConquistas(conquistas, usuarioDto.Id); // faz o update das conquistasUsuario pela api 
-
-        Debug.WriteLine("5");
-
+        await AtualizarConquistas(wasAceppt);
 
         Vibration.Vibrate(200); // vibração do celular pra decoração do jogo
 
         await RunAnswer(actIndexDialog, wasAceppt); // aqui roda o dialogo do rei como resposta
-
-        Debug.WriteLine("6");
-
 
         actIndexDialog++; // aumenta o indice pra indicar o proximo dialogo a ser carregado
 
@@ -326,17 +282,13 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             // se o indice do dialogo for >= ao tamanha da lista ---- é pra nao dar exception de index no allDatasBeforeEraResponse
             // basicamente significa que os dialogos já foram todos carregados
             allDialogsAnswered = true;
+            ShowEndGameDialog();
             return;
         }
-
-        Debug.WriteLine("7");
-
 
         await Task.Delay(1500);
 
         await RunDialog(actIndexDialog);
-
-        Debug.WriteLine("8");
 
     }
 
@@ -375,5 +327,21 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     private void PassDialog(object sender, EventArgs e) // método para pular a animação do diálogo 
     {
         userPassedAnimation = true; // var que atualiza se o usuario clicar na tela - significa que ele quer passar a animacao do dialogo
+    }
+
+    private async void NextEra(object sender, EventArgs e)
+    {
+        if (eraResponseGlobal.Id <= 6) { eraResponseGlobal.Id++; }
+
+        EraResponse nextEraResponse = await eraService.GetEraByID(eraResponseGlobal.Id);
+
+        if (nextEraResponse != null)
+        {
+            await Navigation.PushAsync(new LoadingPage(usuarioDto, nextEraResponse));
+        }
+        else
+        {
+            await DisplayAlert("Erro", "Não foi possível carregar os dados da era.", "OK");
+        }
     }
 }

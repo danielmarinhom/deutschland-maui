@@ -11,7 +11,7 @@ namespace Deutschland_Game.View
         private string nomeRei;
         private CadastrarUsuarioViewModel cadastrarUsuarioViewModel;
         private EraService eraService;
-
+        private AudioService audioService;
 
 
         public string NomeRei
@@ -29,6 +29,7 @@ namespace Deutschland_Game.View
             NomeRei = "Francisco Barbarossa";
             cadastrarUsuarioViewModel = new CadastrarUsuarioViewModel();
             eraService = new EraService();
+            audioService = new AudioService();
         }
         // update left scroll according to right entry irt
         public event PropertyChangedEventHandler PropertyChanged;
@@ -39,7 +40,7 @@ namespace Deutschland_Game.View
 
         private async void continuarBtn_Clicked(object sender, EventArgs e)
         {
-
+            audioService.PlayClickAudio();
             loading_component.IsVisible = true; // habilita o loading visual
             try { 
 
@@ -54,7 +55,7 @@ namespace Deutschland_Game.View
                 }
                 else
                 {
-                    await Navigation.PushAsync(new LoadingPage(usuarioDto, eraResponse, eraResponse.Id));
+                    await Navigation.PushAsync(new LoadingPage(usuarioDto, eraResponse));
                 }
             }
             catch (Exception ex)
@@ -65,10 +66,12 @@ namespace Deutschland_Game.View
 
         private async void voltarBtn_Clicked(object sender, EventArgs e)
         {
+            audioService.PlayClickAudio();
             await Navigation.PopAsync();
         }
         protected override bool OnBackButtonPressed()
         {
+            audioService.PlayClickAudio();
             Navigation.PopAsync();
             return true;
         }

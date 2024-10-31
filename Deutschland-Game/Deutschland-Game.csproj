@@ -93,6 +93,7 @@
 	<ItemGroup>
 	  <None Remove="Resources\Images\sacro_imperio_test.png" />
 	  <None Remove="Resources\Raw\circleloading.json" />
+	  <None Remove="Resources\Raw\conffets.json" />
 	  <None Remove="Resources\Raw\greenarrow.json" />
 	  <None Remove="Resources\Raw\redarrow.json" />
 	</ItemGroup>
@@ -122,6 +123,10 @@
 		<MauiXaml Update="View\LoadingPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Resources\Audios\" />
 	</ItemGroup>
 
 </Project>
