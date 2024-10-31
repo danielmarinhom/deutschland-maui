@@ -50,13 +50,11 @@ namespace Deutschland_Game.View
                 loading_component.IsVisible = false; // desabilita o loading visual
 
                 if (usuarioDto == null) {
-                    // tratar erro (ver com o pscosta) - por mim tá ok, nao precisa ter trabalho com isto
-                    // kkkkkkkkkkkkkk okk
                     await DisplayAlert("Erro", "Falha ao cadastrar o usuário", "OK");
                 }
                 else
                 {
-                    await Navigation.PushAsync(new LoadingPage(usuarioDto, eraResponse, 1));
+                    await Navigation.PushAsync(new LoadingPage(usuarioDto, eraResponse, eraResponse.Id));
                 }
             }
             catch (Exception ex)
