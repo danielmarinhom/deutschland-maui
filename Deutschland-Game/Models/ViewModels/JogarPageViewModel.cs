@@ -141,7 +141,10 @@ namespace Deutschland_Game.Models.ViewModels
 
             }
         }
+<<<<<<< HEAD
 
         
+=======
+>>>>>>> 14220a0384532f642e27b9b4b1ced62bbbb97f6e
     }
 }
