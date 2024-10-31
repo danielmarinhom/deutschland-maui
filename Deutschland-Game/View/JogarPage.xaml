@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:skia="clr-namespace:SkiaSharp.Extended.UI.Controls;assembly=SkiaSharp.Extended.UI"
+             xmlns:material="http://sharpnado.com"
              x:Class="Deutschland_Game.View.JogarPage"
              Title="JogarPage"
              Shell.NavBarIsVisible="False">
@@ -30,6 +31,8 @@
             <Grid>
 
                 <Grid
+                    
+                x:Name="conquistasComponent"
                 VerticalOptions="Start"
                 HorizontalOptions="End"
                 Margin="0, -15, 100, 0"
@@ -286,11 +289,139 @@
 
             </Grid>
 
-            <!--<Grid>
-                                
-                
-                
-            </Grid>-->
+            <Grid
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="False"
+                >
+
+                <BoxView
+                    Background="Black"
+                    Opacity=".4">
+                </BoxView>
+
+                <material:MaterialFrame
+                    MaterialTheme="AcrylicBlur"
+                    MaterialBlurStyle="Dark"
+                    Opacity=".8"
+                    Elevation="10"
+                    HasShadow="False"
+                    AcrylicGlowColor="#000000"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand"
+                    />
+
+                <skia:SKLottieView
+                Source="conffets.json"
+                RepeatCount="2"
+                RepeatMode="Restart"
+                VerticalOptions="FillAndExpand"
+                Background="Transparent"
+                />
+
+                <Grid
+                   WidthRequest="350"
+                    >
+                    <Image Source="relatorio_image.png"
+                            Margin="0, 0, 0, 95"/>
+
+                    <VerticalStackLayout
+                        HorizontalOptions="Center"
+                        Margin="0, 90, 0, 0">
+
+                        <Label
+                                VerticalOptions="Center"
+                                Text="Período Finalizado!&#x0a;Sacro Império (962 - 1806)"
+                                HorizontalTextAlignment="Center"
+                                FontSize="24"
+                                TextColor="Black"
+                                    Margin="0, 0, 0, 5"/>
+
+                        <HorizontalStackLayout
+                            VerticalOptions="Center">
+                            <Image
+                                Source="popularidade_conquista.png"
+                                WidthRequest="30"
+                                Margin="0, 0, 5, 5"/>
+                            <Label
+                                Text="Popularidade +50"
+                                FontSize="25"
+                                TextColor="#339300"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            VerticalOptions="Center">
+                            <Image
+                            Source="igreja_conquista.png"
+                            WidthRequest="30"
+                            Margin="0, 0, 5, 5"/>
+                            <Label
+                            Text="Igreja +50"
+                            FontSize="25"
+                            TextColor="White"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            VerticalOptions="Center">
+                            <Image
+                            Source="diplomacia_conquista.png"
+                            WidthRequest="30"
+                            Margin="0, 0, 5, 5"/>
+                            <Label
+                            Text="Diplomacia +50"
+                            FontSize="25"
+                            TextColor="#339300"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            VerticalOptions="Center">
+                            <Image
+                            Source="dinheiro_conquista.png"
+                            WidthRequest="30"
+                            Margin="0, 0, 5, 5"/>
+                            <Label
+                            Text="Economia -50"
+                            FontSize="25"
+                            TextColor="#FF0000"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout
+                            VerticalOptions="Center">
+                            <Image
+                            Source="exercito_conquista.png"
+                            WidthRequest="30"
+                            Margin="0, 0, 5, 5"/>
+                            <Label
+                            Text="Exército -100"
+                            FontSize="25"
+                            TextColor="#FF0000"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <VerticalStackLayout
+                    VerticalOptions="End"
+                    HorizontalOptions="End"
+                    Margin="0, 0, 30, 120">
+                    <Grid VerticalOptions="End" Padding="10">
+                        <Button
+                            WidthRequest="150"
+                            BackgroundColor="Transparent"
+                            />
+                        
+                        <Image 
+                            Source="scroll.png" 
+                            WidthRequest="150"/>
+                        
+                        <Label Text="Continuar"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="Black"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" 
+                                />
+                    </Grid>
+                </VerticalStackLayout>
+
+            </Grid>
+
+
 
             <Grid.GestureRecognizers>
                 <!-- para validar a interação das escolhas do usuario -->

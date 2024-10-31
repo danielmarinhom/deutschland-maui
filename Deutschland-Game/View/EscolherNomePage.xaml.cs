@@ -54,7 +54,7 @@ namespace Deutschland_Game.View
                 }
                 else
                 {
-                    await Navigation.PushAsync(new LoadingPage(usuarioDto, eraResponse, eraResponse.Id));
+                    await Navigation.PushAsync(new LoadingPage(usuarioDto, eraResponse));
                 }
             }
             catch (Exception ex)

@@ -29,7 +29,7 @@ namespace Deutschland_Game.View
 
         private int eraID;
 
-        public LoadingPage(UsuarioDto usuarioDto, EraResponse eraResponse, int eraID)
+        public LoadingPage(UsuarioDto usuarioDto, EraResponse eraResponse)
         {
             InitializeComponent();
             this.usuarioDto = usuarioDto;
@@ -44,8 +44,6 @@ namespace Deutschland_Game.View
 
             this.eraResponse = eraResponse;
 
-            this.eraID = eraID;
-
             eraNameLabel.Text = eraResponse.Nome;
             eraPeriodo.Text = eraResponse.Periodo;
 
@@ -56,7 +54,7 @@ namespace Deutschland_Game.View
         private async Task LoadAllDatasBeforeEra()
         {
 
-            var response = await allDatasBeforeEraService.GetDatasByEraID(this.eraID); // carrega todos os dados dos dialogos, dos personagens e das consequencias
+            var response = await allDatasBeforeEraService.GetDatasByEraID(this.eraResponse.Id); // carrega todos os dados dos dialogos, dos personagens e das consequencias
             if (response == null) // se nao deu certo, response == null
             {
                 await DisplayAlert("Erro", "Algo deu errado! Cadastre o usuário novamente.", "OK");
