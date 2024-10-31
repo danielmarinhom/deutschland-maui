@@ -73,26 +73,31 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         }
 
     }
-    public void AtualizarConquistas(bool wasAceppt) // atualiza a lista global das conquistas a cada escolha
+    public async Task AtualizarConquistas(bool wasAceppt) // atualiza a lista global das conquistas a cada escolha
     {
-        foreach (var dialogo in allDatasBeforeEraResponse)
-        {
-
             List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>();
             if (wasAceppt)
             {
-                conquistas = dialogo.Consequencias.aceito;
+                conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.aceito;
             }
             else
             {
-                conquistas = dialogo.Consequencias.recusado;
+                conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.recusado;
             }
 
-            foreach (var conquista in conquistas)
+            await conquistaUsuarioService.UpdateConquistas(conquistas, usuarioDto.Id); // faz o update das conquistasUsuario pela api 
+
+            var ids = await viewModel.SetAdicionalValuesInConquistas(conquistas, conquistasLabels);
+
+            for (int i = 0; i < ids.Count; i++) // pra rodar as animações de +50, -100 e etc
             {
-                conquistasValues[conquista.IdConquista - 1] += (int)conquista.ValorAcrescentado;
+                AdicionalAnimation(conquistasLabels[ids[i] - 1]);
             }
-        }
+
+        foreach (var conquista in conquistas)
+            {
+                conquistasValues[conquista.IdConquista - 1] += (int) conquista.ValorAcrescentado;
+            }
     }
     public List<int> endGame() // no fim do jogo retorna os valores acumulados ate o fim da era
     {
@@ -111,7 +116,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
         await DisplayAlert("Resultado Final", message, "OK");
 
-        if(idEra <= 6) { idEra++; }
+        if (idEra <= 6) { idEra++; }
 
         EraResponse eraResponse = await eraService.GetEraByID(idEra);
 
@@ -259,27 +264,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     public async void ChoiceMade(bool wasAceppt) // wasAceppt = se o dialogo foi aceito
     {
 
-        AtualizarConquistas(wasAceppt);
-
-        List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>();
-
-        if (wasAceppt) // filtra as consequencias certas
-        {
-            conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.aceito;
-        }
-        else
-        {
-            conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.recusado;
-        }
-
-        var ids = await viewModel.SetAdicionalValuesInConquistas(conquistas, conquistasLabels);
-
-        for (int i = 0; i < ids.Count; i++) // pra rodar as animações de +50, -100 e etc
-        {
-            AdicionalAnimation(conquistasLabels[ids[i] - 1]);
-        }
-
-        await conquistaUsuarioService.UpdateConquistas(conquistas, usuarioDto.Id); // faz o update das conquistasUsuario pela api 
+        await AtualizarConquistas(wasAceppt);
 
         Vibration.Vibrate(200); // vibração do celular pra decoração do jogo
 
