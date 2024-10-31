@@ -54,6 +54,9 @@ namespace Deutschland_Game.Models.ViewModels
         [ObservableProperty]
         private string eraSummary;
 
+        [ObservableProperty]
+        private string conquistaNegative;
+
         public void setEraPathInImage(string imagePath)
         {
             LocalImagePath = imagePath;
@@ -139,6 +142,26 @@ namespace Deutschland_Game.Models.ViewModels
                 }
 
             }
+        }
+
+        public async Task<bool> isGameOver(long userID)
+        {
+            var conquistas = await conquistaUsuarioService.FindByUserID(userID);
+            if(conquistas == null)
+            {
+                return false;
+            }
+
+            foreach (var conquista in conquistas)
+            {
+                if(conquista.ValorAcrescentado <= 0)
+                {
+                    ConquistaNegative = conquista.NomeConquista.ToLower();
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

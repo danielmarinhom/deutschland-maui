@@ -1,10 +1,8 @@
 using Deutschland_Game.Dtos;
 using Deutschland_Game.Models.ApiModels;
-using System.Diagnostics;
 using System.ComponentModel;
 using Deutschland_Game.Models.ViewModels;
 using Deutschland_Game.Service;
-using Microsoft.Maui.Controls.PlatformConfiguration;
 
 
 namespace Deutschland_Game.View;
@@ -107,6 +105,26 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             }
     }
 
+    public async Task<bool> ValidateGameOver()
+    {
+        bool isGameOver = viewModel.isGameOver(this.usuarioDto.Id).Result;
+        
+        if (isGameOver) {
+
+            gameOverTransition.Opacity = 0;
+            await gameOverTransition.FadeTo(1, 2000, Easing.SinInOut);
+
+            gameOverContainer.IsVisible = true;
+
+            await gameOverTransition.FadeTo(0, 2000, Easing.SinInOut);
+
+            return true;
+
+        }
+
+        return false;
+    }
+
     public async void RunEndEraAnimation()
     {
         conffetsAnimation.IsEnabled = false;
@@ -124,13 +142,18 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     public async void ShowEndGameDialog()
     {
+
+        if (ValidateGameOver().Result)
+        {
+            return;
+        }
+
         await summaryInfoContainer.TranslateTo(0, -500, 10);
         await viewModel.SetEraNameInSummary(eraResponseGlobal);
         await viewModel.SetSummaryValues(summaryLabels, conquistasValues);
         summaryContainer.IsVisible = true;
 
         RunEndEraAnimation();
-
 
     }
 

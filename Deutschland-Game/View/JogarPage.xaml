@@ -446,6 +446,84 @@
 
             </Grid>
 
+            <Grid
+                x:Name="gameOverContainer"
+                IsVisible="False">
+
+                <Image Source="gameover_bkg.png"  
+                Aspect="AspectFill"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand" 
+                Margin="0, 0, 0, 0"
+                />
+
+                <Grid>
+                    <BoxView
+                    IsVisible="True"
+                    Background="Black"
+                    Opacity=".5">
+                    </BoxView>
+
+                    <material:MaterialFrame
+                        MaterialTheme="AcrylicBlur"
+                        MaterialBlurStyle="Dark"
+                        Opacity=".8"
+                        Elevation="10"
+                        HasShadow="False"
+                        AcrylicGlowColor="#000000"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                    />
+                </Grid>
+
+                <VerticalStackLayout
+                    HorizontalOptions="Start"
+                    WidthRequest="480"
+                    Margin="80, 60, 0, 0">
+                    <Label
+                        Text="Game Over"
+                        TextColor="#FA3636"
+                        FontSize="40"/>
+
+                    <Label
+                    Text="{Binding ConquistaNegative, StringFormat='O seu império decaiu por conta do {0}! Tenha mais cuidado da próxima vez...'}"
+                    TextColor="White"
+                    FontSize="25"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    VerticalOptions="End"
+                    HorizontalOptions="End"
+                    Margin="0, 0, 30, 140">
+                    <Grid VerticalOptions="End" Padding="10">
+                        <Button
+                            WidthRequest="150"
+                            BackgroundColor="Transparent"
+                            Clicked="NextEra"
+                            />
+
+                        <Image 
+                            Source="scroll.png" 
+                            WidthRequest="150"/>
+
+                        <Label Text="Continuar"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="Black"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" 
+                               
+                                />
+                    </Grid>
+                </VerticalStackLayout>
+
+            </Grid>
+
+            <BoxView
+                x:Name="gameOverTransition"
+                IsVisible="False"
+                BackgroundColor="Black"></BoxView>
+
 
 
             <Grid.GestureRecognizers>
