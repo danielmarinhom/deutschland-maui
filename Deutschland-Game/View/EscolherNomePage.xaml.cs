@@ -22,14 +22,14 @@ namespace Deutschland_Game.View
             }
         }
 
-        public EscolherNomePage()
+        public EscolherNomePage(AudioService audioService)
         {
             InitializeComponent();
             BindingContext = this;
             NomeRei = "Francisco Barbarossa";
             cadastrarUsuarioViewModel = new CadastrarUsuarioViewModel();
             eraService = new EraService();
-            audioService = new AudioService();
+            this.audioService = audioService;
         }
         // update left scroll according to right entry irt
         public event PropertyChangedEventHandler PropertyChanged;
@@ -55,7 +55,7 @@ namespace Deutschland_Game.View
                 }
                 else
                 {
-                    await Navigation.PushAsync(new LoadingPage(usuarioDto, eraResponse));
+                    await Navigation.PushAsync(new LoadingPage(usuarioDto, eraResponse, audioService));
                 }
             }
             catch (Exception ex)

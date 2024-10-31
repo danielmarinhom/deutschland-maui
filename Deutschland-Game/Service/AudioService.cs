@@ -1,5 +1,6 @@
 ﻿using MediaManager;
 using Plugin.Maui.Audio;
+using AudioManager = Plugin.Maui.Audio.AudioManager;
 
 namespace Deutschland_Game.Service
 {
@@ -7,16 +8,25 @@ namespace Deutschland_Game.Service
     {
         private bool isPlaying = false;
 
+        private readonly IAudioManager audioManager;
+
+        public AudioService(IAudioManager audio)
+        {
+            audioManager = audio;
+        }
+
         public async Task PlayBackgroundAudio()
         {
 
             Random random = new Random();
             string randNumber = random.Next(1, 4).ToString();
             string audio = $"BackgroundMusic{randNumber}.mp3";
-                    
+
             var player = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(audio));
-            player.Play();
+
             player.Loop = true;
+            player.Play();
+
         }
 
         public async void PlayCharacterAudio()

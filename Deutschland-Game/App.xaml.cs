@@ -13,8 +13,6 @@ namespace Deutschland_Game
 
             //Handler.PlatformView.BackgroundTintList = ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
 
-            _audioService = new AudioService();
-
             MainPage = new AppShell();
 
 

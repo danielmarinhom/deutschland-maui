@@ -11,8 +11,11 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 {
 
     private UsuarioDto usuarioDto;
+
     private EraService eraService = new EraService();
-    private AudioService audioService = new AudioService();
+
+    private readonly AudioService audioService;
+
     private List<AllDatasBeforeEraResponse> allDatasBeforeEraResponse;
 
     private JogarPageViewModel viewModel;
@@ -39,10 +42,12 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     private List<int> conquistasValues;
 
-    public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths, EraResponse eraResponse)
+    public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths, EraResponse eraResponse, AudioService audioService)
 
     {
         InitializeComponent();
+
+        this.audioService = audioService;
 
         conquistasLabels = new List<Label> { populaidadeAdicional, igrejaAdicional, diplomaciaAdicional, economiaAdicional, exercitoAdicional };
 
@@ -65,7 +70,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         
         this.personagemImagesPaths = personagemImagesPaths;
 
-        audioService.PlayBackgroundAudio();
+        this.audioService.PlayBackgroundAudio();
 
         RunDialog(0);
         
@@ -364,7 +369,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
         if (nextEraResponse != null)
         {
-            await Navigation.PushAsync(new LoadingPage(usuarioDto, nextEraResponse));
+            await Navigation.PushAsync(new LoadingPage(usuarioDto, nextEraResponse, audioService));
         }
         else
         {

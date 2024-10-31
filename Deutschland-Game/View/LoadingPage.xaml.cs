@@ -10,6 +10,8 @@ namespace Deutschland_Game.View
 {
     public partial class LoadingPage : ContentPage
     {
+        private readonly AudioService audioService;
+
         //puxar id do cadastro da api e passar no JogarPage no parametro do Navigation
         private UsuarioDto usuarioDto;
 
@@ -28,9 +30,11 @@ namespace Deutschland_Game.View
         private List<string> personagemImagesPaths;
 
 
-        public LoadingPage(UsuarioDto usuarioDto, EraResponse eraResponse)
+        public LoadingPage(UsuarioDto usuarioDto, EraResponse eraResponse, AudioService audioService)
         {
             InitializeComponent();
+
+            this.audioService = audioService;
             this.usuarioDto = usuarioDto;
 
             this.allDatasBeforeEraService = new AllDatasBeforeEraService();
@@ -109,7 +113,7 @@ namespace Deutschland_Game.View
                 await Task.Delay(500);
             }
 
-            await Navigation.PushAsync(new JogarPage(this.usuarioDto, this.allDatasBeforeEraResponses, eraImagePath, personagemImagesPaths, eraResponse));
+            await Navigation.PushAsync(new JogarPage(this.usuarioDto, this.allDatasBeforeEraResponses, eraImagePath, personagemImagesPaths, eraResponse, audioService));
         }
         
     }

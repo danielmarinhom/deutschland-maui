@@ -7,25 +7,25 @@ namespace Deutschland_Game
 {
     public partial class MainPage : ContentPage
     {
-        AudioService audioService;
+        private readonly AudioService audioService;
 
-        public MainPage()
+        public MainPage(AudioService audioService)
         {
             InitializeComponent();
-            audioService = new AudioService();
+            this.audioService = audioService;
             audioService.PlayBackgroundAudio();
         }
 
         private async void creditosBtn_Clicked(object sender, EventArgs e)
         {
             audioService.PlayClickAudio();
-            await Navigation.PushAsync(new CreditosPage());
+            await Navigation.PushAsync(new CreditosPage(audioService));
         }
 
         private async void jogarBtn_Clicked(object sender, EventArgs e)
         {
             audioService.PlayClickAudio();
-            await Navigation.PushAsync(new EscolherNomePage());
+            await Navigation.PushAsync(new EscolherNomePage(audioService));
         }
     }
 
