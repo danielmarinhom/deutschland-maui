@@ -79,16 +79,15 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     }
     public async Task AtualizarConquistas(bool wasAceppt) // atualiza a lista global das conquistas a cada escolha
     {
-<<<<<<< HEAD
         List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>(); // tive que mudar essa lógica aqui, Daniel
                                                                                         //antes ele tava somando todas as consequencias de todos os dialogos, pq vc tava fazendo um for no allDatasBeforeEra
                                                                                         // agora ele só pega o dialogo de acordo com o index global da classe, e filtra certinho
         audioService.PlayKingAudio(wasAceppt);
-=======
+
             List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>(); // tive que mudar essa lógica aqui, Daniel
             //antes ele tava somando todas as consequencias de todos os dialogos, pq vc tava fazendo um for no allDatasBeforeEra
             // agora ele só pega o dialogo de acordo com o index global da classe, e filtra certinho
->>>>>>> 14220a0384532f642e27b9b4b1ced62bbbb97f6e
+
         if (wasAceppt)
             {
                 conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.aceito;
@@ -330,7 +329,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         ChoiceMade(false);
     }
 
-    private void PassDialog(object sender, EventArgs e) // método para pular a animação do diálogo 
+    private void PassDialog(object sender, EventArgs e) //método para pular a animação do diálogo 
     {
         userPassedAnimation = true; // var que atualiza se o usuario clicar na tela - significa que ele quer passar a animacao do dialogo
     }
