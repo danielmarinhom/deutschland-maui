@@ -13,6 +13,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 {
 
     private UsuarioDto usuarioDto;
+    private EraService eraService = new EraService();
 
     private List<AllDatasBeforeEraResponse> allDatasBeforeEraResponse;
 
@@ -31,12 +32,10 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     private ConquistaUsuarioService conquistaUsuarioService;
 
     private List<Label> conquistasLabels;
-<<<<<<< HEAD
+    private int idEra;
     private List<int> conquistasValues;
-=======
->>>>>>> 54ff3d6a748c82363769ac948a3b50b0c5c67a26
 
-    public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths)
+    public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths, long eraId)
 
     {
         InitializeComponent();
@@ -50,7 +49,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         viewModel.GetAllConquistasByUserID(usuarioDto.Id);
 
         this.conquistaUsuarioService = new ConquistaUsuarioService();
-
+        this.id = id;
         this.usuarioDto = usuarioDto;
         this.allDatasBeforeEraResponse = allDatasBeforeEraResponses;
         
@@ -66,7 +65,6 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         }
 
     }
-<<<<<<< HEAD
     public void AtualizarConquistas(bool wasAceppt) // atualiza a lista global das conquistas a cada escolha
     {
         foreach (var dialogo in allDatasBeforeEraResponse)
@@ -90,11 +88,35 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     }
     public List<int> endGame() // no fim do jogo retorna os valores acumulados ate o fim da era
     {
+        if (actIndexDialog >= allDatasBeforeEraResponse.Count)
+        {
+            ShowEndGameDialog(); // Exibe a caixa de diálogo com os resultados
+        }
         return conquistasValues;
     }
 
-=======
->>>>>>> 54ff3d6a748c82363769ac948a3b50b0c5c67a26
+    public async void ShowEndGameDialog()
+    {
+        List<int> finalConquistasValues = endGame();
+
+        string message = $"Popularidade: {finalConquistasValues[0]}\n" +
+                         $"Igreja: {finalConquistasValues[1]}\n" +
+                         $"Diplomacia: {finalConquistasValues[2]}\n" +
+                         $"Economia: {finalConquistasValues[3]}\n" +
+                         $"Exército: {finalConquistasValues[4]}";
+
+        await DisplayAlert("Resultado Final", message, "OK");
+        if(idEra <= 6) { idEra++; }
+        EraResponse eraResponse = await eraService.GetEraByID(idEra);
+        if (eraResponse != null)
+        {
+            await Navigation.PushAsync(new LoadingPage(usuarioDto, eraResponse, idEra));
+        }
+        else
+        {
+            await DisplayAlert("Erro", "Não foi possível carregar os dados da era.", "OK");
+        }
+    }
 
     public async void AdicionalAnimation(Label label)
     {
@@ -244,11 +266,9 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         {
             return;
         }
-<<<<<<< HEAD
-        AtualizarConquistas(wasAceppt);
-=======
 
->>>>>>> 54ff3d6a748c82363769ac948a3b50b0c5c67a26
+        AtualizarConquistas(wasAceppt);
+
         List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>();
         if (wasAceppt)
         {
