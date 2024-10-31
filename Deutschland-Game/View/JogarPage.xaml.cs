@@ -34,14 +34,12 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     private ConquistaUsuarioService conquistaUsuarioService;
 
     private List<Label> conquistasLabels;
-<<<<<<< HEAD
-    private int idEra;
-=======
 
->>>>>>> 9341495cb2700e3a51842d5483a7b9c8e9755256
+    private int idEra;
+
     private List<int> conquistasValues;
 
-    public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths, long eraId)
+    public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths, int eraId)
 
     {
         InitializeComponent();
@@ -57,7 +55,9 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         viewModel.GetAllConquistasByUserID(usuarioDto.Id);
 
         this.conquistaUsuarioService = new ConquistaUsuarioService();
-        this.id = id;
+
+        this.idEra = eraId;
+
         this.usuarioDto = usuarioDto;
         this.allDatasBeforeEraResponse = allDatasBeforeEraResponses;
         
@@ -96,14 +96,9 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     }
     public List<int> endGame() // no fim do jogo retorna os valores acumulados ate o fim da era
     {
-        if (actIndexDialog >= allDatasBeforeEraResponse.Count)
-        {
-            ShowEndGameDialog(); // Exibe a caixa de diálogo com os resultados
-        }
         return conquistasValues;
     }
 
-<<<<<<< HEAD
     public async void ShowEndGameDialog()
     {
         List<int> finalConquistasValues = endGame();
@@ -115,11 +110,14 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
                          $"Exército: {finalConquistasValues[4]}";
 
         await DisplayAlert("Resultado Final", message, "OK");
+
         if(idEra <= 6) { idEra++; }
+
         EraResponse eraResponse = await eraService.GetEraByID(idEra);
+
         if (eraResponse != null)
         {
-            await Navigation.PushAsync(new LoadingPage(usuarioDto, eraResponse, idEra));
+            await Navigation.PushAsync(new LoadingPage(usuarioDto, eraResponse));
         }
         else
         {
@@ -127,10 +125,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         }
     }
 
-    public async void AdicionalAnimation(Label label)
-=======
     public async void AdicionalAnimation(Label label) // animacao dos valores acrescentados nas conquistas
->>>>>>> 9341495cb2700e3a51842d5483a7b9c8e9755256
     {
         label.IsVisible = true;
 
@@ -259,27 +254,13 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
         CharacterLeaveInScene(); // animacao do personagem saindo de cena
 
-        isTaskingRunning = false; // usuario pode fazer interações dnv
-
     }
 
     public async void ChoiceMade(bool wasAceppt) // wasAceppt = se o dialogo foi aceito
     {
 
-<<<<<<< HEAD
-        if (actIndexDialog >= allDatasBeforeEraResponse.Count)
-        {
-            return;
-        }
-
         AtualizarConquistas(wasAceppt);
 
-=======
-        Debug.WriteLine("1");
-        AtualizarConquistas(wasAceppt);
-        Debug.WriteLine("1.5");
-
->>>>>>> 9341495cb2700e3a51842d5483a7b9c8e9755256
         List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>();
 
         if (wasAceppt) // filtra as consequencias certas
@@ -291,33 +272,18 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.recusado;
         }
 
-        Debug.WriteLine("2");
-
-
         var ids = await viewModel.SetAdicionalValuesInConquistas(conquistas, conquistasLabels);
-
-        Debug.WriteLine("3");
-
 
         for (int i = 0; i < ids.Count; i++) // pra rodar as animações de +50, -100 e etc
         {
             AdicionalAnimation(conquistasLabels[ids[i] - 1]);
         }
 
-        Debug.WriteLine("4");
-
-
         await conquistaUsuarioService.UpdateConquistas(conquistas, usuarioDto.Id); // faz o update das conquistasUsuario pela api 
-
-        Debug.WriteLine("5");
-
 
         Vibration.Vibrate(200); // vibração do celular pra decoração do jogo
 
         await RunAnswer(actIndexDialog, wasAceppt); // aqui roda o dialogo do rei como resposta
-
-        Debug.WriteLine("6");
-
 
         actIndexDialog++; // aumenta o indice pra indicar o proximo dialogo a ser carregado
 
@@ -326,17 +292,13 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             // se o indice do dialogo for >= ao tamanha da lista ---- é pra nao dar exception de index no allDatasBeforeEraResponse
             // basicamente significa que os dialogos já foram todos carregados
             allDialogsAnswered = true;
+            ShowEndGameDialog();
             return;
         }
-
-        Debug.WriteLine("7");
-
 
         await Task.Delay(1500);
 
         await RunDialog(actIndexDialog);
-
-        Debug.WriteLine("8");
 
     }
 

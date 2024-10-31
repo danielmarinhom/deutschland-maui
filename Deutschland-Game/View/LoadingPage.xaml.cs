@@ -27,7 +27,6 @@ namespace Deutschland_Game.View
 
         private List<string> personagemImagesPaths;
 
-        private int eraID;
 
         public LoadingPage(UsuarioDto usuarioDto, EraResponse eraResponse)
         {
@@ -110,7 +109,7 @@ namespace Deutschland_Game.View
                 await Task.Delay(500);
             }
 
-            await Navigation.PushAsync(new JogarPage(this.usuarioDto, this.allDatasBeforeEraResponses, eraImagePath, personagemImagesPaths));
+            await Navigation.PushAsync(new JogarPage(this.usuarioDto, this.allDatasBeforeEraResponses, eraImagePath, personagemImagesPaths, eraResponse.Id));
         }
         
     }
