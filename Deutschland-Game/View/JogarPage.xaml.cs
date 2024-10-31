@@ -35,16 +35,20 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     private List<Label> conquistasLabels;
 
-    private int idEra;
+    private List<Label> summaryLabels;
+
+    private EraResponse eraResponseGlobal;
 
     private List<int> conquistasValues;
 
-    public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths, int eraId)
+    public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths, EraResponse eraResponse)
 
     {
         InitializeComponent();
 
         conquistasLabels = new List<Label> { populaidadeAdicional, igrejaAdicional, diplomaciaAdicional, economiaAdicional, exercitoAdicional };
+
+        summaryLabels = new List<Label> { popularidadeSum, igrejaSum, diplomaciaSum, economiaSum, exercitoSum };
 
         conquistasValues = new List<int> { 0, 0, 0, 0, 0};
 
@@ -56,7 +60,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
         this.conquistaUsuarioService = new ConquistaUsuarioService();
 
-        this.idEra = eraId;
+        this.eraResponseGlobal = eraResponse;
 
         this.usuarioDto = usuarioDto;
         this.allDatasBeforeEraResponse = allDatasBeforeEraResponses;
@@ -75,8 +79,10 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     }
     public async Task AtualizarConquistas(bool wasAceppt) // atualiza a lista global das conquistas a cada escolha
     {
-            List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>();
-            if (wasAceppt)
+            List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>(); // tive que mudar essa lógica aqui, Daniel
+            //antes ele tava somando todas as consequencias de todos os dialogos, pq vc tava fazendo um for no allDatasBeforeEra
+            // agora ele só pega o dialogo de acordo com o index global da classe, e filtra certinho
+        if (wasAceppt)
             {
                 conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.aceito;
             }
@@ -85,6 +91,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
                 conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.recusado;
             }
 
+            // aqui eu só joguei esses códigos para dentro desse método, antes tava no ChoiceMade()
             await conquistaUsuarioService.UpdateConquistas(conquistas, usuarioDto.Id); // faz o update das conquistasUsuario pela api 
 
             var ids = await viewModel.SetAdicionalValuesInConquistas(conquistas, conquistasLabels);
@@ -94,40 +101,18 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
                 AdicionalAnimation(conquistasLabels[ids[i] - 1]);
             }
 
-        foreach (var conquista in conquistas)
+            foreach (var conquista in conquistas)
             {
                 conquistasValues[conquista.IdConquista - 1] += (int) conquista.ValorAcrescentado;
             }
     }
-    public List<int> endGame() // no fim do jogo retorna os valores acumulados ate o fim da era
-    {
-        return conquistasValues;
-    }
 
     public async void ShowEndGameDialog()
     {
-        List<int> finalConquistasValues = endGame();
-
-        string message = $"Popularidade: {finalConquistasValues[0]}\n" +
-                         $"Igreja: {finalConquistasValues[1]}\n" +
-                         $"Diplomacia: {finalConquistasValues[2]}\n" +
-                         $"Economia: {finalConquistasValues[3]}\n" +
-                         $"Exército: {finalConquistasValues[4]}";
-
-        await DisplayAlert("Resultado Final", message, "OK");
-
-        if (idEra <= 6) { idEra++; }
-
-        EraResponse eraResponse = await eraService.GetEraByID(idEra);
-
-        if (eraResponse != null)
-        {
-            await Navigation.PushAsync(new LoadingPage(usuarioDto, eraResponse));
-        }
-        else
-        {
-            await DisplayAlert("Erro", "Não foi possível carregar os dados da era.", "OK");
-        }
+        await viewModel.SetEraNameInSummary(eraResponseGlobal);
+        await viewModel.SetSummaryValues(summaryLabels, conquistasValues);
+        summaryContainer.IsVisible = true;
+        
     }
 
     public async void AdicionalAnimation(Label label) // animacao dos valores acrescentados nas conquistas
@@ -322,5 +307,21 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     private void PassDialog(object sender, EventArgs e) // método para pular a animação do diálogo 
     {
         userPassedAnimation = true; // var que atualiza se o usuario clicar na tela - significa que ele quer passar a animacao do dialogo
+    }
+
+    private async void NextEra(object sender, EventArgs e)
+    {
+        if (eraResponseGlobal.Id <= 6) { eraResponseGlobal.Id++; }
+
+        EraResponse nextEraResponse = await eraService.GetEraByID(eraResponseGlobal.Id);
+
+        if (nextEraResponse != null)
+        {
+            await Navigation.PushAsync(new LoadingPage(usuarioDto, nextEraResponse));
+        }
+        else
+        {
+            await DisplayAlert("Erro", "Não foi possível carregar os dados da era.", "OK");
+        }
     }
 }

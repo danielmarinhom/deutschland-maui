@@ -1,7 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Deutschland_Game.Dtos;
@@ -53,6 +50,9 @@ namespace Deutschland_Game.Models.ViewModels
 
         [ObservableProperty]
         private string exercitoText;
+
+        [ObservableProperty]
+        private string eraSummary;
 
         public void setEraPathInImage(string imagePath)
         {
@@ -108,6 +108,37 @@ namespace Deutschland_Game.Models.ViewModels
 
             return ids;
 
+        }
+
+        public async Task SetEraNameInSummary(EraResponse eraResponse)
+        {
+            EraSummary = $"{eraResponse.Nome} {eraResponse.Periodo}";
+        }
+
+        public async Task SetSummaryValues(List<Label> labels, List<int> summaryValues)
+        {
+            for( int i = 0; i < labels.Count; i++)
+            {
+                var label = labels[i];
+                var value = summaryValues[i];
+
+                if (value > 0)
+                {
+                    label.Text += "+" + value.ToString();
+                    label.TextColor = Color.FromHex("#339300");
+                }
+                else if (value < 0)
+                {
+                    label.Text += value.ToString();
+                    label.TextColor = Color.FromHex("FF0000");
+                }
+                else
+                {
+                    label.Text += value.ToString();
+                    label.TextColor = Color.FromHex("#FFFFFF");
+                }
+
+            }
         }
     }
 }

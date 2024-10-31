@@ -109,7 +109,7 @@ namespace Deutschland_Game.View
                 await Task.Delay(500);
             }
 
-            await Navigation.PushAsync(new JogarPage(this.usuarioDto, this.allDatasBeforeEraResponses, eraImagePath, personagemImagesPaths, eraResponse.Id));
+            await Navigation.PushAsync(new JogarPage(this.usuarioDto, this.allDatasBeforeEraResponses, eraImagePath, personagemImagesPaths, eraResponse));
         }
         
     }

@@ -290,6 +290,7 @@
             </Grid>
 
             <Grid
+                x:Name="summaryContainer"
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand"
                 IsVisible="False"
@@ -331,64 +332,75 @@
 
                         <Label
                                 VerticalOptions="Center"
-                                Text="Período Finalizado!&#x0a;Sacro Império (962 - 1806)"
+                                Text="{Binding EraSummary, StringFormat='Período Finalizado!&#x0a;{0}'}"
                                 HorizontalTextAlignment="Center"
-                                FontSize="24"
+                                LineBreakMode="WordWrap"
+                                FontSize="20"
                                 TextColor="Black"
                                     Margin="0, 0, 0, 5"/>
 
                         <HorizontalStackLayout
+                            HorizontalOptions="Center"
                             VerticalOptions="Center">
                             <Image
                                 Source="popularidade_conquista.png"
                                 WidthRequest="30"
                                 Margin="0, 0, 5, 5"/>
                             <Label
-                                Text="Popularidade +50"
+                                x:Name="popularidadeSum"
+                                Text="Popularidade "
                                 FontSize="25"
                                 TextColor="#339300"/>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout
+                            HorizontalOptions="Center"
                             VerticalOptions="Center">
                             <Image
                             Source="igreja_conquista.png"
                             WidthRequest="30"
                             Margin="0, 0, 5, 5"/>
                             <Label
-                            Text="Igreja +50"
+                                x:Name="igrejaSum"
+                            Text="Igreja "
                             FontSize="25"
                             TextColor="White"/>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout
+                            HorizontalOptions="Center"
                             VerticalOptions="Center">
                             <Image
                             Source="diplomacia_conquista.png"
                             WidthRequest="30"
                             Margin="0, 0, 5, 5"/>
                             <Label
-                            Text="Diplomacia +50"
+                                x:Name="diplomaciaSum"
+                            Text="Diplomacia "
                             FontSize="25"
                             TextColor="#339300"/>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout
+                            HorizontalOptions="Center"
                             VerticalOptions="Center">
                             <Image
                             Source="dinheiro_conquista.png"
                             WidthRequest="30"
                             Margin="0, 0, 5, 5"/>
                             <Label
-                            Text="Economia -50"
+                                x:Name="economiaSum"
+                            Text="Economia "
                             FontSize="25"
                             TextColor="#FF0000"/>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout
+                            HorizontalOptions="Center"
                             VerticalOptions="Center">
                             <Image
                             Source="exercito_conquista.png"
                             WidthRequest="30"
                             Margin="0, 0, 5, 5"/>
                             <Label
-                            Text="Exército -100"
+                              x:Name="exercitoSum"
+                            Text="Exercito "
                             FontSize="25"
                             TextColor="#FF0000"/>
                         </HorizontalStackLayout>
@@ -403,6 +415,7 @@
                         <Button
                             WidthRequest="150"
                             BackgroundColor="Transparent"
+                            Clicked="NextEra"
                             />
                         
                         <Image 
@@ -415,6 +428,7 @@
                                TextColor="Black"
                                HorizontalOptions="Center"
                                VerticalOptions="Center" 
+                               
                                 />
                     </Grid>
                 </VerticalStackLayout>
