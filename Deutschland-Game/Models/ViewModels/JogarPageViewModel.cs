@@ -5,6 +5,7 @@ using Deutschland_Game.Dtos;
 using Deutschland_Game.Models.ApiModels;
 using Deutschland_Game.Service;
 
+
 namespace Deutschland_Game.Models.ViewModels
 {
     public partial class JogarPageViewModel : ObservableObject

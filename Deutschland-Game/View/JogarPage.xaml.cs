@@ -12,7 +12,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     private UsuarioDto usuarioDto;
     private EraService eraService = new EraService();
-
+    private AudioService audioService = new AudioService();
     private List<AllDatasBeforeEraResponse> allDatasBeforeEraResponse;
 
     private JogarPageViewModel viewModel;
@@ -65,6 +65,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         
         this.personagemImagesPaths = personagemImagesPaths;
 
+        audioService.PlayBackgroundAudio();
+
         RunDialog(0);
         
         tutorialComponent.IsVisible = false;
@@ -77,9 +79,12 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     }
     public async Task AtualizarConquistas(bool wasAceppt) // atualiza a lista global das conquistas a cada escolha
     {
-            List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>(); // tive que mudar essa lógica aqui, Daniel
+        audioService.PlayKingAudio(wasAceppt);
+
+        List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>(); // tive que mudar essa lógica aqui, Daniel
             //antes ele tava somando todas as consequencias de todos os dialogos, pq vc tava fazendo um for no allDatasBeforeEra
             // agora ele só pega o dialogo de acordo com o index global da classe, e filtra certinho
+
         if (wasAceppt)
             {
                 conquistas = allDatasBeforeEraResponse[actIndexDialog].Consequencias.aceito;
@@ -183,7 +188,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     public async void CharacterJoinInScene() // animacao de entrada do personagem
     {
         var translate = personagemComponent.TranslateTo(-80, 0, 2000, Easing.SinInOut);
-
+        audioService.PlayCharacterAudio();
         await Task.WhenAll(translate);
     }
 
@@ -346,7 +351,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         ChoiceMade(false);
     }
 
-    private void PassDialog(object sender, EventArgs e) // método para pular a animação do diálogo 
+    private void PassDialog(object sender, EventArgs e) //método para pular a animação do diálogo 
     {
         userPassedAnimation = true; // var que atualiza se o usuario clicar na tela - significa que ele quer passar a animacao do dialogo
     }

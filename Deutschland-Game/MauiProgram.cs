@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.PlatformConfiguration;
+using Plugin.Maui.Audio;
 using Sharpnado.MaterialFrame;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 
@@ -24,8 +25,9 @@ namespace Deutschland_Game
                     fonts.AddFont("MUTHIARA DEMO VERSION.OTF", "Muthiara");
                 });
 
-            
 
+            builder.Services.AddSingleton(AudioManager.Current);
+            builder.Services.AddTransient<MainPage>();
 #if DEBUG
             builder.Logging.AddDebug();
             builder.Services.AddHttpClient();
