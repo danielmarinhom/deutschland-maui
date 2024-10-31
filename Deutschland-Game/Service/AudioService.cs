@@ -1,5 +1,6 @@
 ﻿using MediaManager;
 using Plugin.Maui.Audio;
+using System.Diagnostics;
 using AudioManager = Plugin.Maui.Audio.AudioManager;
 
 namespace Deutschland_Game.Service
@@ -9,6 +10,8 @@ namespace Deutschland_Game.Service
         private bool isPlaying = false;
 
         private readonly IAudioManager audioManager;
+
+        private IAudioPlayer audioPlayer;
 
         public AudioService(IAudioManager audio)
         {
@@ -22,11 +25,16 @@ namespace Deutschland_Game.Service
             string randNumber = random.Next(1, 4).ToString();
             string audio = $"BackgroundMusic{randNumber}.mp3";
 
-            var player = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(audio));
+            this.audioPlayer = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(audio));
 
-            player.Loop = true;
-            player.Play();
+            this.audioPlayer.Loop = true;
+            this.audioPlayer.Play();
 
+        }
+
+        public async Task StopBackGroundAudio()
+        {
+            this.audioPlayer.Stop();
         }
 
         public async void PlayCharacterAudio()
@@ -36,7 +44,7 @@ namespace Deutschland_Game.Service
             string audio = $"Character0{randNumber}.MP3";
             try
             {
-                var player = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(audio));
+                var player = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(audio));
                 player.Play();
             }
             catch (Exception ex)
@@ -63,7 +71,7 @@ namespace Deutschland_Game.Service
             string audio = $"King{dec}0{randNumber}.{extension}";
             try
             {
-                var player = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(audio));
+                var player = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(audio));
                 player.Play();
                 
             }
@@ -77,7 +85,7 @@ namespace Deutschland_Game.Service
             string audio = "ButtonClick.mp3";
             try
             {
-                var player = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(audio));
+                var player = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync(audio));
                 player.Play();
             }
             catch (Exception ex)

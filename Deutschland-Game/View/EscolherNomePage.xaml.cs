@@ -55,6 +55,7 @@ namespace Deutschland_Game.View
                 }
                 else
                 {
+                    audioService.StopBackGroundAudio();
                     await Navigation.PushAsync(new LoadingPage(usuarioDto, eraResponse, audioService));
                 }
             }

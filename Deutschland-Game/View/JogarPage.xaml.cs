@@ -369,6 +369,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
         if (nextEraResponse != null)
         {
+            audioService.StopBackGroundAudio();
             await Navigation.PushAsync(new LoadingPage(usuarioDto, nextEraResponse, audioService));
         }
         else
