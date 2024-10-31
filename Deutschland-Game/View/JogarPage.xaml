@@ -296,31 +296,40 @@
                 IsVisible="False"
                 >
 
-                <BoxView
+                <Grid
+                    x:Name="bkgSummaryContainer"
+                    >
+                    <BoxView
+                    IsVisible="True"
                     Background="Black"
-                    Opacity=".4">
-                </BoxView>
+                    Opacity=".5">
+                    </BoxView>
 
-                <material:MaterialFrame
-                    MaterialTheme="AcrylicBlur"
-                    MaterialBlurStyle="Dark"
-                    Opacity=".8"
-                    Elevation="10"
-                    HasShadow="False"
-                    AcrylicGlowColor="#000000"
-                    HorizontalOptions="FillAndExpand"
-                    VerticalOptions="FillAndExpand"
+                    <material:MaterialFrame
+                        MaterialTheme="AcrylicBlur"
+                        MaterialBlurStyle="Dark"
+                        Opacity=".8"
+                        Elevation="10"
+                        HasShadow="False"
+                        AcrylicGlowColor="#000000"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
                     />
+                </Grid>
+
 
                 <skia:SKLottieView
+                x:Name="conffetsAnimation"
                 Source="conffets.json"
-                RepeatCount="2"
+                RepeatCount="-1"
                 RepeatMode="Restart"
                 VerticalOptions="FillAndExpand"
                 Background="Transparent"
                 />
 
                 <Grid
+                   x:Name="summaryInfoContainer"
+                   IsVisible="True"
                    WidthRequest="350"
                     >
                     <Image Source="relatorio_image.png"
@@ -408,6 +417,8 @@
                 </Grid>
 
                 <VerticalStackLayout
+                    x:Name="summaryButton"
+                    IsEnabled="False"
                     VerticalOptions="End"
                     HorizontalOptions="End"
                     Margin="0, 0, 30, 120">

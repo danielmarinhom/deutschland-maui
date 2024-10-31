@@ -107,12 +107,31 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             }
     }
 
+    public async void RunEndEraAnimation()
+    {
+        conffetsAnimation.IsEnabled = false;
+        bkgSummaryContainer.Opacity = 0;
+
+        await bkgSummaryContainer.FadeTo(1, 1000, Easing.SinInOut);
+
+        conffetsAnimation.RepeatCount = 0;
+        conffetsAnimation.IsEnabled = true;
+
+        await summaryInfoContainer.TranslateTo(0, 0, 1000, Easing.SinInOut);
+
+        summaryButton.IsEnabled = true;
+    }
+
     public async void ShowEndGameDialog()
     {
+        await summaryInfoContainer.TranslateTo(0, -500, 10);
         await viewModel.SetEraNameInSummary(eraResponseGlobal);
         await viewModel.SetSummaryValues(summaryLabels, conquistasValues);
         summaryContainer.IsVisible = true;
-        
+
+        RunEndEraAnimation();
+
+
     }
 
     public async void AdicionalAnimation(Label label) // animacao dos valores acrescentados nas conquistas
