@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Deutschland_Game.Dtos;
@@ -145,23 +146,39 @@ namespace Deutschland_Game.Models.ViewModels
             }
         }
 
-        public async Task<bool> isGameOver(long userID)
+        public async Task<bool> isGameOver(int userID)
         {
-            var conquistas = await conquistaUsuarioService.FindByUserID(userID);
-            if(conquistas == null)
-            {
-                return false;
-            }
 
-            foreach (var conquista in conquistas)
+            try
             {
-                if(conquista.ValorAcrescentado <= 0)
+
+                var conquistas = await conquistaUsuarioService.FindByUserID(userID);
+
+                if (conquistas == null)
                 {
-                    ConquistaNegative = conquista.NomeConquista.ToLower();
-                    return true;
+                    return false;
                 }
-            }
 
+
+                foreach (var conquista in conquistas)
+                {
+                    Debug.WriteLine("loop1");
+
+                    if (conquista.ValorAcrescentado <= 0)
+                    {
+
+                        ConquistaNegative = conquista.NomeConquista.ToLower();
+                        return true;
+
+                    }
+                }
+
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine("ERRO - " + ex.Message);
+            }
+            
             return false;
         }
     }

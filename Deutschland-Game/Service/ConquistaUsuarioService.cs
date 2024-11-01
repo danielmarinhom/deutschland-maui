@@ -48,7 +48,10 @@ namespace Deutschland_Game.Service
                     var json = JsonSerializer.Deserialize<List<ConquistasResponseDto>>(content, serializerOptions);
                     return json;
                 }
-            }catch(Exception ex)
+                Debug.WriteLine("z");
+
+            }
+            catch (Exception ex)
             {
                 Debug.WriteLine("ERRO ----------------------------- " + ex.Message);
             }

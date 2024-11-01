@@ -3,6 +3,7 @@ using Deutschland_Game.Models.ApiModels;
 using System.ComponentModel;
 using Deutschland_Game.Models.ViewModels;
 using Deutschland_Game.Service;
+using System.Diagnostics;
 
 
 namespace Deutschland_Game.View;
@@ -117,22 +118,31 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     public async Task<bool> ValidateGameOver()
     {
-        bool isGameOver = viewModel.isGameOver(this.usuarioDto.Id).Result;
-        
+
+        bool isGameOver = await viewModel.isGameOver(this.usuarioDto.Id);
+
+        Debug.WriteLine("isGameOver  = " + isGameOver);
+
         if (isGameOver) {
 
-            gameOverTransition.Opacity = 0;
-            await gameOverTransition.FadeTo(1, 2000, Easing.SinInOut);
+            loading_component.IsVisible = false;
 
+            gameOverTransition.Opacity = 0;
+
+            gameOverTransition.IsVisible = true;
+            await gameOverTransition.FadeTo(1, 4000, Easing.SinInOut);
+
+            gameContainer.IsVisible = false;
             gameOverContainer.IsVisible = true;
 
-            await gameOverTransition.FadeTo(0, 2000, Easing.SinInOut);
+            await gameOverTransition.FadeTo(0, 4000, Easing.SinInOut);
+
 
             return true;
-
         }
 
         return false;
+
     }
 
     public async void RunEndEraAnimation()
@@ -153,7 +163,11 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     public async void ShowEndGameDialog()
     {
 
-        if (ValidateGameOver().Result)
+        loading_component.IsVisible = true;
+
+        bool runGameOver = await ValidateGameOver();
+        Debug.WriteLine(runGameOver);
+        if (runGameOver)
         {
             return;
         }
@@ -162,6 +176,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         await viewModel.SetEraNameInSummary(eraResponseGlobal);
         await viewModel.SetSummaryValues(summaryLabels, conquistasValues);
         summaryContainer.IsVisible = true;
+
+        loading_component.IsVisible = false;
 
         RunEndEraAnimation();
 
@@ -208,6 +224,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 	{
 
 		bool itsTheFirstTime = Preferences.Get(IsFirstLaunchKey, true); // verifica se tem essa key no armazenamento local
+
+        Debug.WriteLine(itsTheFirstTime);
 
 		if (itsTheFirstTime)
 		{
@@ -314,7 +332,9 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             // se o indice do dialogo for >= ao tamanha da lista ---- é pra nao dar exception de index no allDatasBeforeEraResponse
             // basicamente significa que os dialogos já foram todos carregados
             allDialogsAnswered = true;
+
             ShowEndGameDialog();
+
             return;
         }
 
@@ -332,7 +352,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             return;
         }
 
-		if (CheckIfItsFirstTime())
+		if (!CheckIfItsFirstTime())
 		{
             tutorialComponent.IsVisible = false;
         }
@@ -348,7 +368,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             return;
         }
 
-        if (CheckIfItsFirstTime())
+        if (!CheckIfItsFirstTime())
         {
             tutorialComponent.IsVisible = false;
         }
