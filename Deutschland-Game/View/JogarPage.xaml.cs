@@ -43,12 +43,16 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     private List<int> conquistasValues;
 
+    private UsuarioService usuarioService;
+
     public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths, EraResponse eraResponse, AudioService audioService)
 
     {
         InitializeComponent();
 
         this.audioService = audioService;
+
+        this.usuarioService = new UsuarioService();
 
         conquistasLabels = new List<Label> { populaidadeAdicional, igrejaAdicional, diplomaciaAdicional, economiaAdicional, exercitoAdicional };
 
@@ -122,6 +126,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         bool isGameOver = await viewModel.isGameOver(this.usuarioDto.Id); // valida se tem alguma conquistaUsuario negativa
 
         if (isGameOver) { // animacoes
+
+            await usuarioService.deleteUser(this.usuarioDto.Id); // deleta o usuario atual
 
             loading_component.IsVisible = false;
 

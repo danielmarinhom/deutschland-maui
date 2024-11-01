@@ -59,5 +59,32 @@ namespace Deutschland_Game.Service
                 return null;
             }
         }
+
+        public async Task<bool> deleteUser(long userID)
+        {
+
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet) // valida se tem internet
+            {
+                return false;
+            }
+
+            try
+            {
+
+                var response = await httpClient.DeleteAsync($"{ApiBaseURL.API_BASE_URL}/usuario/deletar/id/{userID}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+
+            }catch(Exception ex)
+            {
+                Debug.WriteLine("ERRO -----" + ex.Message);
+            }
+
+            return false;
+
+        }
     }
 }
