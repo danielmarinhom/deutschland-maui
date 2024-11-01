@@ -11,39 +11,30 @@ namespace Deutschland_Game.View;
 public partial class JogarPage : ContentPage, INotifyPropertyChanged
 {
 
-    private UsuarioDto usuarioDto;
-
-    private EraService eraService = new EraService();
-
     private readonly AudioService audioService;
 
+    private UsuarioDto usuarioDto;
     private List<AllDatasBeforeEraResponse> allDatasBeforeEraResponse;
+    private EraResponse eraResponseGlobal;
+
+    private EraService eraService = new EraService();
+    private UsuarioService usuarioService;
+    private ConquistaUsuarioService conquistaUsuarioService;
 
     private JogarPageViewModel viewModel;
 
     private List<string> personagemImagesPaths;
-
-    const string IsFirstLaunchKey = "IsFirstLaunch";
-
-	private int actIndexDialog = 0;
-
-    private bool isTaskingRunning = false;
-
-    private bool userPassedAnimation = false;
-
-    private bool allDialogsAnswered = false;
-
-    private ConquistaUsuarioService conquistaUsuarioService;
-
-    private List<Label> conquistasLabels;
-
-    private List<Label> summaryLabels;
-
-    private EraResponse eraResponseGlobal;
-
     private List<int> conquistasValues;
 
-    private UsuarioService usuarioService;
+    private List<Label> conquistasLabels;
+    private List<Label> summaryLabels;
+
+    const string IsFirstLaunchKey = "IsFirstLaunch";
+	private int actIndexDialog = 0;
+    private bool isTaskingRunning = false;
+    private bool userPassedAnimation = false;
+    private bool allDialogsAnswered = false;
+    private bool wasButtonClicked = false;
 
     public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths, EraResponse eraResponse, AudioService audioService)
 
@@ -388,6 +379,10 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     private async void NextEra(object sender, EventArgs e)
     {
+        if (wasButtonClicked) return;
+
+        wasButtonClicked = true;
+
         if (eraResponseGlobal.Id <= 6) { eraResponseGlobal.Id++; }
 
         EraResponse nextEraResponse = await eraService.GetEraByID(eraResponseGlobal.Id);
@@ -401,12 +396,23 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         {
             await DisplayAlert("Erro", "Não foi possível carregar os dados da era.", "OK");
         }
+
+        await Task.Delay(1000);
+        wasButtonClicked = false;
     }
 
     private async void GameOverBtn(object sender, EventArgs e)
     {
+        if (wasButtonClicked) return;
+
+        wasButtonClicked = true;
+
         audioService.StopBackGroundAudio();
         await Navigation.PushAsync(new MainPage(this.audioService));
+
+        await Task.Delay(1000);
+
+        wasButtonClicked = false;
     }
 
     protected override bool OnBackButtonPressed() // cancela o botao de voltar do celular

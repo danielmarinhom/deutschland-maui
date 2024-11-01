@@ -12,6 +12,7 @@ namespace Deutschland_Game.View
         private CadastrarUsuarioViewModel cadastrarUsuarioViewModel;
         private EraService eraService;
         private AudioService audioService;
+        private bool wasButtonClicked = false;
 
 
         public string NomeRei
@@ -40,6 +41,10 @@ namespace Deutschland_Game.View
 
         private async void continuarBtn_Clicked(object sender, EventArgs e)
         {
+            if (wasButtonClicked) return;
+
+            wasButtonClicked = true;
+
             audioService.PlayClickAudio();
             loading_component.IsVisible = true; // habilita o loading visual
             try { 
@@ -63,6 +68,9 @@ namespace Deutschland_Game.View
             {
                 Debug.WriteLine("ERRO ------------ " + ex.Message);
             }
+
+            await Task.Delay(1000);
+            wasButtonClicked = false;
         }
 
         private async void voltarBtn_Clicked(object sender, EventArgs e)
