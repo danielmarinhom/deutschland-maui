@@ -116,14 +116,12 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             }
     }
 
-    public async Task<bool> ValidateGameOver()
+    public async Task<bool> ValidateGameOver() // animacoes para a tela de game over
     {
 
-        bool isGameOver = await viewModel.isGameOver(this.usuarioDto.Id);
+        bool isGameOver = await viewModel.isGameOver(this.usuarioDto.Id); // valida se tem alguma conquistaUsuario negativa
 
-        Debug.WriteLine("isGameOver  = " + isGameOver);
-
-        if (isGameOver) {
+        if (isGameOver) { // animacoes
 
             loading_component.IsVisible = false;
 
@@ -145,7 +143,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     }
 
-    public async void RunEndEraAnimation()
+    public async void RunEndEraAnimation()  // animacoes do Summary da Era
     {
         conffetsAnimation.IsEnabled = false;
         bkgSummaryContainer.Opacity = 0;
@@ -160,18 +158,19 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         summaryButton.IsEnabled = true;
     }
 
-    public async void ShowEndGameDialog()
+    public async void ShowEndGameDialog() // valida se é game over ou pode passar para a próxima era
     {
 
         loading_component.IsVisible = true;
 
         bool runGameOver = await ValidateGameOver();
         Debug.WriteLine(runGameOver);
-        if (runGameOver)
+        if (runGameOver) // se for game over, vai cancelar as animacoes de Summary
         {
             return;
         }
 
+        // animacoes para o Summary da Era
         await summaryInfoContainer.TranslateTo(0, -500, 10);
         await viewModel.SetEraNameInSummary(eraResponseGlobal);
         await viewModel.SetSummaryValues(summaryLabels, conquistasValues);
@@ -368,7 +367,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             return;
         }
 
-        if (!CheckIfItsFirstTime())
+        if (!CheckIfItsFirstTime()) // esconde o componente de tutorial
         {
             tutorialComponent.IsVisible = false;
         }
@@ -396,5 +395,16 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         {
             await DisplayAlert("Erro", "Não foi possível carregar os dados da era.", "OK");
         }
+    }
+
+    private async void GameOverBtn(object sender, EventArgs e)
+    {
+        audioService.StopBackGroundAudio();
+        await Navigation.PushAsync(new MainPage(this.audioService));
+    }
+
+    protected override bool OnBackButtonPressed() // cancela o botao de voltar do celular
+    {
+        return true;
     }
 }

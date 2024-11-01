@@ -27,6 +27,11 @@ namespace Deutschland_Game
             audioService.PlayClickAudio();
             await Navigation.PushAsync(new EscolherNomePage(audioService));
         }
+
+        protected override bool OnBackButtonPressed() // cancela o botao de voltar do celular
+        {
+            return true;
+        }
     }
 
 }

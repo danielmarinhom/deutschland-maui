@@ -17,7 +17,7 @@ namespace Deutschland_Game.Dtos
         public string NomeConquista { get; set; }
 
         [JsonPropertyName("valor_acrescentado")]
-        public double ValorAcrescentado {  get; set; }
+        public double ValorAcrescentado { get; set; }
 
     }
 }

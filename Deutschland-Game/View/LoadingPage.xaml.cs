@@ -115,7 +115,12 @@ namespace Deutschland_Game.View
 
             await Navigation.PushAsync(new JogarPage(this.usuarioDto, this.allDatasBeforeEraResponses, eraImagePath, personagemImagesPaths, eraResponse, audioService));
         }
-        
+
+        protected override bool OnBackButtonPressed() // cancela o botao de voltar do celular
+        {
+            return true;
+        }
+
     }
 
 }
