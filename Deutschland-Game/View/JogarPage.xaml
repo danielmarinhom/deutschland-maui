@@ -21,6 +21,9 @@
 
         <Grid>
 
+            <Grid
+                x:Name="gameContainer"
+                IsVisible="True">
             <Image Source="{Binding LocalImagePath}"  
                 Aspect="AspectFill"
                 VerticalOptions="FillAndExpand"
@@ -30,262 +33,262 @@
 
             <Grid>
 
-                <Grid
-                    
-                x:Name="conquistasComponent"
-                VerticalOptions="Start"
-                HorizontalOptions="End"
-                Margin="0, -15, 100, 0"
-                >
-
                     <Grid
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center"
-                    WidthRequest="180"
+                    
+                    x:Name="conquistasComponent"
+                    VerticalOptions="Start"
+                    HorizontalOptions="End"
+                    Margin="0, -15, 100, 0"
                     >
 
-                        <Image
-                            Source="placa_conquistas.png"          
-                        />
+                        <Grid
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        WidthRequest="180"
+                        >
 
-                        <FlexLayout
+                            <Image
+                                Source="placa_conquistas.png"          
+                            />
+
+                            <FlexLayout
             
-                            HeightRequest="130"
-                            WidthRequest="120"
-                            Margin="15, 0, 0, 0"
-                            Wrap="Wrap"
-                            Direction="Row"
-                            JustifyContent="Start"
-                            AlignItems="Center"
-                            AlignContent="Center"
-                            VerticalOptions="End"
-                            HorizontalOptions="CenterAndExpand">
+                                HeightRequest="130"
+                                WidthRequest="120"
+                                Margin="15, 0, 0, 0"
+                                Wrap="Wrap"
+                                Direction="Row"
+                                JustifyContent="Start"
+                                AlignItems="Center"
+                                AlignContent="Center"
+                                VerticalOptions="End"
+                                HorizontalOptions="CenterAndExpand">
 
-                            <HorizontalStackLayout
-                            Spacing="2"
-                            Margin="0, 0, 6, 3">
-                                <Image
-                                Source="popularidade_conquista.png"
-                                WidthRequest="22"/>
-                                <Label
-                                Text="{Binding PopularidadeText}"
-                                FontSize="17"
-                                TextColor="White"/>
+                                <HorizontalStackLayout
+                                Spacing="2"
+                                Margin="0, 0, 6, 3">
+                                    <Image
+                                    Source="popularidade_conquista.png"
+                                    WidthRequest="22"/>
+                                    <Label
+                                    Text="{Binding PopularidadeText}"
+                                    FontSize="17"
+                                    TextColor="White"/>
 
                                 
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout
-                            Spacing="2"
-                            Margin="0, 0, 0, 3">
-                                <Image
-                                Source="igreja_conquista.png"
-                                WidthRequest="22"/>
-                                <Label
-                                Text="{Binding IgrejaText}"
-                                FontSize="17"
-                                TextColor="White"/>
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout
-                            Spacing="2"
-                            Margin="0, 0, 6, 3">
-                                <Image
-                                Source="diplomacia_conquista.png"
-                                WidthRequest="22"/>
-                                <Label
-                                Text="{Binding DiplomaciaText}"
-                                FontSize="17"
-                                TextColor="White"/>
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout
-                            Spacing="2"
-                            Margin="0, 0, 0, 3">
-                                <Image
-                                Source="dinheiro_conquista.png"
-                                WidthRequest="22"/>
-                                <Label
-                                Text="{Binding DinheiroText}"
-                                FontSize="17"
-                                TextColor="White"/>
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout
-                            Spacing="2"
-                            Margin="0, 0, 6, 3">
-                                <Image
-                                Source="exercito_conquista.png"
-                                WidthRequest="22"/>
-                                <Label
-                                Text="{Binding ExercitoText}"
-                                FontSize="17"
-                                TextColor="White"/>
-                            </HorizontalStackLayout>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout
+                                Spacing="2"
+                                Margin="0, 0, 0, 3">
+                                    <Image
+                                    Source="igreja_conquista.png"
+                                    WidthRequest="22"/>
+                                    <Label
+                                    Text="{Binding IgrejaText}"
+                                    FontSize="17"
+                                    TextColor="White"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout
+                                Spacing="2"
+                                Margin="0, 0, 6, 3">
+                                    <Image
+                                    Source="diplomacia_conquista.png"
+                                    WidthRequest="22"/>
+                                    <Label
+                                    Text="{Binding DiplomaciaText}"
+                                    FontSize="17"
+                                    TextColor="White"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout
+                                Spacing="2"
+                                Margin="0, 0, 0, 3">
+                                    <Image
+                                    Source="dinheiro_conquista.png"
+                                    WidthRequest="22"/>
+                                    <Label
+                                    Text="{Binding DinheiroText}"
+                                    FontSize="17"
+                                    TextColor="White"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout
+                                Spacing="2"
+                                Margin="0, 0, 6, 3">
+                                    <Image
+                                    Source="exercito_conquista.png"
+                                    WidthRequest="22"/>
+                                    <Label
+                                    Text="{Binding ExercitoText}"
+                                    FontSize="17"
+                                    TextColor="White"/>
+                                </HorizontalStackLayout>
 
-                        </FlexLayout>
+                            </FlexLayout>
 
-                        <Label
-                        IsVisible="False"
-                        x:Name="populaidadeAdicional"
-                        Text=""
-                        FontSize="20"
-                        Margin="50, 50, 0, 0"/>
+                            <Label
+                            IsVisible="False"
+                            x:Name="populaidadeAdicional"
+                            Text=""
+                            FontSize="20"
+                            Margin="50, 50, 0, 0"/>
 
-                        <Label
-                        IsVisible="False"
-                        x:Name="igrejaAdicional"
-                        Text=""
-                        FontSize="20"
-                        Margin="110, 50, 0, 0"/>
+                            <Label
+                            IsVisible="False"
+                            x:Name="igrejaAdicional"
+                            Text=""
+                            FontSize="20"
+                            Margin="110, 50, 0, 0"/>
 
-                        <Label
+                            <Label
                             
-                        IsVisible="False"
-                        x:Name="economiaAdicional"
-                        Text=""
-                        FontSize="20"
-                        Margin="140, 100, 0, 0"
-                        Rotation="10"/>
+                            IsVisible="False"
+                            x:Name="economiaAdicional"
+                            Text=""
+                            FontSize="20"
+                            Margin="140, 100, 0, 0"
+                            Rotation="10"/>
 
-                        <Label
-                        IsVisible="False"  
-                        x:Name="diplomaciaAdicional"
-                        Text=""
-                        FontSize="20"
-                        Margin="15, 80, 0, 0"
-                        Rotation="-10"/>
+                            <Label
+                            IsVisible="False"  
+                            x:Name="diplomaciaAdicional"
+                            Text=""
+                            FontSize="20"
+                            Margin="15, 80, 0, 0"
+                            Rotation="-10"/>
 
-                        <Label
-                        IsVisible="False"
-                        x:Name="exercitoAdicional"
-                        Text=""
-                        FontSize="20"
-                        Margin="80, 135, 0, 0"/>
+                            <Label
+                            IsVisible="False"
+                            x:Name="exercitoAdicional"
+                            Text=""
+                            FontSize="20"
+                            Margin="80, 135, 0, 0"/>
 
 
+
+                        </Grid>
 
                     </Grid>
+                    <!-- grid placa das conquistas-->
 
-                </Grid>
-                <!-- grid placa das conquistas-->
+                    <Grid
+                        x:Name="personagemComponent"
+                        VerticalOptions="End"
+                        HorizontalOptions="End"
+                        Margin="0 , 0, -110, 100"
+                        >
 
-                <Grid
-                    x:Name="personagemComponent"
-                    VerticalOptions="End"
-                    HorizontalOptions="End"
-                    Margin="0 , 0, -110, 100"
-                    >
+                        <Image
+                            WidthRequest="100"
+                            MaximumHeightRequest="300"
+                            Source="{Binding PersonagemImagePath}"
+                            />
 
-                    <Image
-                        WidthRequest="100"
-                        MaximumHeightRequest="300"
-                        Source="{Binding PersonagemImagePath}"
-                        />
-
-                </Grid>
+                    </Grid>
                 
 
 
-                <Grid
-                x:Name="dialogoContainer"
-                VerticalOptions="End"
-                HorizontalOptions="Center"
-                WidthRequest="650"
-                IsVisible="True"
-                Margin="0, 0, 0, 100"
-                >
-
-                    <Image
-                    Source="dialogo_folha.png"
-                />
-
-                    <VerticalStackLayout
-                    VerticalOptions="Center"
+                    <Grid
+                    x:Name="dialogoContainer"
+                    VerticalOptions="End"
                     HorizontalOptions="Center"
-                    Margin="0, 0, 0, 30"
-                    WidthRequest="500"
-        
+                    WidthRequest="650"
+                    IsVisible="True"
+                    Margin="0, 0, 0, 100"
                     >
-                        <Label
-                        x:Name="personagemNomeLabel"
-                        Text=""
-                        TextColor="#474747"    
-                        FontSize="17"
-                        />
-                        <Label  
-                        x:Name="dialogoLabel"
-                        Text=""
-                        TextColor="Black"    
-                        FontSize="17"
+
+                        <Image
+                        Source="dialogo_folha.png"
                     />
-                    </VerticalStackLayout>
 
-
-
-                </Grid>
-
-
-
-                <Grid
-                x:Name="tutorialComponent"
-                IsVisible="False"
-                VerticalOptions="FillAndExpand"
-                HorizontalOptions="FillAndExpand">
-
-                    <Grid
-                    BackgroundColor="Black"
-                    Opacity=".6"
-                ></Grid>
-
-                    <Grid
-                    HorizontalOptions="Start"
-                    VerticalOptions="Center"
-                    Margin="0, 0, 0, 120"
-                    >
-                        <skia:SKLottieView
-                        Source="greenarrow.json"
-                        RepeatCount="-1"
-                        RepeatMode="Restart"
-                        WidthRequest="200"
-                        HeightRequest="100"
-                        Rotation="180"
-                        />
-                        <Label
-                        Margin="0, 80, 0, 0"
-                        Text="Para aceitar"
-                        FontSize="22"
-                        TextColor="#00c1a2"
+                        <VerticalStackLayout
+                        VerticalOptions="Center"
                         HorizontalOptions="Center"
+                        Margin="0, 0, 0, 30"
+                        WidthRequest="500"
+        
+                        >
+                            <Label
+                            x:Name="personagemNomeLabel"
+                            Text=""
+                            TextColor="#474747"    
+                            FontSize="17"
+                            />
+                            <Label  
+                            x:Name="dialogoLabel"
+                            Text=""
+                            TextColor="Black"    
+                            FontSize="17"
                         />
-                    </Grid>
+                        </VerticalStackLayout>
 
-                    <Label
-                    HorizontalOptions="Center"
-                    Text="Arraste"
-                    FontSize="32"
-                    Margin="0, 40, 0, 0"
-                    TextColor="White"/>
 
-                    <Grid
-                    VerticalOptions="Center"
-                    HorizontalOptions="End"
-                    Margin="0, 0, 0, 120">
-                        <skia:SKLottieView
-                        Source="redarrow.json"
-                        RepeatCount="-1"
-                        RepeatMode="Restart"
-                        WidthRequest="200"
-                        HeightRequest="100"
-                        Background="Transparent"
-                        />
-                        <Label
-                        Text="Para recusar"
-                        FontSize="22"
-                        TextColor="#de524b"
-                        HorizontalOptions="Center"
-                        Margin="0, 80, 0, 0"
-                        />
+
                     </Grid>
 
 
-                </Grid>
+
+                    <Grid
+                    x:Name="tutorialComponent"
+                    IsVisible="False"
+                    VerticalOptions="FillAndExpand"
+                    HorizontalOptions="FillAndExpand">
+
+                        <Grid
+                        BackgroundColor="Black"
+                        Opacity=".6"
+                        ></Grid>
+
+                        <Grid
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center"
+                        Margin="0, 0, 0, 120"
+                        >
+                            <skia:SKLottieView
+                            Source="greenarrow.json"
+                            RepeatCount="-1"
+                            RepeatMode="Restart"
+                            WidthRequest="200"
+                            HeightRequest="100"
+                            Rotation="180"
+                            />
+                            <Label
+                            Margin="0, 80, 0, 0"
+                            Text="Para aceitar"
+                            FontSize="22"
+                            TextColor="#00c1a2"
+                            HorizontalOptions="Center"
+                            />
+                        </Grid>
+
+                        <Label
+                        HorizontalOptions="Center"
+                        Text="Arraste"
+                        FontSize="32"
+                        Margin="0, 40, 0, 0"
+                        TextColor="White"/>
+
+                        <Grid
+                        VerticalOptions="Center"
+                        HorizontalOptions="End"
+                        Margin="0, 0, 0, 120">
+                            <skia:SKLottieView
+                            Source="redarrow.json"
+                            RepeatCount="-1"
+                            RepeatMode="Restart"
+                            WidthRequest="200"
+                            HeightRequest="100"
+                            Background="Transparent"
+                            />
+                            <Label
+                            Text="Para recusar"
+                            FontSize="22"
+                            TextColor="#de524b"
+                            HorizontalOptions="Center"
+                            Margin="0, 80, 0, 0"
+                            />
+                        </Grid>
+
+
+                    </Grid>
 
             </Grid>
 
@@ -443,6 +446,113 @@
                                 />
                     </Grid>
                 </VerticalStackLayout>
+
+            </Grid>
+
+            </Grid>
+
+            <Grid
+                x:Name="gameOverContainer"
+                IsVisible="False">
+
+                <Image Source="gameover_bkg.png"  
+                Aspect="AspectFill"
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand" 
+                Margin="0, 0, 0, 0"
+                />
+
+                <Grid>
+                    <BoxView
+                    IsVisible="True"
+                    Background="Black"
+                    Opacity=".5">
+                    </BoxView>
+
+                    <material:MaterialFrame
+                        MaterialTheme="AcrylicBlur"
+                        MaterialBlurStyle="Dark"
+                        Opacity=".8"
+                        Elevation="10"
+                        HasShadow="False"
+                        AcrylicGlowColor="#000000"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand"
+                    />
+                </Grid>
+
+                <VerticalStackLayout
+                    HorizontalOptions="Start"
+                    WidthRequest="480"
+                    Margin="80, 60, 0, 0">
+                    <Label
+                        Text="Game Over"
+                        TextColor="#FA3636"
+                        FontSize="40"/>
+
+                    <Label
+                    Text="{Binding ConquistaNegative, StringFormat='O seu império decaiu por conta do {0}! Tenha mais cuidado da próxima vez...'}"
+                    TextColor="White"
+                    FontSize="25"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout
+                    VerticalOptions="End"
+                    HorizontalOptions="End"
+                    Margin="0, 0, 30, 50">
+                    <Grid VerticalOptions="End" Padding="10">
+                        <Button
+                            WidthRequest="150"
+                            BackgroundColor="Transparent"
+                            Clicked="GameOverBtn"
+                            />
+
+                        <Image 
+                            Source="scroll.png" 
+                            WidthRequest="150"/>
+
+                        <Label Text="Continuar"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="Black"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" 
+                               
+                                />
+                    </Grid>
+                </VerticalStackLayout>
+
+            </Grid>
+
+            <BoxView
+                x:Name="gameOverTransition"
+                IsVisible="False"
+                BackgroundColor="Black"></BoxView>
+
+            <Grid
+                IsVisible="False"
+                x:Name="loading_component">
+
+                <material:MaterialFrame
+                    MaterialTheme="AcrylicBlur"
+                    MaterialBlurStyle="Dark"
+                    Opacity=".8"
+                    Elevation="10"
+                    HasShadow="False"
+                    AcrylicGlowColor="#000000"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand"
+                    />
+
+                <skia:SKLottieView
+                    RepeatCount="-1"
+                    RepeatMode="Restart"
+                    Source="circleloading.json"
+                    WidthRequest="150"
+                    HeightRequest="150"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    />
 
             </Grid>
 

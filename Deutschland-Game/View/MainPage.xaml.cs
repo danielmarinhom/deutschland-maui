@@ -7,24 +7,49 @@ namespace Deutschland_Game
 {
     public partial class MainPage : ContentPage
     {
-        AudioService audioService;
+        private readonly AudioService audioService;
 
-        public MainPage()
+        private bool wasButtonClicked = false;
+
+        public MainPage(AudioService audioService)
         {
             InitializeComponent();
-            audioService = new AudioService();
+            this.audioService = audioService;
+            audioService.PlayBackgroundAudio();
         }
 
         private async void creditosBtn_Clicked(object sender, EventArgs e)
         {
+
+            if (wasButtonClicked) { return;  } // evitar duplo clique, q leva a duas páginas ao mesmo tempo
+
+            wasButtonClicked = true;
+
             audioService.PlayClickAudio();
-            await Navigation.PushAsync(new CreditosPage());
+            await Navigation.PushAsync(new CreditosPage(audioService));
+
+            await Task.Delay(1000);
+            wasButtonClicked = false;
+
         }
 
         private async void jogarBtn_Clicked(object sender, EventArgs e)
         {
+            if (wasButtonClicked) { return; }
+
+            wasButtonClicked = true;
+
             audioService.PlayClickAudio();
-            await Navigation.PushAsync(new EscolherNomePage());
+            await Navigation.PushAsync(new EscolherNomePage(audioService));
+            await Task.Delay(1000);
+
+            wasButtonClicked = false;
+
+        }
+
+        protected override bool OnBackButtonPressed() // cancela o botao de voltar do celular
+        {
+            return true;
         }
     }
 

@@ -1,6 +1,9 @@
 ﻿using CommunityToolkit.Maui;
+using Deutschland_Game.Service;
+using Deutschland_Game.View;
 using Microsoft.Extensions.Logging;
 using Microsoft.Maui.Controls.PlatformConfiguration;
+using Plugin.Maui.Audio;
 using Sharpnado.MaterialFrame;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 
@@ -24,7 +27,15 @@ namespace Deutschland_Game
                     fonts.AddFont("MUTHIARA DEMO VERSION.OTF", "Muthiara");
                 });
 
-            
+
+            builder.Services.AddSingleton(AudioManager.Current);
+            builder.Services.AddTransient<AudioService>();
+
+            builder.Services.AddTransient<MainPage>();
+            builder.Services.AddTransient<CreditosPage>();
+            builder.Services.AddTransient<EscolherNomePage>();
+            builder.Services.AddTransient<JogarPage>();
+
 
 #if DEBUG
             builder.Logging.AddDebug();

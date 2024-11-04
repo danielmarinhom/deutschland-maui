@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Telephony;
 using Android.Views;
+using MediaManager;
 using Microsoft.Maui.Controls.Compatibility;
 
 namespace Deutschland_Game
@@ -15,6 +16,8 @@ namespace Deutschland_Game
         protected override void OnCreate(Bundle? savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            CrossMediaManager.Current.Init(this);
 
             // Coloca o app em tela horizontal
             RequestedOrientation = ScreenOrientation.Landscape;

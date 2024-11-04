@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Deutschland_Game.View.EndPage"
+             Title="EndPage">
+
+    <Grid>
+        <Label 
+            x:Name="EndText"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            FontSize="24"
+            TextColor="White" />
+
+        <MediaElement
+            x:Name="EndVideo"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            AutoPlay="True"
+            Aspect="AspectFill" />
+        <Button 
+            Text="Voltar pro Menu Principal"
+            Clicked="OnMainMenuButtonClicked"
+            HorizontalOptions="End"
+            VerticalOptions="End"
+            Margin="10"
+            BackgroundColor="DarkGray"
+            TextColor="White" />
+    </Grid>
+</ContentPage>

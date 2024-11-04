@@ -1,10 +1,9 @@
 using Deutschland_Game.Dtos;
 using Deutschland_Game.Models.ApiModels;
-using System.Diagnostics;
 using System.ComponentModel;
 using Deutschland_Game.Models.ViewModels;
 using Deutschland_Game.Service;
-using Microsoft.Maui.Controls.PlatformConfiguration;
+using System.Diagnostics;
 
 
 namespace Deutschland_Game.View;
@@ -12,39 +11,39 @@ namespace Deutschland_Game.View;
 public partial class JogarPage : ContentPage, INotifyPropertyChanged
 {
 
+    private readonly AudioService audioService;
+
     private UsuarioDto usuarioDto;
-    private EraService eraService = new EraService();
-    private AudioService audioService = new AudioService();
     private List<AllDatasBeforeEraResponse> allDatasBeforeEraResponse;
+    private EraResponse eraResponseGlobal;
+
+    private EraService eraService = new EraService();
+    private UsuarioService usuarioService;
+    private ConquistaUsuarioService conquistaUsuarioService;
 
     private JogarPageViewModel viewModel;
 
     private List<string> personagemImagesPaths;
-
-    const string IsFirstLaunchKey = "IsFirstLaunch";
-
-	private int actIndexDialog = 0;
-
-    private bool isTaskingRunning = false;
-
-    private bool userPassedAnimation = false;
-
-    private bool allDialogsAnswered = false;
-
-    private ConquistaUsuarioService conquistaUsuarioService;
-
-    private List<Label> conquistasLabels;
-
-    private List<Label> summaryLabels;
-
-    private EraResponse eraResponseGlobal;
-
     private List<int> conquistasValues;
 
-    public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths, EraResponse eraResponse)
+    private List<Label> conquistasLabels;
+    private List<Label> summaryLabels;
+
+    const string IsFirstLaunchKey = "IsFirstLaunch";
+	private int actIndexDialog = 0;
+    private bool isTaskingRunning = false;
+    private bool userPassedAnimation = false;
+    private bool allDialogsAnswered = false;
+    private bool wasButtonClicked = false;
+
+    public JogarPage(UsuarioDto usuarioDto, List<AllDatasBeforeEraResponse> allDatasBeforeEraResponses, string eraImagePath, List<string> personagemImagesPaths, EraResponse eraResponse, AudioService audioService)
 
     {
         InitializeComponent();
+
+        this.audioService = audioService;
+
+        this.usuarioService = new UsuarioService();
 
         conquistasLabels = new List<Label> { populaidadeAdicional, igrejaAdicional, diplomaciaAdicional, economiaAdicional, exercitoAdicional };
 
@@ -67,6 +66,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         
         this.personagemImagesPaths = personagemImagesPaths;
 
+        this.audioService.PlayBackgroundAudio();
+
         RunDialog(0);
         
         tutorialComponent.IsVisible = false;
@@ -79,12 +80,9 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
     }
     public async Task AtualizarConquistas(bool wasAceppt) // atualiza a lista global das conquistas a cada escolha
     {
-        List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>(); // tive que mudar essa lógica aqui, Daniel
-                                                                                        //antes ele tava somando todas as consequencias de todos os dialogos, pq vc tava fazendo um for no allDatasBeforeEra
-                                                                                        // agora ele só pega o dialogo de acordo com o index global da classe, e filtra certinho
         audioService.PlayKingAudio(wasAceppt);
 
-            List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>(); // tive que mudar essa lógica aqui, Daniel
+        List<ConquistasResponseDto> conquistas = new List<ConquistasResponseDto>(); // tive que mudar essa lógica aqui, Daniel
             //antes ele tava somando todas as consequencias de todos os dialogos, pq vc tava fazendo um for no allDatasBeforeEra
             // agora ele só pega o dialogo de acordo com o index global da classe, e filtra certinho
 
@@ -113,7 +111,36 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             }
     }
 
-    public async void RunEndEraAnimation()
+    public async Task<bool> ValidateGameOver() // animacoes para a tela de game over
+    {
+
+        bool isGameOver = await viewModel.isGameOver(this.usuarioDto.Id); // valida se tem alguma conquistaUsuario negativa
+
+        if (isGameOver) { // animacoes
+
+            await usuarioService.deleteUser(this.usuarioDto.Id); // deleta o usuario atual
+
+            loading_component.IsVisible = false;
+
+            gameOverTransition.Opacity = 0;
+
+            gameOverTransition.IsVisible = true;
+            await gameOverTransition.FadeTo(1, 4000, Easing.SinInOut);
+
+            gameContainer.IsVisible = false;
+            gameOverContainer.IsVisible = true;
+
+            await gameOverTransition.FadeTo(0, 4000, Easing.SinInOut);
+
+
+            return true;
+        }
+
+        return false;
+
+    }
+
+    public async void RunEndEraAnimation()  // animacoes do Summary da Era
     {
         conffetsAnimation.IsEnabled = false;
         bkgSummaryContainer.Opacity = 0;
@@ -128,15 +155,27 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         summaryButton.IsEnabled = true;
     }
 
-    public async void ShowEndGameDialog()
+    public async void ShowEndGameDialog() // valida se é game over ou pode passar para a próxima era
     {
+
+        loading_component.IsVisible = true;
+
+        bool runGameOver = await ValidateGameOver();
+        Debug.WriteLine(runGameOver);
+        if (runGameOver) // se for game over, vai cancelar as animacoes de Summary
+        {
+            return;
+        }
+
+        // animacoes para o Summary da Era
         await summaryInfoContainer.TranslateTo(0, -500, 10);
         await viewModel.SetEraNameInSummary(eraResponseGlobal);
         await viewModel.SetSummaryValues(summaryLabels, conquistasValues);
         summaryContainer.IsVisible = true;
 
-        RunEndEraAnimation();
+        loading_component.IsVisible = false;
 
+        RunEndEraAnimation();
 
     }
 
@@ -181,6 +220,8 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 	{
 
 		bool itsTheFirstTime = Preferences.Get(IsFirstLaunchKey, true); // verifica se tem essa key no armazenamento local
+
+        Debug.WriteLine(itsTheFirstTime);
 
 		if (itsTheFirstTime)
 		{
@@ -287,7 +328,9 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             // se o indice do dialogo for >= ao tamanha da lista ---- é pra nao dar exception de index no allDatasBeforeEraResponse
             // basicamente significa que os dialogos já foram todos carregados
             allDialogsAnswered = true;
+
             ShowEndGameDialog();
+
             return;
         }
 
@@ -305,7 +348,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             return;
         }
 
-		if (CheckIfItsFirstTime())
+		if (!CheckIfItsFirstTime())
 		{
             tutorialComponent.IsVisible = false;
         }
@@ -321,7 +364,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
             return;
         }
 
-        if (CheckIfItsFirstTime())
+        if (!CheckIfItsFirstTime()) // esconde o componente de tutorial
         {
             tutorialComponent.IsVisible = false;
         }
@@ -336,17 +379,45 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
     private async void NextEra(object sender, EventArgs e)
     {
+        if (wasButtonClicked) return;
+
+        wasButtonClicked = true;
+
         if (eraResponseGlobal.Id <= 6) { eraResponseGlobal.Id++; }
 
         EraResponse nextEraResponse = await eraService.GetEraByID(eraResponseGlobal.Id);
 
         if (nextEraResponse != null)
         {
-            await Navigation.PushAsync(new LoadingPage(usuarioDto, nextEraResponse));
+            audioService.StopBackGroundAudio();
+            await Navigation.PushAsync(new LoadingPage(usuarioDto, nextEraResponse, audioService));
         }
         else
         {
-            await DisplayAlert("Erro", "Não foi possível carregar os dados da era.", "OK");
+            //await DisplayAlert("Erro", "Não foi possível carregar os dados da era.", "OK");
+            await Navigation.PushAsync(new EndPage(conquistasValues));
         }
+
+        await Task.Delay(1000);
+        wasButtonClicked = false;
+    }
+
+    private async void GameOverBtn(object sender, EventArgs e)
+    {
+        if (wasButtonClicked) return;
+
+        wasButtonClicked = true;
+
+        audioService.StopBackGroundAudio();
+        await Navigation.PushAsync(new MainPage(this.audioService));
+
+        await Task.Delay(1000);
+
+        wasButtonClicked = false;
+    }
+
+    protected override bool OnBackButtonPressed() // cancela o botao de voltar do celular
+    {
+        return true;
     }
 }

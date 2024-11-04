@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Deutschland_Game.Dtos;
@@ -54,6 +55,9 @@ namespace Deutschland_Game.Models.ViewModels
 
         [ObservableProperty]
         private string eraSummary;
+
+        [ObservableProperty]
+        private string conquistaNegative;
 
         public void setEraPathInImage(string imagePath)
         {
@@ -141,10 +145,41 @@ namespace Deutschland_Game.Models.ViewModels
 
             }
         }
-<<<<<<< HEAD
 
-        
-=======
->>>>>>> 14220a0384532f642e27b9b4b1ced62bbbb97f6e
+        public async Task<bool> isGameOver(int userID)
+        {
+
+            try
+            {
+
+                var conquistas = await conquistaUsuarioService.FindByUserID(userID);
+
+                if (conquistas == null)
+                {
+                    return false;
+                }
+
+
+                foreach (var conquista in conquistas)
+                {
+                    Debug.WriteLine("loop1");
+
+                    if (conquista.ValorAcrescentado <= 0)
+                    {
+
+                        ConquistaNegative = conquista.NomeConquista.ToLower();
+                        return true;
+
+                    }
+                }
+
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine("ERRO - " + ex.Message);
+            }
+            
+            return false;
+        }
     }
 }

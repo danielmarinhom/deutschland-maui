@@ -6,11 +6,11 @@ namespace Deutschland_Game.View;
 public partial class CreditosPage : ContentPage
 {
     AudioService audioService;
-	public CreditosPage()
+	public CreditosPage(AudioService audioService)
 	{
 		InitializeComponent();
-        audioService = new AudioService();
-	}
+        this.audioService = audioService;
+    }
 
     private void gitHubImageBtn_Clicked(object sender, EventArgs e)
     {

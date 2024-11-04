@@ -13,26 +13,18 @@ namespace Deutschland_Game
 
             //Handler.PlatformView.BackgroundTintList = ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
 
-            _audioService = new AudioService();
-
             MainPage = new AppShell();
-            //MainPage = new NavigationPage(new MainPage());
-            //MainPage = new GamePage();
+
 
         }
-        protected override async void OnStart() // toca ao iniciar 
-        {
-            await _audioService.PlayBackgroundAudio();
-        }
+        //protected override async void OnStart() // toca ao iniciar 
+        //{
+        //    await _audioService.PlayBackgroundAudio();
+        //}
 
-        protected override async void OnSleep() // para quando minimizado
-        {
-            await _audioService.StopAudio();
-        }
-
-        protected override async void OnResume() // volta quando ele volta pro primeiro plano
-        {
-            await _audioService.PlayBackgroundAudio();
-        }
+        //protected override async void OnResume() // volta quando ele volta pro primeiro plano
+        //{
+        //    await _audioService.PlayBackgroundAudio();
+        //}
     }
 }
