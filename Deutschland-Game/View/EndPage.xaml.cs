@@ -24,7 +24,9 @@ public partial class EndPage : ContentPage
 
     protected override async void OnAppearing()
     {
+        dialogAlreadyRunning = true;
         await DialogsAnimation(finalType);
+        dialogAlreadyRunning = false;
     }
 
     public async Task LoadTextStyle(string dialog, Label targetLabel, int delayInMls) // animacao de textos 
@@ -126,5 +128,10 @@ public partial class EndPage : ContentPage
         btnComponent.Opacity = 0;
         btnComponent.IsVisible = true;
         await btnComponent.FadeTo(1, 1000, Easing.SinInOut);
+    }
+
+    protected override bool OnBackButtonPressed() // cancela o botao de voltar do celular
+    {
+        return true;
     }
 }

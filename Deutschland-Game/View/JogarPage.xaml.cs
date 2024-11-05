@@ -398,7 +398,11 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         }
         else
         {
+            loading_component.IsVisible = true;
+            await usuarioService.deleteUser(this.usuarioDto.Id); // deleta o usuario atual
+            loading_component.IsVisible = false;
             //await DisplayAlert("Erro", "Não foi possível carregar os dados da era.", "OK");
+
             await Navigation.PushAsync(new EndPage(conquistasValues, audioService));
         }
 
