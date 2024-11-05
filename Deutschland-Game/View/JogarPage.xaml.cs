@@ -118,9 +118,13 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
 
         if (isGameOver) { // animacoes
 
+            await audioService.StopBackGroundAudio();
+
             await usuarioService.deleteUser(this.usuarioDto.Id); // deleta o usuario atual
 
             loading_component.IsVisible = false;
+
+            audioService.PlayGameOverAudio();
 
             gameOverTransition.Opacity = 0;
 
@@ -161,7 +165,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         loading_component.IsVisible = true;
 
         bool runGameOver = await ValidateGameOver();
-        Debug.WriteLine(runGameOver);
+
         if (runGameOver) // se for game over, vai cancelar as animacoes de Summary
         {
             return;
@@ -395,7 +399,7 @@ public partial class JogarPage : ContentPage, INotifyPropertyChanged
         else
         {
             //await DisplayAlert("Erro", "Não foi possível carregar os dados da era.", "OK");
-            await Navigation.PushAsync(new EndPage(conquistasValues));
+            await Navigation.PushAsync(new EndPage(conquistasValues, audioService));
         }
 
         await Task.Delay(1000);

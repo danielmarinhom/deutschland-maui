@@ -15,12 +15,6 @@
     </ContentPage.Resources>
 
     <Grid>
-        <Label 
-            x:Name="EndText"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"
-            FontSize="24"
-            TextColor="White" />
 
         <toolkit:MediaElement
             x:Name="EndVideo"
@@ -29,9 +23,50 @@
             ShouldAutoPlay="True"
             ShouldShowPlaybackControls="False"
             Aspect="AspectFill" />
+
+        <Grid
+            x:Name="dialogContainer"
+            VerticalOptions="Start"
+            HorizontalOptions="Center"
+            IsVisible="True">
+
+            <Grid
+                WidthRequest="600"
+                VerticalOptions="Center"
+                HorizontalOptions="Center"
+                >
+                
+                <Image
+                    Source="dialogo_folha.png"
+                    />
+                
+                <Label
+                    x:Name="EndText"
+                    IsVisible="False"
+                    WidthRequest="460"
+                    FontSize="17"
+                    Margin="0, 0, 0, 20"
+                    TextColor="Black"
+                    FontFamily="PeachCake"
+                    VerticalOptions="Center"/>
+
+                <Label
+                    x:Name="finalType"
+                    Text="Final Econômico!"
+                    FontFamily="PeachCake"
+                    TextColor="Black"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Margin="0, 0, 0, 20"
+                    FontSize="46"
+                    />
+
+            </Grid>
+        </Grid>
         
         <Grid VerticalOptions="End" HorizontalOptions="End" Margin="40"
-              x:Name="btnComponent">
+              x:Name="btnComponent"
+              IsVisible="False">
             <Button
                     WidthRequest="150"
                     BackgroundColor="Transparent"
@@ -43,11 +78,16 @@
 
             <Label Text="Continuar"
                    FontSize="20"
+                   FontFamily="PeachCake"
                    FontAttributes="Bold"
                    TextColor="Black"
                    HorizontalOptions="Center"
                    VerticalOptions="Center" 
                         />
         </Grid>
+
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+        </Grid.GestureRecognizers>
     </Grid>
 </ContentPage>

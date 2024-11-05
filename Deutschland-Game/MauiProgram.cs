@@ -32,6 +32,7 @@ namespace Deutschland_Game
             builder.Services.AddSingleton(AudioManager.Current);
             builder.Services.AddTransient<AudioService>();
 
+            builder.Services.AddTransient<EndPage>();
             builder.Services.AddTransient<MainPage>();
             builder.Services.AddTransient<CreditosPage>();
             builder.Services.AddTransient<EscolherNomePage>();

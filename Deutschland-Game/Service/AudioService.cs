@@ -32,6 +32,22 @@ namespace Deutschland_Game.Service
 
         }
 
+        public async Task PlayEndGameAudio()
+        {
+            this.audioPlayer = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("endGame.mpeg"));
+
+            this.audioPlayer.Loop = true;
+            this.audioPlayer.Play();
+        }
+
+        public async Task PlayGameOverAudio()
+        {
+            this.audioPlayer = audioManager.CreatePlayer(await FileSystem.OpenAppPackageFileAsync("gameover.mpeg"));
+
+            this.audioPlayer.Loop = true;
+            this.audioPlayer.Play();
+        }
+
         public async Task StopBackGroundAudio()
         {
             this.audioPlayer.Stop();
