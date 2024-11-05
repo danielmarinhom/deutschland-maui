@@ -13,8 +13,8 @@ namespace Deutschland_Game
 
             //Handler.PlatformView.BackgroundTintList = ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
 
-            //MainPage = new AppShell();
-            MainPage = new EndPage([300, 200, 100, 50, 20]);
+            MainPage = new AppShell();
+            //MainPage = new EndPage([300, 200, 100, 50, 20]);
 
 
         }

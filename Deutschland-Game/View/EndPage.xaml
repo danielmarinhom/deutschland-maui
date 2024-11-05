@@ -5,6 +5,15 @@
              x:Class="Deutschland_Game.View.EndPage"
              Title="EndPage">
 
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontFamily" Value="PeachCake" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="PeachCake" />
+        </Style>
+    </ContentPage.Resources>
+
     <Grid>
         <Label 
             x:Name="EndText"
@@ -20,13 +29,25 @@
             ShouldAutoPlay="True"
             ShouldShowPlaybackControls="False"
             Aspect="AspectFill" />
-        <Button 
-            Text="Voltar pro Menu Principal"
-            Clicked="OnMainMenuButtonClicked"
-            HorizontalOptions="End"
-            VerticalOptions="End"
-            Margin="10"
-            BackgroundColor="DarkGray"
-            TextColor="White" />
+        
+        <Grid VerticalOptions="End" HorizontalOptions="End" Margin="40"
+              x:Name="btnComponent">
+            <Button
+                    WidthRequest="150"
+                    BackgroundColor="Transparent"
+                    Clicked="OnMainMenuButtonClicked"/>
+
+            <Image 
+                    Source="scroll.png" 
+                    WidthRequest="150"/>
+
+            <Label Text="Continuar"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   TextColor="Black"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" 
+                        />
+        </Grid>
     </Grid>
 </ContentPage>
