@@ -13,18 +13,10 @@ namespace Deutschland_Game
 
             //Handler.PlatformView.BackgroundTintList = ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
 
-            MainPage = new AppShell();
+            //MainPage = new AppShell();
+            MainPage = new EndPage([300, 200, 100, 50, 20]);
 
 
         }
-        //protected override async void OnStart() // toca ao iniciar 
-        //{
-        //    await _audioService.PlayBackgroundAudio();
-        //}
-
-        //protected override async void OnResume() // volta quando ele volta pro primeiro plano
-        //{
-        //    await _audioService.PlayBackgroundAudio();
-        //}
     }
 }

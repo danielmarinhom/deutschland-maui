@@ -19,6 +19,7 @@ namespace Deutschland_Game
                 .UseSharpnadoMaterialFrame(loggerEnable: false)
                 .UseMauiCommunityToolkit()
                 .UseSkiaSharp()
+                .UseMauiCommunityToolkitMediaElement()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
